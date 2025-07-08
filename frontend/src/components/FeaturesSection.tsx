@@ -202,9 +202,9 @@ const FeaturesSection = () => {
                   // layoutId={isScheduleCard ? "schedule-card" : undefined}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className={`glass-card p-6 group hover:scale-105 transition-all duration-300 relative overflow-hidden ${
-                    feature.highlight ? 'ring-2 ring-stellar-accent/30 glow-effect' : ''
-                  }`}
+                  className={`glass-card-enhanced perspective-card group hover:scale-105 transition-all duration-300 relative overflow-hidden glass-shimmer-effect glass-floating-particles ${
+                    feature.highlight ? 'ring-2 ring-stellar-accent/30 glow-effect-enhanced' : ''
+                  } ${hoveredIndex === index ? 'glass-card-glow-animation' : ''}`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                   animate={{
                     // ВРЕМЕННО ОТКЛЮЧЕНО: анимации затухания для фокуса на sticky секции
@@ -229,7 +229,7 @@ const FeaturesSection = () => {
                     }
                   }}
                 >
-                <div className="relative z-10">
+                <div className="relative z-10 perspective-card-content">
                   <div className={`w-12 h-12 rounded-2xl bg-glass-secondary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform ${feature.highlight ? 'animate-pulse-glow' : ''}`}>
                     {/* --- 4. Используем наш "компонент-помощник" --- */}
                     {feature.isLottie ? (
