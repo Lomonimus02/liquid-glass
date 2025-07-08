@@ -1,53 +1,131 @@
 import { Sparkles, Mail, Phone, MapPin } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   return (
     <footer className="relative py-16 px-4 border-t border-glass-border">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-32 bg-stellar-primary/5 rounded-full blur-3xl"></div>
+        <motion.div 
+          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-32 bg-stellar-primary/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company info */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center">
+            <motion.div 
+              className="flex items-center gap-2 mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <motion.div 
+                className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
+                animate={{
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
                 <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gradient">Stellar School</span>
-            </div>
-            <p className="text-text-secondary mb-6 max-w-md">
+              </motion.div>
+              <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
+            </motion.div>
+            <motion.p 
+              className="text-text-secondary mb-6 max-w-md"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
               Инновационная платформа для управления образовательным процессом. 
               Автоматизируем рутину, освобождаем время для творчества и обучения.
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-text-secondary">
+            </motion.p>
+            <motion.div 
+              className="space-y-3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <motion.div 
+                className="flex items-center gap-3 text-text-secondary"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
                 <Mail className="w-4 h-4 text-stellar-accent" />
                 <span>info@stellarschool.ru</span>
-              </div>
-              <div className="flex items-center gap-3 text-text-secondary">
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3 text-text-secondary"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
                 <Phone className="w-4 h-4 text-stellar-accent" />
                 <span>+7 (495) 123-45-67</span>
-              </div>
-              <div className="flex items-center gap-3 text-text-secondary">
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-3 text-text-secondary"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >
                 <MapPin className="w-4 h-4 text-stellar-accent" />
                 <span>Москва, ул. Образования, 1</span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Quick links */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
             <h4 className="text-lg font-semibold text-text-primary mb-4">Продукт</h4>
             <ul className="space-y-2">
-              <li><a href="#features" className="text-text-secondary hover:text-stellar-accent transition-colors">Возможности</a></li>
-              <li><a href="#schedule" className="text-text-secondary hover:text-stellar-accent transition-colors">Автоматизация</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-stellar-accent transition-colors">Мобильное приложение</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-stellar-accent transition-colors">Интеграции</a></li>
+              <li><motion.a 
+                href="#features" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Возможности</motion.a></li>
+              <li><motion.a 
+                href="#schedule" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Расписание</motion.a></li>
+              <li><motion.a 
+                href="#analytics" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Аналитика</motion.a></li>
+              <li><motion.a 
+                href="#ai-assistant" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >ИИ-помощник</motion.a></li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Support */}
           <div>
