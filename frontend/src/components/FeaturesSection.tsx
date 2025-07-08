@@ -259,20 +259,26 @@ const FeaturesSection = () => {
         
         <div className="mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="glass-card p-8 text-center group hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-gradient mb-4">-70%</div>
-              <div className="text-xl font-semibold text-text-primary mb-2">Времени на администрирование</div>
-              <div className="text-text-secondary">Автоматизация рутинных задач освобождает время для обучения</div>
+            <div className="glass-card-floating perspective-card text-center group hover:scale-105 transition-transform glass-shimmer-effect">
+              <div className="perspective-card-content p-8">
+                <div className="text-5xl font-bold text-gradient-animated mb-4">-70%</div>
+                <div className="text-xl font-semibold text-text-primary mb-2">Времени на администрирование</div>
+                <div className="text-text-secondary">Автоматизация рутинных задач освобождает время для обучения</div>
+              </div>
             </div>
-            <div className="glass-card p-8 text-center group hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-gradient mb-4">+40%</div>
-              <div className="text-xl font-semibold text-text-primary mb-2">Вовлеченность учеников</div>
-              <div className="text-text-secondary">Интерактивные инструменты повышают интерес к обучению</div>
+            <div className="glass-card-floating perspective-card text-center group hover:scale-105 transition-transform glass-shimmer-effect">
+              <div className="perspective-card-content p-8">
+                <div className="text-5xl font-bold text-gradient-animated mb-4">+40%</div>
+                <div className="text-xl font-semibold text-text-primary mb-2">Вовлеченность учеников</div>
+                <div className="text-text-secondary">Интерактивные инструменты повышают интерес к обучению</div>
+              </div>
             </div>
-            <div className="glass-card p-8 text-center group hover:scale-105 transition-transform">
-              <div className="text-5xl font-bold text-gradient mb-4">100%</div>
-              <div className="text-xl font-semibold text-text-primary mb-2">Прозрачность процесса</div>
-              <div className="text-text-secondary">Полная видимость успеваемости для всех участников</div>
+            <div className="glass-card-floating perspective-card text-center group hover:scale-105 transition-transform glass-shimmer-effect">
+              <div className="perspective-card-content p-8">
+                <div className="text-5xl font-bold text-gradient-animated mb-4">100%</div>
+                <div className="text-xl font-semibold text-text-primary mb-2">Прозрачность процесса</div>
+                <div className="text-text-secondary">Полная видимость успеваемости для всех участников</div>
+              </div>
             </div>
           </div>
         </div>
