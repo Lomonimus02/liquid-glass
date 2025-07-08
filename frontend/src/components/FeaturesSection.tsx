@@ -163,9 +163,19 @@ const FeaturesSection = () => {
 
   return (
     <section ref={sectionRef} className="py-24 px-4 relative">
+      {/* Анимированные частицы в фоне */}
+      <ParticleSystem
+        particleCount={30}
+        colors={['rgba(2, 191, 122, 0.2)', 'rgba(2, 191, 122, 0.1)', 'rgba(255, 255, 255, 0.1)']}
+        speed={0.3}
+        size={1}
+        className="opacity-60"
+      />
+      
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-stellar-accent/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-stellar-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-stellar-accent/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-stellar-primary/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-stellar-glow/3 rounded-full blur-2xl animate-pulse"></div>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
