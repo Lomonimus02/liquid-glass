@@ -11,6 +11,7 @@ import {
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import Lottie from 'lottie-react';
+import ParticleSystem from './ParticleSystem';
 
 // --- 1. Импортируем ОБЕ анимации ---
 import analyticsAnimationData from "./animations/Research (1).json"; 
