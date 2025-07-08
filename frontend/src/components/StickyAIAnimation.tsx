@@ -477,7 +477,7 @@ const StickyAIAnimation = () => {
                   <div className="space-y-6">
                     <div className="glass-card-enhanced p-6">
                       <div className="flex items-center gap-3 mb-4">
-                        <Sparkles2 className="w-6 h-6 text-stellar-accent" />
+                        <Sparkles className="w-6 h-6 text-stellar-accent" />
                         <h3 className="text-xl font-semibold text-text-primary">
                           Этапы работы ИИ
                         </h3>
