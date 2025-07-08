@@ -1,3 +1,5 @@
+// Файл: types.ts (ИЗМЕНЕН)
+
 export interface Teacher {
   id: string;
   name: string;
@@ -31,7 +33,7 @@ export interface ScheduleStep {
   id: number;
   title: string;
   description: string;
-  icon: any;
+  animationData: any; // <-- ИЗМЕНЕНИЕ: было 'icon: any'
   color: string;
   duration: number;
 }

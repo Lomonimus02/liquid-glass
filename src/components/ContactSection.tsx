@@ -1,9 +1,47 @@
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+import Lottie from 'lottie-react';
+// --- 1. Импортируем ОБЕ анимации ---
+import paperPlaneAnimationData from "./animations/paper plane.json";
+import successAnimationData from "./animations/successs.json";
+
+// --- 2. Немного улучшаем наш "компонент-помощник" ---
+// Добавляем поддержку 'loop' и однократного проигрывания
+const LottieIconPlayer = ({ animationData, isPlaying, loop = true, className }) => {
+  const lottieRef = useRef(null);
+
+  useEffect(() => {
+    const lottieInstance = lottieRef.current;
+    if (lottieInstance) {
+      if (isPlaying) {
+        // Если анимация не зациклена, проигрываем ее один раз от начала
+        if (!loop) {
+          lottieInstance.goToAndPlay(0, true);
+        } else {
+          lottieInstance.play();
+        }
+      } else {
+        lottieInstance.stop();
+      }
+    }
+  }, [isPlaying, loop, animationData]);
+
+  return (
+    <Lottie
+      lottieRef={lottieRef}
+      animationData={animationData}
+      loop={false}
+      autoplay={false}
+      className={className}
+    />
+  );
+};
+
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -12,19 +50,38 @@ const ContactSection = () => {
     school: "",
     message: ""
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  // --- 3. Добавляем два новых состояния ---
+  const [isSuccess, setIsSuccess] = useState(false); // Для показа галочки
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+  
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // --- 4. Обновляем логику отправки для трех состояний ---
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
-    // Simulate form submission
-    toast({
-      title: "Заявка отправлена!",
-      description: "Мы свяжемся с вами в ближайшее время для демонстрации системы.",
-    });
+    if (isSubmitting || isSuccess) return;
 
-    // Reset form
-    setFormData({ name: "", email: "", school: "", message: "" });
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      // Переход из "Отправка" в "Успех"
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      
+      toast({
+        title: "Заявка отправлена!",
+        description: "Мы свяжемся с вами в ближайшее время.",
+      });
+      setFormData({ name: "", email: "", school: "", message: "" });
+
+      // Через 2 секунды сбрасываем состояние кнопки в исходное
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 2000);
+
+    }, 2000);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,121 +89,66 @@ const ContactSection = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const shouldAnimatePlane = isButtonHovered || isSubmitting;
+
   return (
     <section className="py-24 px-4 relative">
-      {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-stellar-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-stellar-accent/5 rounded-full blur-3xl"></div>
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-6">
-            <MessageCircle className="w-4 h-4 text-stellar-accent" />
-            <span className="text-sm font-medium text-text-secondary">Связаться с нами</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-gradient">Готовы начать?</span>
-            <br />
-            <span className="text-text-primary">Свяжитесь с нами</span>
-          </h2>
-          
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Получите персональную демонстрацию Stellar School и узнайте, 
-            как наша система может трансформировать вашу образовательную организацию
-          </p>
+            {/* ... */}
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact form */}
           <div className="glass-card p-8">
-            <h3 className="text-2xl font-semibold text-text-primary mb-6">
-              Запросить демонстрацию
-            </h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-2">
-                    Имя и фамилия
-                  </label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="glass-card border-glass-border bg-glass-secondary text-text-primary placeholder:text-text-muted"
-                    placeholder="Введите ваше имя"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="glass-card border-glass-border bg-glass-secondary text-text-primary placeholder:text-text-muted"
-                    placeholder="example@school.ru"
-                  />
-                </div>
-              </div>
+            <h3 className="text-2xl font-semibold text-text-primary mb-6">Запросить демонстрацию</h3>
+            <form className="space-y-6">
+                {/* ... Поля формы ... */}
+                <div><label htmlFor="name">Имя и фамилия</label><Input id="name" name="name" type="text" required value={formData.name} onChange={handleInputChange} placeholder="Введите ваше имя"/></div>
+                <div><label htmlFor="email">Email</label><Input id="email" name="email" type="email" required value={formData.email} onChange={handleInputChange} placeholder="example@school.ru"/></div>
+                <div><label htmlFor="school">Образовательная организация</label><Input id="school" name="school" type="text" required value={formData.school} onChange={handleInputChange} placeholder="Название школы или учреждения"/></div>
+                <div><label htmlFor="message">Сообщение</label><Textarea id="message" name="message" rows={4} value={formData.message} onChange={handleInputChange} placeholder="Расскажите о ваших потребностях и вопросах..."/></div>
 
-              <div>
-                <label htmlFor="school" className="block text-sm font-medium text-text-secondary mb-2">
-                  Образовательная организация
-                </label>
-                <Input
-                  id="school"
-                  name="school"
-                  type="text"
-                  required
-                  value={formData.school}
-                  onChange={handleInputChange}
-                  className="glass-card border-glass-border bg-glass-secondary text-text-primary placeholder:text-text-muted"
-                  placeholder="Название школы или учреждения"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-text-secondary mb-2">
-                  Сообщение
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="glass-card border-glass-border bg-glass-secondary text-text-primary placeholder:text-text-muted resize-none"
-                  placeholder="Расскажите о ваших потребностях и вопросах..."
-                />
-              </div>
-
+              {/* --- 5. Самое главное - новая кнопка --- */}
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full glass-button bg-primary hover:bg-primary/90 text-primary-foreground group"
+                className="w-full glass-button bg-primary hover:bg-primary/90 text-primary-foreground group flex items-center justify-center transition-all duration-300"
+                disabled={isSubmitting} 
+                onClick={handleSubmit}
+                onMouseEnter={() => setIsButtonHovered(true)}
+                onMouseLeave={() => setIsButtonHovered(false)}
               >
-                Отправить заявку
-                <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {/* Текст меняется в зависимости от состояния */}
+                <span>
+                  {isSuccess ? "Отправлено!" : isSubmitting ? "Отправка..." : "Отправить заявку"}
+                </span>
+
+                {/* Контейнер для двух анимаций */}
+                <div className="relative w-6 h-6 ml-2">
+                  {/* Иконка самолетика */}
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${isSuccess ? 'opacity-0' : 'opacity-100'}`}>
+                    <LottieIconPlayer 
+                      animationData={paperPlaneAnimationData} 
+                      isPlaying={shouldAnimatePlane}
+                      className="w-full h-full"
+                    />
+                  </div>
+                  
+                  {/* Иконка галочки */}
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${isSuccess ? 'opacity-100' : 'opacity-0'}`}>
+                    <LottieIconPlayer 
+                      animationData={successAnimationData} 
+                      isPlaying={isSuccess} // Играет только в состоянии успеха
+                      loop={false} // Проигрывается один раз
+                      className="w-15 h-15"
+                    />
+                  </div>
+                </div>
               </Button>
             </form>
           </div>
 
           {/* Contact information */}
           <div className="space-y-8">
-            {/* Contact cards */}
             <div className="space-y-6">
               <div className="glass-card p-6 group hover:scale-105 transition-transform">
                 <div className="flex items-center gap-4">
@@ -185,7 +187,6 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Additional info */}
             <div className="glass-card p-6 bg-stellar-primary/5 border-stellar-accent/30">
               <h4 className="text-xl font-semibold text-stellar-accent mb-4">
                 Бесплатная консультация

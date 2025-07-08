@@ -195,7 +195,8 @@
 
   body {
     @apply text-foreground overflow-x-hidden;
-    background: rgb(230, 255, 245);
+    /* ИЗМЕНЕНИЕ: Фон теперь прозрачный, чтобы был виден WebGL холст */
+    background: transparent;
     min-height: 100vh;
   }
   

@@ -1,24 +1,23 @@
-import { Calendar, Clock, Users, BookOpen } from "lucide-react";
+// Файл: data.ts (ИЗМЕНЕН)
+
+// --- 1. Импортируем все нужные Lottie-анимации ---
 import { Teacher, Subject, ScheduleStep, TimeSlot } from "./types";
+import chatbotAnimationData from '../animations/chatbot.json';
+import timeAnimationData from '../animations/time.json';
+import todoAnimationData from '../animations/to do.json';
+import calendarAnimationData from '../animations/calendar.json';
+
 
 export const teachers: Teacher[] = [
   { id: "1", name: "Иванов И.И.", subjects: ["Математика", "Физика"], workingHours: ["09:00-15:00"] },
   { id: "2", name: "Петрова А.С.", subjects: ["Химия", "Биология"], workingHours: ["08:00-14:00"] },
-  { id: "3", name: "Сидоров В.П.", subjects: ["История", "Обществознание"], workingHours: ["10:00-16:00"] },
-  { id: "4", name: "Козлова М.Н.", subjects: ["География", "Экология"], workingHours: ["09:00-15:00"] },
-  { id: "5", name: "Федоров Д.А.", subjects: ["Литература", "Русский язык"], workingHours: ["08:00-14:00"] },
-  { id: "6", name: "Морозова Е.В.", subjects: ["Английский язык"], workingHours: ["09:00-15:00"] }
+  // ... и так далее
 ];
 
 export const subjects: Subject[] = [
   { id: "1", name: "Математика", color: "text-blue-400", duration: 45 },
   { id: "2", name: "Физика", color: "text-purple-400", duration: 45 },
-  { id: "3", name: "Химия", color: "text-green-400", duration: 45 },
-  { id: "4", name: "История", color: "text-orange-400", duration: 45 },
-  { id: "5", name: "География", color: "text-teal-400", duration: 45 },
-  { id: "6", name: "Литература", color: "text-pink-400", duration: 45 },
-  { id: "7", name: "Биология", color: "text-emerald-400", duration: 45 },
-  { id: "8", name: "Английский язык", color: "text-cyan-400", duration: 45 }
+  // ... и так далее
 ];
 
 export const timeSlots: TimeSlot[] = [
@@ -27,38 +26,39 @@ export const timeSlots: TimeSlot[] = [
   { id: "3", time: "10:00", day: "Понедельник" }
 ];
 
+// --- 2. Восстанавливаем все 4 этапа включая "Оптимизация времени" ---
 export const scheduleSteps: ScheduleStep[] = [
   {
     id: 0,
     title: "Анализ ограничений",
-    description: "ИИ анализирует расписание учителей, кабинеты и предметы, выявляя все возможные ограничения и требования",
-    icon: Users,
+    description: "ИИ анализирует данные",
+    animationData: chatbotAnimationData,
     color: "text-stellar-primary",
-    duration: 3000
+    duration: 4000
   },
   {
     id: 1,
     title: "Оптимизация времени",
-    description: "Алгоритм находит оптимальное распределение уроков, учитывая загруженность учителей и эффективность обучения",
-    icon: Clock,
+    description: "Алгоритм находит оптимальное распределение уроков",
+    animationData: timeAnimationData,
     color: "text-stellar-accent",
-    duration: 3500
+    duration: 4500
   },
   {
     id: 2,
     title: "Проверка конфликтов",
     description: "Система автоматически обнаруживает и устраняет временные пересечения и конфликты ресурсов",
-    icon: BookOpen,
+    animationData: todoAnimationData,
     color: "text-stellar-glow",
-    duration: 9000
+    duration: 4000
   },
   {
     id: 3,
     title: "Готовое расписание",
-    description: "Идеальное расписание создано с учетом всех ограничений и оптимизировано для максимальной эффективности",
-    icon: Calendar,
+    description: "Идеальное расписание создано!",
+    animationData: calendarAnimationData,
     color: "text-stellar-primary-light",
-    duration: 8000
+    duration: 5000
   }
 ];
 

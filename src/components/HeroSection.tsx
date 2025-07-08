@@ -35,34 +35,33 @@ const HeroSection = () => {
           и интеллектуальной аналитикой
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+        {/* Подводка к карточкам */}
+        <div className="text-center mb-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <p className="text-lg text-text-secondary">
+            Начните сотрудничать с нами и получите
+          </p>
+        </div>
+
+        {/* CTA Button */}
+        <div className="flex justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
           <Button size="lg" className="glass-button px-8 py-4 text-lg font-semibold text-primary-foreground bg-primary hover:bg-primary/90 group">
             Начать использовать
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            size="lg" 
-            className="glass-button px-8 py-4 text-lg font-semibold border-glass-border text-text-primary hover:text-primary-foreground"
-          >
-            Смотреть демо
           </Button>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
           <div className="glass-card p-6 text-center group hover:scale-105 transition-transform">
-            <div className="text-3xl font-bold text-gradient mb-2">500+</div>
-            <div className="text-text-secondary">Школ доверяют нам</div>
+            <div className="text-3xl font-bold text-gradient mb-2">🎨</div>
+            <div className="text-text-secondary">Персонализированный интерфейс для Вашей школы</div>
           </div>
-          
+
           <div className="glass-card p-6 text-center group hover:scale-105 transition-transform">
-            <div className="text-3xl font-bold text-gradient mb-2">98%</div>
-            <div className="text-text-secondary">Удовлетворенность пользователей</div>
+            <div className="text-3xl font-bold text-gradient mb-2">🎯</div>
+            <div className="text-text-secondary">Бесплатная демонстрация</div>
           </div>
-          
+
           <div className="glass-card p-6 text-center group hover:scale-105 transition-transform">
             <div className="text-3xl font-bold text-gradient mb-2">24/7</div>
             <div className="text-text-secondary">Техническая поддержка</div>
