@@ -1,9 +1,11 @@
-// Файл: src/pages/Index.tsx (Оригинальная версия)
+// Файл: src/pages/Index.tsx (Обновленная версия с новыми sticky анимациями)
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import StickyScheduleAnimation from "@/components/StickyScheduleAnimation";
+import StickyAnalyticsAnimation from "@/components/StickyAnalyticsAnimation";
+import StickyAIAnimation from "@/components/StickyAIAnimation";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -26,9 +28,19 @@ const Index = () => {
             <FeaturesSection />
           </section>
 
-          {/* Sticky анимация с демонстрацией этапов */}
+          {/* Sticky анимация с демонстрацией этапов создания расписания */}
           <section id="schedule">
             <StickyScheduleAnimation />
+          </section>
+
+          {/* Новая sticky анимация для аналитики */}
+          <section id="analytics">
+            <StickyAnalyticsAnimation />
+          </section>
+
+          {/* Новая sticky анимация для ИИ-помощника */}
+          <section id="ai-assistant">
+            <StickyAIAnimation />
           </section>
 
           <section id="contact">
