@@ -2,9 +2,9 @@
 
 // --- 1. Импортируем все нужные Lottie-анимации ---
 import { Teacher, Subject, ScheduleStep, TimeSlot } from "./types";
-import chatbotAnimationData from '../animations/chatbot.json';
+import chatbotAnimationData from '../animations/Chatbot.json';
 import timeAnimationData from '../animations/time.json';
-import todoAnimationData from '../animations/to do.json';
+import todoAnimationData from '../animations/To Do.json';
 import calendarAnimationData from '../animations/calendar.json';
 
 
