@@ -20,7 +20,7 @@ import securityAnimationData from "./animations/lock.json";
 import scheduleAnimationData from "./animations/calendar V3.json";
 import clockAnimationData from "./animations/time.json"
 import ideaAnimationData from "./animations/Learn More.json"
-import multiAnimationData from "./animations/staff.json"
+import multiAnimationData from "./animations/Staff.json"
 
 // --- 2. Создаем "компонент-помощник" прямо здесь ---
 // Этот маленький компонент будет нашим "умным" плеером для КАЖДОЙ иконки.
