@@ -122,7 +122,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     });
   }, []);
 
-  // Animation loop with 3D effects
+  // Simple animation loop with pseudo-3D effect
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -136,16 +136,10 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     const shapes = shapesRef.current;
     if (shapes.length === 0) return;
 
-    // Sort shapes by depth (Z coordinate) for proper rendering order
-    const sortedShapes = [...shapes].sort((a, b) => b.center.z - a.center.z);
-
-    // Update and render shapes
-    sortedShapes.forEach((shape, shapeIndex) => {
+    // Update shapes
+    shapes.forEach((shape, shapeIndex) => {
       shape.lifetime += 16; // Assuming 60fps
       shape.rotation += shape.rotationSpeed;
-      shape.rotationX += shape.rotationX;
-      shape.rotationY += shape.rotationY;
-      shape.rotationZ += shape.rotationZ;
 
       // Check if shape should start dissolving
       if (shape.lifetime > shape.maxLifetime && !shape.isDissolving) {
@@ -158,21 +152,17 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         
         // If fully dissolved, recreate the shape
         if (shape.dissolveProgress >= 1) {
-          const originalIndex = shapes.findIndex(s => s.id === shape.id);
-          if (originalIndex !== -1) {
-            shapesRef.current[originalIndex] = createGeometricShape(shape.id);
-          }
+          shapesRef.current[shapeIndex] = createGeometricShape(shape.id);
           return;
         }
       }
 
-      // Update points with 3D movement
+      // Update points with gentle movement
       shape.points.forEach(point => {
         point.x += point.vx;
         point.y += point.vy;
-        point.z += point.vz;
 
-        // 3D boundary bouncing
+        // Boundary bouncing
         if (point.x <= 0 || point.x >= canvas.width) {
           point.vx *= -0.8;
           point.x = Math.max(0, Math.min(canvas.width, point.x));
@@ -181,86 +171,89 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
           point.vy *= -0.8;
           point.y = Math.max(0, Math.min(canvas.height, point.y));
         }
-        if (point.z <= -150 || point.z >= 150) {
-          point.vz *= -0.8;
-          point.z = Math.max(-150, Math.min(150, point.z));
-        }
 
         // Gentle velocity damping
         point.vx *= 0.999;
         point.vy *= 0.999;
-        point.vz *= 0.999;
       });
 
-      // Update center based on points
-      shape.center.x = shape.points.reduce((sum, p) => sum + p.x, 0) / shape.points.length;
-      shape.center.y = shape.points.reduce((sum, p) => sum + p.y, 0) / shape.points.length;
-      shape.center.z = shape.points.reduce((sum, p) => sum + p.z, 0) / shape.points.length;
+      // Update center based on first few points (exclude center point)
+      const mainPoints = shape.points.slice(0, -1);
+      shape.center.x = mainPoints.reduce((sum, p) => sum + p.x, 0) / mainPoints.length;
+      shape.center.y = mainPoints.reduce((sum, p) => sum + p.y, 0) / mainPoints.length;
 
-      // Calculate opacity based on dissolve progress and depth
-      const depthOpacity = Math.max(0.3, 1 - Math.abs(shape.center.z) / 200);
+      // Update center point position
+      const centerPoint = shape.points[shape.points.length - 1];
+      centerPoint.x = shape.center.x;
+      centerPoint.y = shape.center.y;
+
+      // Calculate opacity based on dissolve progress
       const baseOpacity = shape.isDissolving ? 
-        Math.max(0, (1 - shape.dissolveProgress) * depthOpacity) : 
-        Math.min(depthOpacity, shape.lifetime / 1000);
+        Math.max(0, 1 - shape.dissolveProgress) : 
+        Math.min(1, shape.lifetime / 1000);
 
-      // Draw connections between points with 3D effect
-      ctx.save();
+      // Draw perimeter connections (outer shape)
+      ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.6})`;
+      ctx.lineWidth = 1.5;
       
-      // Add shadow for 3D depth effect
-      ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-      ctx.shadowBlur = Math.max(2, 8 - Math.abs(shape.center.z) / 25);
-      ctx.shadowOffsetX = shape.center.z * 0.02;
-      ctx.shadowOffsetY = shape.center.z * 0.02;
-      
-      // Project points to 2D and draw connections
-      const projectedPoints = shape.points.map(point => {
-        const projected = project3D(point.x, point.y, point.z);
-        return {
-          ...point,
-          x2d: projected.x,
-          y2d: projected.y,
-          scale: projected.scale
-        };
-      });
-
-      // Draw lines connecting all points in the shape
-      for (let i = 0; i < projectedPoints.length; i++) {
-        const currentPoint = projectedPoints[i];
-        const nextPoint = projectedPoints[(i + 1) % projectedPoints.length];
+      const mainPointCount = shape.points.length - 1;
+      for (let i = 0; i < mainPointCount; i++) {
+        const currentPoint = shape.points[i];
+        const nextPoint = shape.points[(i + 1) % mainPointCount];
         
-        // Calculate line opacity based on depth and dissolve
-        let lineOpacity = baseOpacity * 0.8;
+        let opacity = baseOpacity * 0.6;
         if (shape.isDissolving) {
-          lineOpacity *= (1 - shape.dissolveProgress * 0.5 + Math.random() * 0.3);
+          opacity *= (1 - shape.dissolveProgress * 0.5 + Math.random() * 0.3);
         }
         
-        // Create gradient for 3D line effect
-        const gradient = ctx.createLinearGradient(
-          currentPoint.x2d, currentPoint.y2d,
-          nextPoint.x2d, nextPoint.y2d
-        );
-        
-        const avgDepth = (currentPoint.z + nextPoint.z) / 2;
-        const lightIntensity = Math.max(0.3, 1 - Math.abs(avgDepth) / 200);
-        
-        gradient.addColorStop(0, `rgba(2, 191, 122, ${Math.max(0, lineOpacity * lightIntensity)})`);
-        gradient.addColorStop(0.5, `rgba(26, 203, 132, ${Math.max(0, lineOpacity * lightIntensity * 0.8)})`);
-        gradient.addColorStop(1, `rgba(2, 191, 122, ${Math.max(0, lineOpacity * lightIntensity)})`);
-        
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = Math.max(0.5, 2 * Math.min(currentPoint.scale, nextPoint.scale));
+        ctx.strokeStyle = `rgba(2, 191, 122, ${Math.max(0, opacity)})`;
         ctx.beginPath();
-        ctx.moveTo(currentPoint.x2d, currentPoint.y2d);
-        ctx.lineTo(nextPoint.x2d, nextPoint.y2d);
+        ctx.moveTo(currentPoint.x, currentPoint.y);
+        ctx.lineTo(nextPoint.x, nextPoint.y);
         ctx.stroke();
       }
 
-      ctx.restore();
+      // Draw connections to center point for 3D effect
+      ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.4})`;
+      ctx.lineWidth = 1;
+      
+      const centerPoint = shape.points[shape.points.length - 1];
+      for (let i = 0; i < mainPointCount; i++) {
+        const point = shape.points[i];
+        
+        let opacity = baseOpacity * 0.4;
+        if (shape.isDissolving) {
+          opacity *= (1 - shape.dissolveProgress * 0.3 + Math.random() * 0.2);
+        }
+        
+        ctx.strokeStyle = `rgba(2, 191, 122, ${Math.max(0, opacity)})`;
+        ctx.beginPath();
+        ctx.moveTo(point.x, point.y);
+        ctx.lineTo(centerPoint.x, centerPoint.y);
+        ctx.stroke();
+      }
 
-      // Draw points with 3D lighting effect
-      projectedPoints.forEach(point => {
+      // For quadrilaterals and pentagons, add diagonal connections for more 3D effect
+      if (shape.shapeType === 'quad' && mainPointCount >= 4) {
+        // Draw diagonals
+        ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.3})`;
+        ctx.lineWidth = 0.8;
+        
+        ctx.beginPath();
+        ctx.moveTo(shape.points[0].x, shape.points[0].y);
+        ctx.lineTo(shape.points[2].x, shape.points[2].y);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(shape.points[1].x, shape.points[1].y);
+        ctx.lineTo(shape.points[3].x, shape.points[3].y);
+        ctx.stroke();
+      }
+
+      // Draw points
+      shape.points.forEach(point => {
         let pointOpacity = baseOpacity * point.opacity;
-        let pointSize = point.size * point.scale;
+        let pointSize = point.size;
         
         // Add dissolve effect to points
         if (shape.isDissolving) {
@@ -268,31 +261,15 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
           pointSize *= (1 - shape.dissolveProgress * 0.5);
         }
         
-        if (pointOpacity > 0 && pointSize > 0) {
-          ctx.save();
-          
-          // Add shadow for depth
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-          ctx.shadowBlur = Math.max(1, 4 - Math.abs(point.z) / 50);
-          ctx.shadowOffsetX = point.z * 0.01;
-          ctx.shadowOffsetY = point.z * 0.01;
-          
-          // Create 3D gradient for the point
-          const lightingGradient = createLightingGradient(ctx, point.x2d, point.y2d, pointSize, point.z);
-          
-          ctx.fillStyle = lightingGradient;
-          ctx.globalAlpha = Math.max(0, pointOpacity);
-          ctx.beginPath();
-          ctx.arc(point.x2d, point.y2d, Math.max(0, pointSize), 0, Math.PI * 2);
-          ctx.fill();
-          
-          ctx.restore();
-        }
+        ctx.fillStyle = `rgba(2, 191, 122, ${Math.max(0, pointOpacity)})`;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, Math.max(0, pointSize), 0, Math.PI * 2);
+        ctx.fill();
       });
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [createGeometricShape, dissolveSpeed, project3D, createLightingGradient]);
+  }, [createGeometricShape, dissolveSpeed]);
 
   useEffect(() => {
     updateDimensions();
