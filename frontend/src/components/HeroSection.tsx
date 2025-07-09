@@ -116,18 +116,21 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <MorphingText 
-            words={['Stellar', 'Звездная', 'Лучшая', 'Stellar']}
+          <motion.span 
             className="text-gradient-animated"
-            interval={4000}
-          />
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            Stellar
+          </motion.span>
           <br />
-          <KineticTypography 
-            text="School"
-            className="text-text-primary"
-            animation="elastic"
-            stagger={0.1}
-          />
+          <span className="text-text-primary">School</span>
         </motion.div>
 
         {/* Subtitle */}
