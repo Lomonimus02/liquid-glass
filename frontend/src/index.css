@@ -149,12 +149,14 @@
   }
 
   .glass-card:hover {
-    background: rgba(230, 255, 245, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15); /* Brighter on hover */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px) saturate(1.4); /* Stronger blur on hover */
     box-shadow:
-      0 12px 48px rgba(2, 191, 122, 0.2),
-      0 24px 96px rgba(2, 191, 122, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      0 12px 48px rgba(2, 191, 122, 0.15),
+      0 24px 96px rgba(2, 191, 122, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
     z-index: 20; /* Поднимаем hover элементы выше фона */
   }
