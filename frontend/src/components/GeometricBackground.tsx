@@ -302,8 +302,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         vertex.x = shape.center.x + cosAngle * currentRadius;
         vertex.y = shape.center.y + sinAngle * currentRadius;
 
-        // Update opacity based on deformation
-        vertex.opacity = 0.4 + Math.abs(organicDeformation) * 0.3 + mouseInfluence * 0.2;
+        // Update opacity based on deformation (no mouse influence)
+        vertex.opacity = 0.4 + Math.abs(organicDeformation) * 0.3;
       });
 
       // Draw connections between cursor and nearby shapes
