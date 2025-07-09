@@ -77,6 +77,9 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
           filter: 'blur(20px)',
           transform: 'translateZ(-1px)',
           opacity: glowIntensity,
+          borderRadius: '1.5rem',
+          WebkitBorderRadius: '1.5rem',
+          MozBorderRadius: '1.5rem',
         }}
         animate={{
           opacity: isHovering ? 0.6 : 0,
