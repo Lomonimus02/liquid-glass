@@ -30,7 +30,7 @@ import multiAnimationData from "./animations/Staff.json"
 // --- 2. Создаем "компонент-помощник" прямо здесь ---
 // Этот маленький компонент будет нашим "умным" плеером для КАЖДОЙ иконки.
 // Он содержит свою собственную, независимую логику управления.
-const LottiePlayer = ({ animationData, isHovered, className }) => {
+const LottiePlayer = React.memo(({ animationData, isHovered, className }) => {
   const lottieRef = useRef(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const LottiePlayer = ({ animationData, isHovered, className }) => {
       // Сбрасываем на первый кадр и останавливаем
       lottieInstance.goToAndStop(0, true);
     }
-  }, [isHovered, animationData]); // Эффект сработает, когда isHovered изменится
+  }, [isHovered]); // Убираем animationData из зависимостей
 
   return (
     <Lottie
@@ -55,7 +55,9 @@ const LottiePlayer = ({ animationData, isHovered, className }) => {
       className={className}
     />
   );
-};
+});
+
+LottiePlayer.displayName = 'LottiePlayer';
 
 
 // --- 3. Наш основной компонент FeaturesSection ---
