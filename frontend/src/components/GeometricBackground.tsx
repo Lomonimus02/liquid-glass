@@ -106,7 +106,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     
     const centerX = Math.random() * dimensions.width;
     const centerY = Math.random() * dimensions.height;
-    const originalSize = 30 + Math.random() * 70; // Size between 30-100px
+    const originalSize = 60 + Math.random() * 120; // Increased size: 60-180px (was 30-100px)
     
     const pointCount = shapeType === 'triangle' ? 3 : 
                      shapeType === 'quad' ? 4 : 5;
@@ -170,6 +170,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     if (dimensions.width === 0 || dimensions.height === 0) return;
     
     const shapes: GeometricShape[] = [];
+    const shapeCount = getShapeCount();
     
     for (let i = 0; i < shapeCount; i++) {
       shapes.push(createGeometricShape(i));
@@ -177,8 +178,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
     shapesRef.current = shapes;
     setIsInitialized(true);
-    console.log('Geometric shapes initialized:', shapes.length);
-  }, [shapeCount, createGeometricShape, dimensions]);
+    console.log('Geometric shapes initialized:', shapes.length, 'for screen size:', dimensions.width, 'x', dimensions.height);
+  }, [createGeometricShape, dimensions, getShapeCount]);
 
   // Update canvas dimensions
   const updateDimensions = useCallback(() => {
