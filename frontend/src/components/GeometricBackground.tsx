@@ -177,7 +177,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     });
   }, []);
 
-  // Animation loop with smooth size changes and floating effect
+  // Animation loop with enhanced cursor interaction and organic deformation
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -189,106 +189,205 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const shapes = shapesRef.current;
+    const particles = particlesRef.current;
+    const mouse = mouseRef.current;
+
     if (shapes.length === 0) return;
 
-    // Update shapes with floating and size animation
+    // Update cursor particles
+    if (particleTrails) {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const particle = particles[i];
+        
+        // Update particle
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.life--;
+        particle.opacity = (particle.life / particle.maxLife) * 0.8;
+        particle.vx *= 0.98;
+        particle.vy *= 0.98;
+
+        // Draw particle
+        ctx.fillStyle = `rgba(2, 191, 122, ${particle.opacity})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Remove dead particles
+        if (particle.life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    // Update shapes with organic deformation and cursor interaction
     shapes.forEach((shape) => {
       // Update rotation
       shape.rotation += shape.rotationSpeed;
       
-      // Update size phase for smooth size changes
-      shape.sizePhase += 0.005;
-      // NO SIZE CHANGES - keep multiplier at 1.0 always
-      shape.currentSizeMultiplier = 1.0;
+      // Update size phase for breathing effect
+      shape.sizePhase += 0.003;
+      shape.currentSizeMultiplier = 1.0 + Math.sin(shape.sizePhase) * 0.1;
       
       // Update float phase for floating effect
       shape.floatPhase += shape.floatSpeed;
-      const floatOffset = Math.sin(shape.floatPhase) * 8; // Gentle floating
+      const floatOffset = Math.sin(shape.floatPhase) * 10;
 
-      // Update center point with movement
-      shape.center.vx += (Math.random() - 0.5) * 0.008;
-      shape.center.vy += (Math.random() - 0.5) * 0.008;
+      // Calculate distance to mouse for interaction
+      const distanceToMouse = Math.sqrt(
+        Math.pow(mouse.x - shape.center.x, 2) + 
+        Math.pow(mouse.y - shape.center.y, 2)
+      );
+
+      // Mouse influence on center
+      if (cursorInteraction && distanceToMouse < 200) {
+        const mouseForce = (200 - distanceToMouse) / 200;
+        const angle = Math.atan2(mouse.y - shape.center.y, mouse.x - shape.center.x);
+        
+        // Attraction towards mouse
+        shape.center.vx += Math.cos(angle) * shape.mouseAttraction * mouseForce;
+        shape.center.vy += Math.sin(angle) * shape.mouseAttraction * mouseForce;
+      }
+
+      // Update center point with organic movement
+      shape.center.vx += (Math.random() - 0.5) * 0.005;
+      shape.center.vy += (Math.random() - 0.5) * 0.005;
       
       shape.center.x += shape.center.vx;
-      shape.center.y += shape.center.vy + floatOffset * 0.015;
+      shape.center.y += shape.center.vy + floatOffset * 0.01;
 
-      // Boundary bouncing for center
+      // Boundary bouncing for center with soft rebounds
       if (shape.center.x <= 0 || shape.center.x >= canvas.width) {
-        shape.center.vx *= -0.7;
+        shape.center.vx *= -0.6;
         shape.center.x = Math.max(0, Math.min(canvas.width, shape.center.x));
       }
       if (shape.center.y <= 0 || shape.center.y >= canvas.height) {
-        shape.center.vy *= -0.7;
+        shape.center.vy *= -0.6;
         shape.center.y = Math.max(0, Math.min(canvas.height, shape.center.y));
       }
 
-      // Velocity damping for center
-      shape.center.vx *= 0.9995;
-      shape.center.vy *= 0.9995;
+      // Velocity damping for organic movement
+      shape.center.vx *= 0.995;
+      shape.center.vy *= 0.995;
 
-      // Update vertices with gentle breathing effect using FIXED angles
+      // Update vertices with organic deformation and cursor interaction
       shape.vertices.forEach((vertex, index) => {
-        // Update radius phase for breathing
-        vertex.radiusPhase += 0.01 + (index * 0.002); // Different speeds for organic feel
+        // Update deformation phases
+        vertex.radiusPhase += 0.008 + (index * 0.003);
+        vertex.deformationPhase += 0.006 + (index * 0.002);
         
-        // Calculate breathing radius (small variations: ±12%)
-        const breathingMultiplier = 1.0 + Math.sin(vertex.radiusPhase) * 0.12;
-        const currentRadius = vertex.originalRadius * breathingMultiplier;
+        // Calculate organic deformation
+        const organicDeformation = Math.sin(vertex.deformationPhase) * shape.deformationStrength;
+        const breathingMultiplier = 1.0 + Math.sin(vertex.radiusPhase) * shape.liquidness;
         
-        // Use FIXED original angle to maintain geometry
-        vertex.x = shape.center.x + Math.cos(vertex.originalAngle) * currentRadius;
-        vertex.y = shape.center.y + Math.sin(vertex.originalAngle) * currentRadius;
+        // Mouse influence on individual vertices
+        let mouseInfluence = 0;
+        if (cursorInteraction && distanceToMouse < 150) {
+          const vertexDistanceToMouse = Math.sqrt(
+            Math.pow(mouse.x - vertex.x, 2) + 
+            Math.pow(mouse.y - vertex.y, 2)
+          );
+          if (vertexDistanceToMouse < 100) {
+            mouseInfluence = (100 - vertexDistanceToMouse) / 100 * vertex.mouseInfluence;
+          }
+        }
+        
+        // Calculate current radius with all influences
+        const currentRadius = vertex.originalRadius * breathingMultiplier * shape.currentSizeMultiplier * (1 + organicDeformation + mouseInfluence * 0.3);
+        
+        // Calculate deformed angle for organic shape
+        const angleDeformation = Math.sin(vertex.deformationPhase + index) * 0.2;
+        const currentAngle = vertex.originalAngle + angleDeformation;
+        
+        // Apply transformations
+        const cosAngle = Math.cos(currentAngle + shape.rotation);
+        const sinAngle = Math.sin(currentAngle + shape.rotation);
+        
+        vertex.x = shape.center.x + cosAngle * currentRadius;
+        vertex.y = shape.center.y + sinAngle * currentRadius;
+
+        // Update opacity based on deformation
+        vertex.opacity = 0.4 + Math.abs(organicDeformation) * 0.3 + mouseInfluence * 0.2;
       });
 
-      // Use direct vertex positions without any size calculations
+      // Draw connections between cursor and nearby shapes
+      if (cursorInteraction && distanceToMouse < 180) {
+        const connectionOpacity = (180 - distanceToMouse) / 180 * 0.4;
+        ctx.strokeStyle = `rgba(2, 191, 122, ${connectionOpacity})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x, mouse.y);
+        ctx.lineTo(shape.center.x, shape.center.y);
+        ctx.stroke();
+      }
+
+      // Use vertex positions for rendering
       const actualVertices = shape.vertices.map(vertex => ({
         x: vertex.x,
         y: vertex.y,
         opacity: vertex.opacity
       }));
 
-      // Draw perimeter connections
-      ctx.strokeStyle = `rgba(2, 191, 122, 0.6)`;
-      ctx.lineWidth = 1.2;
+      // Draw perimeter connections with organic curve
+      ctx.strokeStyle = `rgba(2, 191, 122, 0.7)`;
+      ctx.lineWidth = 1.5;
       
       for (let i = 0; i < actualVertices.length; i++) {
         const current = actualVertices[i];
         const next = actualVertices[(i + 1) % actualVertices.length];
         
+        // Create curved organic connections
         ctx.beginPath();
         ctx.moveTo(current.x, current.y);
-        ctx.lineTo(next.x, next.y);
+        
+        // Add slight curve for organic feel
+        const midX = (current.x + next.x) / 2;
+        const midY = (current.y + next.y) / 2;
+        const curve = Math.sin(Date.now() * 0.001 + i) * 3;
+        
+        ctx.quadraticCurveTo(
+          midX + curve,
+          midY + curve,
+          next.x,
+          next.y
+        );
         ctx.stroke();
       }
 
-      // Draw 3D effect lines from center to vertices
-      ctx.strokeStyle = `rgba(2, 191, 122, 0.4)`;
-      ctx.lineWidth = 0.8;
-      
-      actualVertices.forEach(vertex => {
+      // Draw 3D effect lines from center to vertices with varying opacity
+      actualVertices.forEach((vertex, index) => {
+        const lineOpacity = 0.3 + Math.sin(Date.now() * 0.002 + index) * 0.1;
+        ctx.strokeStyle = `rgba(2, 191, 122, ${lineOpacity})`;
+        ctx.lineWidth = 0.8;
+        
         ctx.beginPath();
         ctx.moveTo(shape.center.x, shape.center.y);
         ctx.lineTo(vertex.x, vertex.y);
         ctx.stroke();
       });
 
-      // Draw vertices
-      actualVertices.forEach(vertex => {
+      // Draw vertices with pulsing effect
+      actualVertices.forEach((vertex, index) => {
+        const pulse = 1 + Math.sin(Date.now() * 0.003 + index) * 0.2;
         ctx.fillStyle = `rgba(2, 191, 122, ${vertex.opacity})`;
         ctx.beginPath();
-        ctx.arc(vertex.x, vertex.y, 2, 0, Math.PI * 2);
+        ctx.arc(vertex.x, vertex.y, 2 * pulse, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      // Draw center point
+      // Draw center point with glow effect
+      const centerPulse = 1 + Math.sin(Date.now() * 0.004) * 0.3;
       ctx.fillStyle = `rgba(2, 191, 122, ${shape.center.opacity})`;
       ctx.beginPath();
-      ctx.arc(shape.center.x, shape.center.y, 1.5, 0, Math.PI * 2);
+      ctx.arc(shape.center.x, shape.center.y, 2 * centerPulse, 0, Math.PI * 2);
       ctx.fill();
     });
 
+    // Reset mouse moving state
+    mouseRef.current.isMoving = false;
+
     animationRef.current = requestAnimationFrame(animate);
-  }, []);
+  }, [cursorInteraction, particleTrails]);
 
   useEffect(() => {
     updateDimensions();
