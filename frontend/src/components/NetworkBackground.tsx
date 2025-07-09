@@ -46,7 +46,7 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         y: Math.random() * dimensions.height,
         vx: (Math.random() - 0.5) * animationSpeed,
         vy: (Math.random() - 0.5) * animationSpeed,
-        size: Math.random() * 4 + 2,
+        size: Math.random() * 2 + 1,
         opacity: Math.random() * 0.5 + 0.5,
         connections: []
       });
