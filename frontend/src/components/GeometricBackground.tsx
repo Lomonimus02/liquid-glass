@@ -352,8 +352,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
       // Draw 3D effect lines from center to vertices with varying opacity
       actualVertices.forEach((vertex, index) => {
-        const lineOpacity = 0.3 + Math.sin(Date.now() * 0.002 + index) * 0.1;
-        ctx.strokeStyle = `rgba(120, 120, 120, ${lineOpacity})`; // Changed to neutral gray
+        const lineOpacity = 0.3 + Math.sin(Date.now() * 0.001 + index) * 0.1; // Slower animation
+        ctx.strokeStyle = `rgba(2, 191, 122, ${lineOpacity})`; // Brand green color
         ctx.lineWidth = 0.8;
         
         ctx.beginPath();
