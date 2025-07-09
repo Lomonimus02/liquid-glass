@@ -399,6 +399,18 @@
         agent: "main"
         comment: "Enhanced geometric background with more active movement and smoother size animation. Increased movement speed multipliers (vertices: 1.5x, center: 1.2x), slowed size animation from 0.015 to 0.005 for smoother effect, added slight acceleration for natural movement, reduced velocity damping for sustained movement (0.9995 vs 0.998), and softened bouncing (-0.7 vs -0.8)."
 
+  - task: "Fix button styles and card glassmorphism effects"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/HeroSection.tsx, /app/frontend/src/components/Navigation.tsx, /app/frontend/src/components/Interactive3DCard.tsx, /app/frontend/src/index.css"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "FIXED BUTTON AND CARD STYLING ISSUES: Fixed three issues reported by user after z-index layering fix: 1) BUTTON COLORS: Changed buttons 'Начать использовать' and 'Попробовать' from frosted-glass to glass-button class, making them green with proper glassmorphism effects 2) BUTTON SHIMMER: Enhanced glass-button class with improved shimmer animation using ::before pseudo-element, faster shimmer on hover (1s vs 2s) 3) CARD GLASSMORPHISM: Improved frosted-glass class with stronger background blur (rgba(255,255,255,0.05) instead of 0.02), better border opacity (0.15 instead of 0.08), and enhanced backdrop-filter for proper background blurring instead of transparency 4) CARD ROUNDNESS: Updated Interactive3DCard to properly apply frosted-glass class when specified, ensuring rounded-3xl corners are maintained. All buttons now have proper green color with shimmer effects, and cards have correct rounded corners with proper glassmorphism that blurs the geometric background."
+
   - task: "Fix z-index layering for geometric background and glassmorphism cards"
     implemented: true
     working: true
