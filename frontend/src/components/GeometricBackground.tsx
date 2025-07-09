@@ -158,7 +158,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     });
   }, []);
 
-  // Simple animation loop with pseudo-3D effect, smooth transitions, and chaotic elements
+  // Animation loop with diverse shapes that just fly around
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -172,183 +172,152 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     const shapes = shapesRef.current;
     if (shapes.length === 0) return;
 
-    // Update shapes
-    shapes.forEach((shape, shapeIndex) => {
-      shape.lifetime += 16; // Assuming 60fps
+    // Update shapes - they just fly around without dissolving
+    shapes.forEach((shape) => {
       shape.rotation += shape.rotationSpeed;
 
-      // Handle fade in transition
-      if (shape.isFadingIn) {
-        shape.fadeInProgress += 0.02; // Fade in over ~1 second
-        if (shape.fadeInProgress >= 1) {
-          shape.isFadingIn = false;
-          shape.fadeInProgress = 1;
-        }
-      }
-
-      // Check if shape should start dissolving
-      if (shape.lifetime > shape.maxLifetime && !shape.isDissolving) {
-        shape.isDissolving = true;
-      }
-
-      // Update dissolve progress
-      if (shape.isDissolving) {
-        shape.dissolveProgress += dissolveSpeed;
-        
-        // If fully dissolved, recreate the shape
-        if (shape.dissolveProgress >= 1) {
-          shapesRef.current[shapeIndex] = createGeometricShape(shape.id);
-          return;
-        }
-      }
-
-      // Update chaotic lines
-      shape.chaoticLines.forEach((line, lineIndex) => {
-        line.lifetime += 16;
-        if (line.lifetime > line.maxLifetime) {
-          // Replace with new chaotic line
-          const newLine = generateChaoticLines(shape.center, 60)[0];
-          if (newLine) {
-            shape.chaoticLines[lineIndex] = newLine;
-          }
-        }
-      });
-
-      // Update points with gentle movement and small random variations
+      // Update points with more chaotic movement
       shape.points.forEach(point => {
-        // Add small random variations for organic feel
-        point.vx += (Math.random() - 0.5) * 0.01;
-        point.vy += (Math.random() - 0.5) * 0.01;
+        // Add more random variations for chaotic movement
+        point.vx += (Math.random() - 0.5) * 0.02;
+        point.vy += (Math.random() - 0.5) * 0.02;
         
         point.x += point.vx;
         point.y += point.vy;
 
-        // Boundary bouncing
+        // Boundary bouncing with more variety
         if (point.x <= 0 || point.x >= canvas.width) {
-          point.vx *= -0.8;
+          point.vx *= -(0.6 + Math.random() * 0.4); // Random bounce strength
           point.x = Math.max(0, Math.min(canvas.width, point.x));
         }
         if (point.y <= 0 || point.y >= canvas.height) {
-          point.vy *= -0.8;
+          point.vy *= -(0.6 + Math.random() * 0.4); // Random bounce strength
           point.y = Math.max(0, Math.min(canvas.height, point.y));
         }
 
-        // Gentle velocity damping
-        point.vx *= 0.999;
-        point.vy *= 0.999;
+        // Variable velocity damping
+        point.vx *= (0.995 + Math.random() * 0.01);
+        point.vy *= (0.995 + Math.random() * 0.01);
       });
 
-      // Update center based on first few points (exclude center point)
+      // Update center based on main points (exclude center point if it exists)
       const mainPoints = shape.points.slice(0, -1);
-      shape.center.x = mainPoints.reduce((sum, p) => sum + p.x, 0) / mainPoints.length;
-      shape.center.y = mainPoints.reduce((sum, p) => sum + p.y, 0) / mainPoints.length;
+      if (mainPoints.length > 0) {
+        shape.center.x = mainPoints.reduce((sum, p) => sum + p.x, 0) / mainPoints.length;
+        shape.center.y = mainPoints.reduce((sum, p) => sum + p.y, 0) / mainPoints.length;
 
-      // Update center point position
-      const centerPoint = shape.points[shape.points.length - 1];
-      centerPoint.x = shape.center.x;
-      centerPoint.y = shape.center.y;
-
-      // Calculate opacity based on dissolve progress and fade in
-      let baseOpacity = 1;
-      
-      if (shape.isFadingIn) {
-        baseOpacity = shape.fadeInProgress;
-      } else if (shape.isDissolving) {
-        baseOpacity = Math.max(0, 1 - shape.dissolveProgress);
-      } else {
-        baseOpacity = Math.min(1, shape.lifetime / 1000);
+        // Update center point position if it exists
+        if (shape.points.length > mainPoints.length) {
+          const centerPoint = shape.points[shape.points.length - 1];
+          centerPoint.x = shape.center.x;
+          centerPoint.y = shape.center.y;
+        }
       }
 
-      // Draw chaotic lines first (behind the main shape)
-      shape.chaoticLines.forEach(line => {
-        const lineOpacity = baseOpacity * line.opacity * (1 - line.lifetime / line.maxLifetime);
-        if (lineOpacity > 0) {
-          ctx.strokeStyle = `rgba(2, 191, 122, ${lineOpacity})`;
-          ctx.lineWidth = 0.5;
+      const baseOpacity = 0.6 + Math.sin(Date.now() * 0.001 + shape.id) * 0.1; // Gentle breathing effect
+
+      // Draw connections based on shape type
+      if (shape.shapeType === 'irregular') {
+        // Draw irregular connections
+        shape.irregularConnections.forEach((connections, pointIndex) => {
+          connections.forEach(targetIndex => {
+            const startPoint = shape.points[pointIndex];
+            const endPoint = shape.points[targetIndex];
+            
+            if (startPoint && endPoint) {
+              ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.5})`;
+              ctx.lineWidth = 0.8 + Math.random() * 0.4;
+              ctx.beginPath();
+              ctx.moveTo(startPoint.x, startPoint.y);
+              ctx.lineTo(endPoint.x, endPoint.y);
+              ctx.stroke();
+            }
+          });
+        });
+      } else {
+        // Draw regular perimeter connections
+        const mainPointCount = shape.points.length > 3 ? shape.points.length - 1 : shape.points.length;
+        
+        for (let i = 0; i < mainPointCount; i++) {
+          const currentPoint = shape.points[i];
+          const nextPoint = shape.points[(i + 1) % mainPointCount];
+          
+          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.7})`;
+          ctx.lineWidth = 1 + Math.random() * 0.5;
           ctx.beginPath();
-          ctx.moveTo(line.startX, line.startY);
-          ctx.lineTo(line.endX, line.endY);
+          ctx.moveTo(currentPoint.x, currentPoint.y);
+          ctx.lineTo(nextPoint.x, nextPoint.y);
           ctx.stroke();
         }
-      });
 
-      // Draw perimeter connections (outer shape)
-      ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.6})`;
-      ctx.lineWidth = 1.5;
-      
-      const mainPointCount = shape.points.length - 1;
-      for (let i = 0; i < mainPointCount; i++) {
-        const currentPoint = shape.points[i];
-        const nextPoint = shape.points[(i + 1) % mainPointCount];
-        
-        let opacity = baseOpacity * 0.6;
-        if (shape.isDissolving) {
-          opacity *= (1 - shape.dissolveProgress * 0.5 + Math.random() * 0.2);
+        // Draw connections to center point for 3D effect (if center point exists)
+        if (shape.points.length > mainPointCount) {
+          const centerPoint = shape.points[shape.points.length - 1];
+          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.4})`;
+          ctx.lineWidth = 0.8;
+          
+          for (let i = 0; i < mainPointCount; i++) {
+            const point = shape.points[i];
+            ctx.beginPath();
+            ctx.moveTo(point.x, point.y);
+            ctx.lineTo(centerPoint.x, centerPoint.y);
+            ctx.stroke();
+          }
+        }
+
+        // For quadrilaterals and hexagons, add diagonal connections
+        if (shape.shapeType === 'quad' && mainPointCount >= 4) {
+          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.3})`;
+          ctx.lineWidth = 0.6;
+          
+          ctx.beginPath();
+          ctx.moveTo(shape.points[0].x, shape.points[0].y);
+          ctx.lineTo(shape.points[2].x, shape.points[2].y);
+          ctx.stroke();
+          
+          ctx.beginPath();
+          ctx.moveTo(shape.points[1].x, shape.points[1].y);
+          ctx.lineTo(shape.points[3].x, shape.points[3].y);
+          ctx.stroke();
         }
         
-        ctx.strokeStyle = `rgba(2, 191, 122, ${Math.max(0, opacity)})`;
-        ctx.beginPath();
-        ctx.moveTo(currentPoint.x, currentPoint.y);
-        ctx.lineTo(nextPoint.x, nextPoint.y);
-        ctx.stroke();
-      }
-
-      // Draw connections to center point for 3D effect
-      ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.4})`;
-      ctx.lineWidth = 1;
-      
-      for (let i = 0; i < mainPointCount; i++) {
-        const point = shape.points[i];
-        
-        let opacity = baseOpacity * 0.4;
-        if (shape.isDissolving) {
-          opacity *= (1 - shape.dissolveProgress * 0.3 + Math.random() * 0.15);
+        if (shape.shapeType === 'hexagon' && mainPointCount >= 6) {
+          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.25})`;
+          ctx.lineWidth = 0.5;
+          
+          // Draw some inner connections for hexagon
+          for (let i = 0; i < mainPointCount; i += 2) {
+            const targetIndex = (i + 3) % mainPointCount;
+            ctx.beginPath();
+            ctx.moveTo(shape.points[i].x, shape.points[i].y);
+            ctx.lineTo(shape.points[targetIndex].x, shape.points[targetIndex].y);
+            ctx.stroke();
+          }
         }
-        
-        ctx.strokeStyle = `rgba(2, 191, 122, ${Math.max(0, opacity)})`;
-        ctx.beginPath();
-        ctx.moveTo(point.x, point.y);
-        ctx.lineTo(centerPoint.x, centerPoint.y);
-        ctx.stroke();
       }
 
-      // For quadrilaterals and pentagons, add diagonal connections for more 3D effect
-      if (shape.shapeType === 'quad' && mainPointCount >= 4) {
-        // Draw diagonals
-        ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.3})`;
-        ctx.lineWidth = 0.8;
+      // Draw points with more variety
+      shape.points.forEach((point, index) => {
+        const pointOpacity = baseOpacity * point.opacity;
+        const pointSize = point.size + Math.sin(Date.now() * 0.003 + index) * 0.3;
         
+        ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity})`;
         ctx.beginPath();
-        ctx.moveTo(shape.points[0].x, shape.points[0].y);
-        ctx.lineTo(shape.points[2].x, shape.points[2].y);
-        ctx.stroke();
-        
-        ctx.beginPath();
-        ctx.moveTo(shape.points[1].x, shape.points[1].y);
-        ctx.lineTo(shape.points[3].x, shape.points[3].y);
-        ctx.stroke();
-      }
-
-      // Draw points
-      shape.points.forEach(point => {
-        let pointOpacity = baseOpacity * point.opacity;
-        let pointSize = point.size;
-        
-        // Add dissolve effect to points
-        if (shape.isDissolving) {
-          pointOpacity *= (1 - shape.dissolveProgress + Math.random() * 0.15);
-          pointSize *= (1 - shape.dissolveProgress * 0.5);
-        }
-        
-        ctx.fillStyle = `rgba(2, 191, 122, ${Math.max(0, pointOpacity)})`;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, Math.max(0, pointSize), 0, Math.PI * 2);
+        ctx.arc(point.x, point.y, Math.max(0.2, pointSize), 0, Math.PI * 2);
         ctx.fill();
+        
+        // Add slight glow for some points
+        if (Math.random() > 0.8) {
+          ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity * 0.3})`;
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, pointSize * 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
       });
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [createGeometricShape, dissolveSpeed, generateChaoticLines]);
+  }, []);
 
   useEffect(() => {
     updateDimensions();
