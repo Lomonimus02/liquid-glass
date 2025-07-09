@@ -24,17 +24,13 @@ interface GeometricBackgroundProps {
   minPoints?: number;
   maxPoints?: number;
   animationSpeed?: number;
-  shapeLifetime?: number;
-  dissolveSpeed?: number;
 }
 
 const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
-  shapeCount = 8,
+  shapeCount = 10, // Increased for more diversity
   minPoints = 3,
-  maxPoints = 5,
-  animationSpeed = 0.3,
-  shapeLifetime = 8000, // 8 seconds
-  dissolveSpeed = 0.02
+  maxPoints = 6, // Increased for hexagons
+  animationSpeed = 0.4 // Slightly faster for more chaos
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
