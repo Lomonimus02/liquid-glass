@@ -260,6 +260,9 @@
       - working: true
         agent: "main"
         comment: "Final improvements: Made shapes more diverse (triangles, quads, pentagons, hexagons, irregular shapes), removed migrating chaotic lines, eliminated dissolution/recreation - shapes now just fly around continuously until page reload. Added more chaotic movement patterns and variety in connections."
+      - working: true
+        agent: "main"
+        comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
 ## backend:
   - task: "Backend API connectivity"
