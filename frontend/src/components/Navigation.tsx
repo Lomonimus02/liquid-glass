@@ -27,11 +27,8 @@ const Navigation = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass-nav shadow-lg' : 'bg-transparent'
-    }`} style={{
-      background: isScrolled ? 'rgba(230, 255, 245, 0.6)' : 'transparent',
-      backdropFilter: isScrolled ? 'blur(60px) saturate(1.4) brightness(1.1)' : 'none'
-    }}>
+      isScrolled ? 'frosted-glass shadow-lg' : 'bg-transparent'
+    }`}>
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
