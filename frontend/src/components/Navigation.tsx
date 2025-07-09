@@ -34,121 +34,110 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <MagneticElement strength={0.2}>
+          <motion.div 
+            className="flex items-center gap-2 cursor-pointer" 
+            onClick={() => scrollToSection('hero')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <motion.div 
-              className="flex items-center gap-2 cursor-pointer" 
-              onClick={() => scrollToSection('hero')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
             >
-              <motion.div 
-                className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
-                animate={{ 
-                  rotate: [0, 360],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-              >
-                <Sparkles className="w-5 h-5 text-white" />
-              </motion.div>
-              <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
+              <Sparkles className="w-5 h-5 text-white" />
             </motion.div>
-          </MagneticElement>
+            <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
+          </motion.div>
 
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <MagneticElement strength={0.1}>
-              <motion.button 
-                onClick={() => scrollToSection('features')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Возможности
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </motion.button>
-            </MagneticElement>
+            <motion.button 
+              onClick={() => scrollToSection('features')}
+              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Возможности
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+            </motion.button>
             
-            <MagneticElement strength={0.1}>
-              <motion.button 
-                onClick={() => scrollToSection('schedule')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Расписание
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </motion.button>
-            </MagneticElement>
+            <motion.button 
+              onClick={() => scrollToSection('schedule')}
+              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Расписание
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+            </motion.button>
             
-            <MagneticElement strength={0.1}>
-              <motion.button 
-                onClick={() => scrollToSection('analytics')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Аналитика
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </motion.button>
-            </MagneticElement>
+            <motion.button 
+              onClick={() => scrollToSection('analytics')}
+              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Аналитика
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+            </motion.button>
             
-            <MagneticElement strength={0.1}>
-              <motion.button 
-                onClick={() => scrollToSection('ai-assistant')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                ИИ-помощник
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </motion.button>
-            </MagneticElement>
+            <motion.button 
+              onClick={() => scrollToSection('ai-assistant')}
+              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              ИИ-помощник
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+            </motion.button>
             
-            <MagneticElement strength={0.1}>
-              <motion.button 
-                onClick={() => scrollToSection('contact')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Контакты
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </motion.button>
-            </MagneticElement>
+            <motion.button 
+              onClick={() => scrollToSection('contact')}
+              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Контакты
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+            </motion.button>
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <MagneticElement strength={0.15}>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <Button 
                 onClick={() => scrollToSection('contact')}
                 className="glass-button bg-primary hover:bg-primary/90 text-primary-foreground glass-shimmer-effect"
               >
                 Попробовать
               </Button>
-            </MagneticElement>
+            </motion.div>
           </div>
 
           {/* Mobile menu button */}
-          <MagneticElement strength={0.2}>
-            <motion.button
-              className="md:hidden p-2 rounded-lg glass-card-enhanced text-text-primary"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </motion.button>
-          </MagneticElement>
+          <motion.button
+            className="md:hidden p-2 rounded-lg glass-card-enhanced text-text-primary"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </motion.button>
         </div>
 
         {/* Mobile menu */}
