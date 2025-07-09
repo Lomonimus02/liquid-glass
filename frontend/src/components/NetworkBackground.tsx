@@ -31,9 +31,12 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
   const nodesRef = useRef<Node[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Initialize nodes
   const initializeNodes = useCallback(() => {
+    if (dimensions.width === 0 || dimensions.height === 0) return;
+    
     const nodes: Node[] = [];
     
     for (let i = 0; i < nodeCount; i++) {
@@ -43,8 +46,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         y: Math.random() * dimensions.height,
         vx: (Math.random() - 0.5) * animationSpeed,
         vy: (Math.random() - 0.5) * animationSpeed,
-        size: Math.random() * 3 + 1,
-        opacity: Math.random() * 0.5 + 0.3,
+        size: Math.random() * 4 + 2,
+        opacity: Math.random() * 0.5 + 0.5,
         connections: []
       });
     }
@@ -69,6 +72,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
     });
 
     nodesRef.current = nodes;
+    setIsInitialized(true);
+    console.log('Nodes initialized:', nodes.length);
   }, [nodeCount, maxConnections, connectionDistance, animationSpeed, dimensions]);
 
   // Update canvas dimensions
@@ -99,6 +104,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const nodes = nodesRef.current;
+    if (nodes.length === 0) return;
+
     const mouse = mouseRef.current;
 
     // Update node positions
@@ -126,14 +133,14 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         const force = (mouseInteractionRadius - mouseDistance) / mouseInteractionRadius;
         const angle = Math.atan2(node.y - mouse.y, node.x - mouse.x);
         
-        node.vx += Math.cos(angle) * force * 0.01;
-        node.vy += Math.sin(angle) * force * 0.01;
+        node.vx += Math.cos(angle) * force * 0.02;
+        node.vy += Math.sin(angle) * force * 0.02;
         
         // Increase opacity when near mouse
-        node.opacity = Math.min(1, 0.3 + force * 0.7);
+        node.opacity = Math.min(1, 0.5 + force * 0.5);
       } else {
         // Return to normal opacity
-        node.opacity = Math.max(0.3, node.opacity * 0.98);
+        node.opacity = Math.max(0.5, node.opacity * 0.98);
       }
 
       // Limit velocity
@@ -143,8 +150,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
     });
 
     // Draw connections
-    ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
-    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = 'rgba(150, 150, 150, 0.4)';
+    ctx.lineWidth = 1;
     
     nodes.forEach(node => {
       node.connections.forEach(connectionId => {
@@ -156,7 +163,7 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         );
 
         if (distance < connectionDistance) {
-          const opacity = Math.max(0.1, 1 - distance / connectionDistance);
+          const opacity = Math.max(0.2, 1 - distance / connectionDistance);
           
           // Enhanced opacity for mouse interaction
           const nodeMouseDistance = Math.sqrt(
@@ -168,10 +175,10 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
           
           let finalOpacity = opacity;
           if (nodeMouseDistance < mouseInteractionRadius || connectedNodeMouseDistance < mouseInteractionRadius) {
-            finalOpacity = Math.min(1, opacity * 3);
+            finalOpacity = Math.min(1, opacity * 2);
           }
 
-          ctx.strokeStyle = `rgba(120, 120, 120, ${finalOpacity})`;
+          ctx.strokeStyle = `rgba(150, 150, 150, ${finalOpacity})`;
           ctx.beginPath();
           ctx.moveTo(node.x, node.y);
           ctx.lineTo(connectedNode.x, connectedNode.y);
@@ -192,24 +199,25 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
       if (mouseDistance < mouseInteractionRadius) {
         const force = (mouseInteractionRadius - mouseDistance) / mouseInteractionRadius;
         nodeSize = node.size * (1 + force * 0.5);
-        nodeOpacity = Math.min(1, node.opacity + force * 0.5);
+        nodeOpacity = Math.min(1, node.opacity + force * 0.3);
       }
 
-      ctx.fillStyle = `rgba(180, 180, 180, ${nodeOpacity})`;
+      // Draw node with darker color to be more visible
+      ctx.fillStyle = `rgba(100, 100, 100, ${nodeOpacity})`;
       ctx.beginPath();
       ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
       ctx.fill();
 
       // Add glow effect for nodes near mouse
       if (mouseDistance < mouseInteractionRadius) {
-        const glowRadius = nodeSize * 3;
+        const glowRadius = nodeSize * 4;
         const gradient = ctx.createRadialGradient(
           node.x, node.y, 0,
           node.x, node.y, glowRadius
         );
         
-        gradient.addColorStop(0, `rgba(220, 220, 220, ${nodeOpacity * 0.3})`);
-        gradient.addColorStop(1, 'rgba(220, 220, 220, 0)');
+        gradient.addColorStop(0, `rgba(180, 180, 180, ${nodeOpacity * 0.4})`);
+        gradient.addColorStop(1, 'rgba(180, 180, 180, 0)');
         
         ctx.fillStyle = gradient;
         ctx.beginPath();
@@ -245,7 +253,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
   }, [handleMouseMove]);
 
   useEffect(() => {
-    if (nodesRef.current.length > 0) {
+    if (isInitialized && nodesRef.current.length > 0) {
+      console.log('Starting animation with', nodesRef.current.length, 'nodes');
       animate();
     }
     
@@ -254,7 +263,7 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animate]);
+  }, [isInitialized, animate]);
 
   return (
     <div className="fixed inset-0 z-0">
