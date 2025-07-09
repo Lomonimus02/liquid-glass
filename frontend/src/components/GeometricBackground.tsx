@@ -66,18 +66,22 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
   // Mouse movement handler
   const handleMouseMove = useCallback((e: MouseEvent) => {
+    const newPosition = { x: e.clientX, y: e.clientY };
+    
     mouseRef.current = {
-      x: e.clientX,
-      y: e.clientY,
+      x: newPosition.x,
+      y: newPosition.y,
       isMoving: true
     };
+    
+    setMousePosition(newPosition);
 
     // Create cursor particles if enabled
     if (particleTrails && Math.random() < 0.3) {
       const particle: CursorParticle = {
         id: Date.now() + Math.random(),
-        x: e.clientX + (Math.random() - 0.5) * 20,
-        y: e.clientY + (Math.random() - 0.5) * 20,
+        x: newPosition.x + (Math.random() - 0.5) * 20,
+        y: newPosition.y + (Math.random() - 0.5) * 20,
         vx: (Math.random() - 0.5) * 2,
         vy: (Math.random() - 0.5) * 2,
         life: 1,
