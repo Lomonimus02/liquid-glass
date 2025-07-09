@@ -3,6 +3,10 @@ import { ArrowRight, Stars, Zap } from "lucide-react";
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import ParticleSystem from './ParticleSystem';
+import MorphingText from './MorphingText';
+import KineticTypography from './KineticTypography';
+import Interactive3DCard from './Interactive3DCard';
+import MagneticElement from './MagneticElement';
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -77,64 +81,67 @@ const HeroSection = () => {
 
       <div className="max-w-6xl mx-auto text-center relative z-10">
         {/* Badge */}
-        <motion.div 
-          className="inline-flex items-center gap-2 glass-card-enhanced px-6 py-3 mb-8 glass-shimmer-effect"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Stars className="w-5 h-5 text-stellar-accent" />
-          <span className="text-sm font-medium text-text-secondary">
-            Инновационный электронный дневник
-          </span>
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+        <MagneticElement>
+          <motion.div 
+            className="inline-flex items-center gap-2 glass-card-enhanced px-6 py-3 mb-8 glass-shimmer-effect"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            <Zap className="w-4 h-4 text-stellar-glow" />
+            <Stars className="w-5 h-5 text-stellar-accent" />
+            <span className="text-sm font-medium text-text-secondary">
+              Инновационный электронный дневник
+            </span>
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 1, 0.5]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Zap className="w-4 h-4 text-stellar-glow" />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </MagneticElement>
 
-        {/* Main heading with parallax */}
-        <motion.h1 
+        {/* Main heading with morphing text */}
+        <motion.div 
           className="text-6xl md:text-8xl font-bold mb-6"
           style={{ y: textY }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <motion.span 
+          <MorphingText 
+            words={['Stellar', 'Звездная', 'Лучшая', 'Stellar']}
             className="text-gradient-animated"
-            animate={{
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          >
-            Stellar
-          </motion.span>
+            interval={4000}
+          />
           <br />
-          <span className="text-text-primary">School</span>
-        </motion.h1>
+          <KineticTypography 
+            text="School"
+            className="text-text-primary"
+            animation="elastic"
+            stagger={0.1}
+          />
+        </motion.div>
 
         {/* Subtitle */}
-        <motion.p 
+        <motion.div 
           className="text-xl md:text-2xl text-text-secondary mb-8 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Революционная система управления образовательным процессом с 
+          <KineticTypography 
+            text="Революционная система управления образовательным процессом с"
+            animation="wave"
+            stagger={0.05}
+          />
           <motion.span 
             className="text-stellar-accent font-semibold"
             animate={{
@@ -152,8 +159,12 @@ const HeroSection = () => {
           >
             {" "}автоматизированным составлением расписания
           </motion.span> 
-          и интеллектуальной аналитикой
-        </motion.p>
+          <KineticTypography 
+            text=" и интеллектуальной аналитикой"
+            animation="slide"
+            stagger={0.03}
+          />
+        </motion.div>
 
         {/* Подводка к карточкам */}
         <motion.div 
@@ -162,23 +173,23 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <p className="text-lg text-text-secondary">
-            Начните сотрудничать с нами и получите
-          </p>
+          <KineticTypography 
+            text="Начните сотрудничать с нами и получите"
+            className="text-lg text-text-secondary"
+            animation="bounce"
+            stagger={0.1}
+          />
         </motion.div>
 
-        {/* CTA Button with parallax */}
+        {/* CTA Button with magnetic effect */}
         <motion.div 
-          className="flex justify-center items-center"
+          className="flex justify-center items-center mb-16"
           style={{ y: buttonY }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <MagneticElement strength={0.2}>
             <Button 
               size="lg" 
               className="glass-button px-8 py-4 text-lg font-semibold text-primary-foreground bg-primary hover:bg-primary/90 group glass-shimmer-effect"
@@ -198,48 +209,36 @@ const HeroSection = () => {
                 <ArrowRight className="w-5 h-5" />
               </motion.div>
             </Button>
-          </motion.div>
+          </MagneticElement>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats with 3D Interactive Cards */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <motion.div 
-            className="glass-card-enhanced perspective-card text-center group"
-            whileHover={{ scale: 1.05, rotateY: 5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="perspective-card-content p-6">
+          <Interactive3DCard className="h-full" glowColor="#02bf7a" intensity={0.8}>
+            <div className="text-center">
               <div className="text-3xl font-bold text-gradient mb-2">🎨</div>
               <div className="text-text-secondary">Персонализированный интерфейс для Вашей школы</div>
             </div>
-          </motion.div>
+          </Interactive3DCard>
 
-          <motion.div 
-            className="glass-card-enhanced perspective-card text-center group"
-            whileHover={{ scale: 1.05, rotateY: -5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="perspective-card-content p-6">
+          <Interactive3DCard className="h-full" glowColor="#1a8c5c" intensity={0.9}>
+            <div className="text-center">
               <div className="text-3xl font-bold text-gradient mb-2">🎯</div>
               <div className="text-text-secondary">Бесплатная демонстрация</div>
             </div>
-          </motion.div>
+          </Interactive3DCard>
 
-          <motion.div 
-            className="glass-card-enhanced perspective-card text-center group"
-            whileHover={{ scale: 1.05, rotateY: 5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="perspective-card-content p-6">
+          <Interactive3DCard className="h-full" glowColor="#0ea5e9" intensity={0.8}>
+            <div className="text-center">
               <div className="text-3xl font-bold text-gradient mb-2">24/7</div>
               <div className="text-text-secondary">Техническая поддержка</div>
             </div>
-          </motion.div>
+          </Interactive3DCard>
         </motion.div>
       </div>
 
