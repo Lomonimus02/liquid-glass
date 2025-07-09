@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { Zap, Sparkles } from "lucide-react"; 
 import Lottie from 'lottie-react';
 
-import chatbotAnimationData from './animations/chatbot.json';
+import chatbotAnimationData from './animations/Chatbot.json';
 import timeAnimationData from './animations/time.json';
-import todoAnimationData from './animations/to do.json';
+import todoAnimationData from './animations/To Do.json';
 import calendarAnimationData from './animations/calendar.json';
-import successAnimationData from './animations/success.json';
+import successAnimationData from './animations/Success.json';
 
 const StepLottieIcon = ({ stepAnimationData, successAnimationData, isActive, isCompleted, className }) => {
   const stepLottieRef = useRef(null);
