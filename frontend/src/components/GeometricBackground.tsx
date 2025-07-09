@@ -51,52 +51,89 @@ interface GeometricBackgroundProps {
 
 const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   shapeCount = 8,
-  animationSpeed = 0.5
+  animationSpeed = 0.5,
+  cursorInteraction = true,
+  particleTrails = true
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const shapesRef = useRef<GeometricShape[]>([]);
+  const particlesRef = useRef<CursorParticle[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0, isMoving: false });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Create a geometric shape (triangle, quad, or pentagon)
+  // Mouse movement handler
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    mouseRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      isMoving: true
+    };
+
+    // Create cursor particles if enabled
+    if (particleTrails && Math.random() < 0.3) {
+      const particle: CursorParticle = {
+        id: Date.now() + Math.random(),
+        x: e.clientX + (Math.random() - 0.5) * 20,
+        y: e.clientY + (Math.random() - 0.5) * 20,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        life: 1,
+        maxLife: 60 + Math.random() * 40,
+        size: 1 + Math.random() * 3,
+        opacity: 0.8
+      };
+      particlesRef.current.push(particle);
+    }
+  }, [particleTrails]);
+
+  // Create organic geometric shape with deformation capabilities
   const createGeometricShape = useCallback((id: number): GeometricShape => {
     const shapeTypes: ('triangle' | 'quad' | 'pentagon')[] = ['triangle', 'quad', 'pentagon'];
     const shapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
     
     const centerX = Math.random() * dimensions.width;
     const centerY = Math.random() * dimensions.height;
-    const originalSize = 40 + Math.random() * 60; // Size between 40-100px
+    const originalSize = 30 + Math.random() * 70; // Size between 30-100px
     
     const pointCount = shapeType === 'triangle' ? 3 : 
                      shapeType === 'quad' ? 4 : 5;
     
     const vertices: Point[] = [];
     
-    // Create vertices with FIXED angles and breathing radius
+    // Create vertices with organic deformation capabilities
     for (let i = 0; i < pointCount; i++) {
       const angle = (i / pointCount) * Math.PI * 2;
-      const radius = originalSize; // Fixed radius, no variance
+      const radiusVariation = 0.8 + Math.random() * 0.4; // 80%-120% of original
+      const radius = originalSize * radiusVariation;
       
       vertices.push({
         x: centerX + Math.cos(angle) * radius,
         y: centerY + Math.sin(angle) * radius,
-        vx: 0, // No individual movement
-        vy: 0, // No individual movement
-        opacity: 0.6 + Math.random() * 0.4,
-        originalRadius: radius, // Store original distance
-        originalAngle: angle, // Store FIXED angle - never changes
-        radiusPhase: Math.random() * Math.PI * 2 // Random phase for organic breathing
+        vx: 0,
+        vy: 0,
+        opacity: 0.4 + Math.random() * 0.6,
+        originalRadius: radius,
+        originalAngle: angle,
+        radiusPhase: Math.random() * Math.PI * 2,
+        deformationPhase: Math.random() * Math.PI * 2,
+        mouseInfluence: 0.5 + Math.random() * 0.5
       });
     }
 
-    // Create center point for 3D effect
+    // Create center point
     const center: Point = {
       x: centerX,
       y: centerY,
-      vx: (Math.random() - 0.5) * animationSpeed * 1.2, // Only center moves
-      vy: (Math.random() - 0.5) * animationSpeed * 1.2, // Only center moves
-      opacity: 0.7 + Math.random() * 0.3
+      vx: (Math.random() - 0.5) * animationSpeed * 0.8,
+      vy: (Math.random() - 0.5) * animationSpeed * 0.8,
+      opacity: 0.6 + Math.random() * 0.4,
+      originalRadius: 0,
+      originalAngle: 0,
+      radiusPhase: 0,
+      deformationPhase: 0,
+      mouseInfluence: 0.8
     };
 
     return {
@@ -106,11 +143,14 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       originalSize,
       currentSizeMultiplier: 1.0,
       sizePhase: Math.random() * Math.PI * 2,
-      rotationSpeed: (Math.random() - 0.5) * 0.01,
+      rotationSpeed: (Math.random() - 0.5) * 0.008,
       rotation: 0,
       shapeType,
       floatPhase: Math.random() * Math.PI * 2,
-      floatSpeed: 0.02 + Math.random() * 0.03
+      floatSpeed: 0.015 + Math.random() * 0.025,
+      deformationStrength: 0.3 + Math.random() * 0.4,
+      mouseAttraction: 0.0008 + Math.random() * 0.0012,
+      liquidness: 0.1 + Math.random() * 0.2
     };
   }, [dimensions, animationSpeed]);
 
