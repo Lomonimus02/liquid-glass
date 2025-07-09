@@ -187,10 +187,10 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.center.vx *= 0.9995;
       shape.center.vy *= 0.9995;
 
-      // Calculate actual vertices positions with size animation
+      // Use direct vertex positions without any size calculations
       const actualVertices = shape.vertices.map(vertex => ({
-        x: shape.center.x + (vertex.x - shape.center.x) * shape.currentSizeMultiplier,
-        y: shape.center.y + (vertex.y - shape.center.y) * shape.currentSizeMultiplier,
+        x: vertex.x,
+        y: vertex.y,
         opacity: vertex.opacity
       }));
 
