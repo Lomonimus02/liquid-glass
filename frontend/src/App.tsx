@@ -16,8 +16,8 @@ const queryClient = new QueryClient();
 const App = () => (
   // Используем React.Fragment (<>), чтобы не создавать лишних DOM-элементов
   <>
-    {/* Интерактивный сетевой фон с узлами и соединениями */}
-    <NetworkBackground />
+    {/* Геометрический фон с фигурами из 3-5 точек */}
+    <GeometricBackground />
 
     {/* Все ваши провайдеры и роуты будут поверх фона */}
     <QueryClientProvider client={queryClient}>
