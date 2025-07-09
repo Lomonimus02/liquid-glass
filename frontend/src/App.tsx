@@ -8,31 +8,35 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-// Импортируем наш новый WebGL фон
-import GrokBackground from "./components/GrokBackground";
+// Импортируем наши новые компоненты с wow эффектами
+import Advanced3DBackground from "./components/Advanced3DBackground";
+import CursorFollower from "./components/CursorFollower";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   // Используем React.Fragment (<>), чтобы не создавать лишних DOM-элементов
   <>
-    {/* Фон будет отрисован на самом нижнем слое */}
-    <GrokBackground />
+    {/* Улучшенный 3D фон с летающими геометрическими формами */}
+    <Advanced3DBackground />
 
-    {/* Все ваши провайдеры и роуты будут поверх фона */}
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    {/* Cursor следящие эффекты */}
+    <CursorFollower>
+      {/* Все ваши провайдеры и роуты будут поверх фона */}
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </CursorFollower>
   </>
 );
 
