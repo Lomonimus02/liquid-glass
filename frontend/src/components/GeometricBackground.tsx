@@ -239,7 +239,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
           const nextPoint = shape.points[(i + 1) % mainPointCount];
           
           ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.7})`;
-          ctx.lineWidth = 1 + Math.random() * 0.5;
+          ctx.lineWidth = 1.2; // Fixed line width
           ctx.beginPath();
           ctx.moveTo(currentPoint.x, currentPoint.y);
           ctx.lineTo(nextPoint.x, nextPoint.y);
