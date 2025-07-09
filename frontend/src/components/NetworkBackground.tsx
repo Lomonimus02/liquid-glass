@@ -143,8 +143,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         node.opacity = Math.max(0.5, node.opacity * 0.98);
       }
 
-      // Limit velocity (slower movement)
-      const maxVel = 1;
+      // Limit velocity (even slower movement)
+      const maxVel = 0.5;
       node.vx = Math.max(-maxVel, Math.min(maxVel, node.vx));
       node.vy = Math.max(-maxVel, Math.min(maxVel, node.vy));
     });
