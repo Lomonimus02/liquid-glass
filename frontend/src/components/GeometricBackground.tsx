@@ -336,7 +336,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         ctx.beginPath();
         ctx.moveTo(current.x, current.y);
         
-        // Add slight curve for organic feel
+        // Add slight curve for organic feel - slower animation
         const midX = (current.x + next.x) / 2;
         const midY = (current.y + next.y) / 2;
         const curve = Math.sin(Date.now() * 0.0005 + i) * 3; // Reduced speed from 0.001 to 0.0005
