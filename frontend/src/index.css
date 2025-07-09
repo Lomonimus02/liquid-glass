@@ -233,6 +233,27 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
+  /* Ultra glass effect for maximum transparency with blur */
+  .glass-card-ultra {
+    @apply backdrop-blur-3xl border rounded-3xl transition-all duration-400 relative overflow-hidden;
+    background: rgba(255, 255, 255, 0.05); /* Very subtle glass tint */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(32px) saturate(1.4) brightness(1.1); /* Maximum glass effect */
+    box-shadow:
+      0 8px 32px rgba(2, 191, 122, 0.08),
+      0 16px 64px rgba(2, 191, 122, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card-ultra:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(36px) saturate(1.6) brightness(1.2);
+    transform: translateY(-3px);
+    z-index: 20;
+  }
+
   /* Seamless section transitions */
   .seamless-section {
     @apply relative;
