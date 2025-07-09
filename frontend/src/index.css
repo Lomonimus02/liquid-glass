@@ -195,6 +195,9 @@
   }
 
   .glass-card-enhanced:hover {
+    background: rgba(255, 255, 255, 0.12); /* Brighter on hover */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(28px) saturate(1.5); /* Enhanced blur on hover */
     z-index: 20; /* Поднимаем hover элементы выше фона */
     transform: translateY(-4px) scale(1.02);
   }
