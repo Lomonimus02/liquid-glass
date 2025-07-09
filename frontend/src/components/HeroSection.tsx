@@ -224,21 +224,21 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <Interactive3DCard className="h-full" glowColor="#02bf7a" intensity={0.8}>
+          <Interactive3DCard className="h-full frosted-glass" glowColor="#02bf7a" intensity={0.8}>
             <div className="text-center p-4 md:p-6">
               <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎨</div>
               <div className="text-text-secondary text-sm md:text-base">Персонализированный интерфейс для Вашей школы</div>
             </div>
           </Interactive3DCard>
 
-          <Interactive3DCard className="h-full" glowColor="#1a8c5c" intensity={0.9}>
+          <Interactive3DCard className="h-full frosted-glass" glowColor="#1a8c5c" intensity={0.9}>
             <div className="text-center p-4 md:p-6">
               <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎯</div>
               <div className="text-text-secondary text-sm md:text-base">Бесплатная демонстрация</div>
             </div>
           </Interactive3DCard>
 
-          <Interactive3DCard className="h-full" glowColor="#0ea5e9" intensity={0.8}>
+          <Interactive3DCard className="h-full frosted-glass" glowColor="#0ea5e9" intensity={0.8}>
             <div className="text-center p-4 md:p-6">
               <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">24/7</div>
               <div className="text-text-secondary text-sm md:text-base">Техническая поддержка</div>
