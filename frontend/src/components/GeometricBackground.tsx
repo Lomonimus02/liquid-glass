@@ -43,7 +43,6 @@ interface GeometricShape {
 }
 
 interface GeometricBackgroundProps {
-  shapeCount?: number;
   animationSpeed?: number;
   cursorInteraction?: boolean;
   particleTrails?: boolean;
