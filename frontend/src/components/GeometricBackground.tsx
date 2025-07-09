@@ -62,6 +62,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   const mouseRef = useRef({ x: 0, y: 0, isMoving: false });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Mouse movement handler
   const handleMouseMove = useCallback((e: MouseEvent) => {
