@@ -224,12 +224,13 @@
 
   .glass-card-subtle {
     @apply backdrop-blur-md border rounded-3xl transition-all duration-300 relative;
-    background: rgba(230, 255, 245, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.12); /* Glass-like appearance */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px) saturate(1.1); /* Subtle glass effect */
     box-shadow:
-      0 4px 16px rgba(2, 191, 122, 0.08),
-      0 8px 24px rgba(2, 191, 122, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      0 4px 16px rgba(2, 191, 122, 0.06),
+      0 8px 24px rgba(2, 191, 122, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   /* Seamless section transitions */
