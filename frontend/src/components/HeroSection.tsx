@@ -96,7 +96,7 @@ const HeroSection = () => {
         {/* Badge */}
         <MagneticElement>
           <motion.div 
-            className="inline-flex items-center gap-2 glass-card-supreme px-4 md:px-6 py-2 md:py-3 mb-6 md:mb-8 glass-shimmer-effect"
+            className="inline-flex items-center gap-2 frosted-glass px-4 md:px-6 py-2 md:py-3 mb-6 md:mb-8 glass-shimmer-effect"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
