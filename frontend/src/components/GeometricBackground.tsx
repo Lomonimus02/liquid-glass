@@ -222,7 +222,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
             
             if (startPoint && endPoint) {
               ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.5})`;
-              ctx.lineWidth = 0.8 + Math.random() * 0.4;
+              ctx.lineWidth = 1.0; // Fixed line width
               ctx.beginPath();
               ctx.moveTo(startPoint.x, startPoint.y);
               ctx.lineTo(endPoint.x, endPoint.y);
