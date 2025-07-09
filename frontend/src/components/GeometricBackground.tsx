@@ -134,9 +134,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.rotation += shape.rotationSpeed;
       
       // Update size phase for smooth size changes
-      shape.sizePhase += 0.005; // Much slower size animation for smoother effect
-      // Size multiplier oscillates between 0.95 and 1.05 (minimal size change)
-      shape.currentSizeMultiplier = 1.0 + Math.sin(shape.sizePhase) * 0.05;
+      shape.sizePhase += 0.005;
+      // NO SIZE CHANGES - keep multiplier at 1.0 always
+      shape.currentSizeMultiplier = 1.0;
       
       // Update float phase for floating effect
       shape.floatPhase += shape.floatSpeed;
