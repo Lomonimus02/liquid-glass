@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Fix geometry collapse by preserving fixed vertex angles"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Fixed shapes collapsing into lines by storing original fixed angles for each vertex. Now using originalAngle instead of recalculating with atan2. Shapes maintain their geometric structure while still having breathing radius effect. Vertices stay in proper triangular/quadrilateral/pentagonal positions."
+
   - task: "Add organic breathing effect to geometric shapes"
     implemented: true
     working: true
