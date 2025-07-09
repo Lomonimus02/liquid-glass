@@ -71,8 +71,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     const center: Point = {
       x: centerX,
       y: centerY,
-      vx: (Math.random() - 0.5) * animationSpeed * 0.5,
-      vy: (Math.random() - 0.5) * animationSpeed * 0.5,
+      vx: (Math.random() - 0.5) * animationSpeed * 1.2, // Increased movement speed
+      vy: (Math.random() - 0.5) * animationSpeed * 1.2, // Increased movement speed
       opacity: 0.7 + Math.random() * 0.3
     };
 
