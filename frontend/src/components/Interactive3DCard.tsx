@@ -95,6 +95,9 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
             ? `0 20px 60px rgba(2, 191, 122, 0.3), 0 0 0 1px ${glowColor}30, inset 0 1px 0 rgba(255, 255, 255, 0.4)`
             : '0 8px 32px rgba(2, 191, 122, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3)'),
           transform: 'translateZ(0)',
+          borderRadius: '1.5rem', // Ensure rounded corners
+          WebkitBorderRadius: '1.5rem', // Safari compatibility
+          MozBorderRadius: '1.5rem', // Firefox compatibility
         }}
       >
         {/* Shimmer effect */}
