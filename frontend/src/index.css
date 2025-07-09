@@ -139,6 +139,8 @@
   /* Deep Glass Effect - Level 1 */
   .glass-card {
     @apply backdrop-blur-3xl border rounded-3xl transition-all duration-300 relative overflow-hidden;
+    position: relative;
+    z-index: 10;
     background: rgba(255, 255, 255, 0.06); /* Deep glass with subtle white tint */
     border: 1px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(40px) saturate(1.4) brightness(1.05); /* Deep glass effect */
@@ -151,6 +153,7 @@
   }
 
   .glass-card:hover {
+    z-index: 20;
     background: rgba(255, 255, 255, 0.1); /* Brighter on hover */
     border: 1px solid rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(48px) saturate(1.6) brightness(1.1); /* Deeper blur on hover */
@@ -161,7 +164,6 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.7),
       inset 0 -1px 0 rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-    z-index: 20;
   }
 
   .glass-card::before {
