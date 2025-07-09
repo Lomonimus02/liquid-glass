@@ -9,6 +9,16 @@ interface Point {
   size: number;
 }
 
+interface ChaoticLine {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  opacity: number;
+  lifetime: number;
+  maxLifetime: number;
+}
+
 interface GeometricShape {
   id: number;
   points: Point[];
@@ -17,9 +27,12 @@ interface GeometricShape {
   maxLifetime: number;
   isDissolving: boolean;
   dissolveProgress: number;
+  isFadingIn: boolean;
+  fadeInProgress: number;
   rotationSpeed: number;
   rotation: number;
   shapeType: 'triangle' | 'quad' | 'pentagon';
+  chaoticLines: ChaoticLine[];
 }
 
 interface GeometricBackgroundProps {
