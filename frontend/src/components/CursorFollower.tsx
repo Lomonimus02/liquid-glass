@@ -20,18 +20,11 @@ const CursorFollower: React.FC<CursorFollowerProps> = ({ children }) => {
   const trailX = useSpring(mouseX, { damping: 30, stiffness: 200 });
   const trailY = useSpring(mouseY, { damping: 30, stiffness: 200 });
 
-  // Throttle function for mouse movement
-  const throttleRef = useRef<NodeJS.Timeout>();
-  const handleMouseMoveThrottled = useCallback((e: MouseEvent) => {
-    if (throttleRef.current) {
-      clearTimeout(throttleRef.current);
-    }
-    
-    throttleRef.current = setTimeout(() => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      setIsVisible(true);
-    }, 16); // ~60fps
+  // Optimized mouse move handler without throttling
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
+    setIsVisible(true);
   }, [mouseX, mouseY]);
 
   const handleMouseEnter = useCallback(() => setIsHovering(true), []);
