@@ -54,7 +54,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     
     const vertices: Point[] = [];
     
-    // Create vertices with FIXED relative positions but with breathing effect
+    // Create vertices with FIXED angles and breathing radius
     for (let i = 0; i < pointCount; i++) {
       const angle = (i / pointCount) * Math.PI * 2;
       const radius = originalSize; // Fixed radius, no variance
@@ -66,6 +66,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         vy: 0, // No individual movement
         opacity: 0.6 + Math.random() * 0.4,
         originalRadius: radius, // Store original distance
+        originalAngle: angle, // Store FIXED angle - never changes
         radiusPhase: Math.random() * Math.PI * 2 // Random phase for organic breathing
       });
     }
