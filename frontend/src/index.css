@@ -5,6 +5,12 @@
 /* Stellar School Design System - Glassmorphism with Green Theme */
 
 @layer base {
+  /* Force brand background color on body */
+  body {
+    background-color: rgb(230, 255, 245) !important;
+    background: rgb(230, 255, 245) !important;
+  }
+  
   :root {
     /* Main brand colors - green theme */
     --stellar-primary: 162 98% 38%;
