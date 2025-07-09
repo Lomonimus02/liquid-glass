@@ -6,28 +6,47 @@ interface Point {
   vx: number;
   vy: number;
   opacity: number;
-  originalRadius: number; // Store original distance from center
-  originalAngle: number; // Store original angle from center - FIXED
-  radiusPhase: number; // Phase for radius animation
+  originalRadius: number;
+  originalAngle: number;
+  radiusPhase: number;
+  deformationPhase: number; // For organic deformation
+  mouseInfluence: number; // How much mouse affects this point
+}
+
+interface CursorParticle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  size: number;
+  opacity: number;
 }
 
 interface GeometricShape {
   id: number;
-  vertices: Point[]; // Outer vertices of the shape
-  center: Point; // Center point for 3D effect
-  originalSize: number; // Original size to return to
-  currentSizeMultiplier: number; // Current size multiplier
-  sizePhase: number; // Phase for size animation
+  vertices: Point[];
+  center: Point;
+  originalSize: number;
+  currentSizeMultiplier: number;
+  sizePhase: number;
   rotationSpeed: number;
   rotation: number;
   shapeType: 'triangle' | 'quad' | 'pentagon';
-  floatPhase: number; // Phase for floating animation
-  floatSpeed: number; // Speed of floating
+  floatPhase: number;
+  floatSpeed: number;
+  deformationStrength: number; // How much shape can deform
+  mouseAttraction: number; // How much mouse attracts this shape
+  liquidness: number; // How fluid/organic the shape is
 }
 
 interface GeometricBackgroundProps {
   shapeCount?: number;
   animationSpeed?: number;
+  cursorInteraction?: boolean;
+  particleTrails?: boolean;
 }
 
 const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
