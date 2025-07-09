@@ -165,13 +165,21 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.center.vx *= 0.9995;
       shape.center.vy *= 0.9995;
 
-      // Move all vertices relative to center movement (shape moves as whole)
-      const deltaX = shape.center.x - (shape.vertices.reduce((sum, v) => sum + v.x, 0) / shape.vertices.length);
-      const deltaY = shape.center.y - (shape.vertices.reduce((sum, v) => sum + v.y, 0) / shape.vertices.length);
-      
-      shape.vertices.forEach(vertex => {
-        vertex.x += deltaX;
-        vertex.y += deltaY;
+      // Update vertices with gentle breathing effect
+      shape.vertices.forEach((vertex, index) => {
+        // Update radius phase for breathing
+        vertex.radiusPhase += 0.01 + (index * 0.002); // Different speeds for organic feel
+        
+        // Calculate breathing radius (small variations: ±12%)
+        const breathingMultiplier = 1.0 + Math.sin(vertex.radiusPhase) * 0.12;
+        const currentRadius = vertex.originalRadius * breathingMultiplier;
+        
+        // Calculate angle from center to vertex
+        const angle = Math.atan2(vertex.y - shape.center.y, vertex.x - shape.center.x);
+        
+        // Update vertex position with new radius but same angle
+        vertex.x = shape.center.x + Math.cos(angle) * currentRadius;
+        vertex.y = shape.center.y + Math.sin(angle) * currentRadius;
       });
 
       // Use direct vertex positions without any size calculations
