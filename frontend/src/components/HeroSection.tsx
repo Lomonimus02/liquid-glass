@@ -197,7 +197,7 @@ const HeroSection = () => {
           <MagneticElement strength={0.2}>
             <Button 
               size="lg" 
-              className="frosted-glass px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-primary-foreground bg-primary hover:bg-primary/90 group glass-shimmer-effect"
+              className="glass-button px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white group glass-shimmer-effect"
             >
               Начать использовать
               <motion.div
