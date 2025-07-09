@@ -1,90 +1,190 @@
-import { useState, useEffect } from "react";
-import { teachers, subjects } from "./data";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FileText, Calendar, Clock, Users, BookOpen, AlertCircle } from 'lucide-react';
 
 const Stage0UnorganizedData = () => {
-  const [positions, setPositions] = useState<{ [key: string]: { x: number; y: number } }>({});
+  const [highlightedItems, setHighlightedItems] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    // Generate better distributed positions for chaotic but visible effect
-    const newPositions: { [key: string]: { x: number; y: number } } = {};
-    const allItems = [...teachers, ...subjects.map(s => ({ ...s, id: `subject-${s.id}` }))];
+    const interval = setInterval(() => {
+      setHighlightedItems(prev => {
+        const newSet = new Set<number>();
+        // Randomly highlight 2-3 items
+        for (let i = 0; i < 3; i++) {
+          newSet.add(Math.floor(Math.random() * 8));
+        }
+        return newSet;
+      });
+    }, 1500);
 
-    // Create a grid-like distribution with randomness
-    const cols = 4;
-    const rows = Math.ceil(allItems.length / cols);
-
-    allItems.forEach((item, index) => {
-      const col = index % cols;
-      const row = Math.floor(index / cols);
-
-      // Base position in grid
-      const baseX = (col + 0.5) * (100 / cols);
-      const baseY = (row + 0.5) * (100 / rows);
-
-      // Add randomness while keeping items visible
-      const randomOffsetX = (Math.random() - 0.5) * 15; // ±7.5%
-      const randomOffsetY = (Math.random() - 0.5) * 15; // ±7.5%
-
-      newPositions[item.id] = {
-        x: Math.max(8, Math.min(92, baseX + randomOffsetX)),
-        y: Math.max(8, Math.min(85, baseY + randomOffsetY))
-      };
-    });
-
-    setPositions(newPositions);
+    return () => clearInterval(interval);
   }, []);
 
+  const dataItems = [
+    { id: 1, text: "Математика - 11А", icon: <BookOpen className="w-4 h-4" />, type: "subject" },
+    { id: 2, text: "Иванов И.И.", icon: <Users className="w-4 h-4" />, type: "teacher" },
+    { id: 3, text: "Каб. 205", icon: <Calendar className="w-4 h-4" />, type: "room" },
+    { id: 4, text: "Понедельник", icon: <Calendar className="w-4 h-4" />, type: "day" },
+    { id: 5, text: "09:00-09:45", icon: <Clock className="w-4 h-4" />, type: "time" },
+    { id: 6, text: "Физика - 10Б", icon: <BookOpen className="w-4 h-4" />, type: "subject" },
+    { id: 7, text: "Петров П.П.", icon: <Users className="w-4 h-4" />, type: "teacher" },
+    { id: 8, text: "Лаборатория", icon: <Calendar className="w-4 h-4" />, type: "room" },
+  ];
+
+  const getItemPosition = (index: number) => {
+    const positions = [
+      { left: '10%', top: '15%' },
+      { left: '60%', top: '25%' },
+      { left: '30%', top: '45%' },
+      { left: '75%', top: '35%' },
+      { left: '15%', top: '65%' },
+      { left: '70%', top: '55%' },
+      { left: '45%', top: '75%' },
+      { left: '85%', top: '65%' },
+    ];
+    return positions[index] || { left: '50%', top: '50%' };
+  };
+
+  const getItemColor = (type: string) => {
+    switch (type) {
+      case 'subject': return 'text-stellar-primary';
+      case 'teacher': return 'text-stellar-accent';
+      case 'room': return 'text-stellar-glow';
+      case 'day': return 'text-stellar-primary';
+      case 'time': return 'text-stellar-accent';
+      default: return 'text-text-secondary';
+    }
+  };
+
   return (
-    <div className="relative h-full">
-      <h3 className="text-lg font-semibold text-stellar-accent mb-4 text-center">
-        Неорганизованные данные
-      </h3>
-      
-      <div className="relative h-96 overflow-hidden">
-        {/* Teacher cards */}
-        {teachers.map((teacher, index) => (
-          <div
-            key={teacher.id}
-            className="absolute p-3 glass-card-subtle text-sm animate-shake hover:animate-pulse transition-all cursor-pointer"
-            style={{
-              left: `${positions[teacher.id]?.x || 0}%`,
-              top: `${positions[teacher.id]?.y || 0}%`,
-              animationDelay: `${index * 0.2}s`,
-              transform: 'translate(-50%, -50%)'
-            }}
-          >
-            <div className="font-medium text-text-primary">{teacher.name}</div>
-            <div className="text-xs text-text-secondary mt-1">
-              {teacher.subjects.join(", ")}
-            </div>
-          </div>
-        ))}
+    <div className="relative w-full h-full min-h-[400px] p-8">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <motion.div
+          className="inline-flex items-center gap-2 glass-card-enhanced px-4 py-2 mb-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <FileText className="w-5 h-5 text-stellar-accent" />
+          <span className="text-sm font-medium text-text-secondary">
+            Исходные данные
+          </span>
+        </motion.div>
         
-        {/* Subject cards */}
-        {subjects.map((subject, index) => (
-          <div
-            key={`subject-${subject.id}`}
-            className="absolute p-3 glass-card-subtle text-sm animate-shake hover:animate-pulse transition-all cursor-pointer"
-            style={{
-              left: `${positions[`subject-${subject.id}`]?.x || 0}%`,
-              top: `${positions[`subject-${subject.id}`]?.y || 0}%`,
-              animationDelay: `${(index + teachers.length) * 0.2}s`,
-              transform: 'translate(-50%, -50%)'
-            }}
-          >
-            <div className={`font-medium ${subject.color}`}>{subject.name}</div>
-            <div className="text-xs text-text-secondary mt-1">
-              {subject.duration} мин
-            </div>
-          </div>
-        ))}
+        <motion.h3
+          className="text-xl font-bold text-gradient mb-2"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          Неорганизованные данные
+        </motion.h3>
         
-        {/* Chaos indicators */}
-        <div className="absolute top-4 right-4 glass-card p-2">
-          <div className="text-xs text-destructive font-medium animate-pulse">
-            ⚠️ Требует организации
-          </div>
+        <motion.p
+          className="text-text-secondary text-sm"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          Учебные предметы, преподаватели, аудитории и временные слоты
+        </motion.p>
+      </div>
+
+      {/* Scattered data items */}
+      <AnimatePresence>
+        {dataItems.map((item, index) => {
+          const position = getItemPosition(index);
+          const isHighlighted = highlightedItems.has(index);
+          
+          return (
+            <motion.div
+              key={item.id}
+              className={`absolute p-3 glass-card-ultra text-sm animate-shake hover:animate-pulse transition-all cursor-pointer ${
+                isHighlighted ? 'ring-2 ring-stellar-accent/50' : ''
+              }`}
+              style={{
+                left: position.left,
+                top: position.top,
+                transform: 'translate(-50%, -50%)',
+              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ 
+                opacity: 1, 
+                scale: isHighlighted ? 1.1 : 1,
+                y: isHighlighted ? -5 : 0,
+              }}
+              transition={{ 
+                duration: 0.3,
+                delay: index * 0.1,
+              }}
+              whileHover={{ 
+                scale: 1.15,
+                y: -8,
+                boxShadow: '0 10px 30px rgba(2, 191, 122, 0.3)',
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <span className={getItemColor(item.type)}>
+                  {item.icon}
+                </span>
+                <span className="text-text-primary font-medium">
+                  {item.text}
+                </span>
+              </div>
+              
+              {isHighlighted && (
+                <motion.div
+                  className="absolute -inset-1 rounded-2xl border-2 border-stellar-accent/30"
+                  animate={{
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.05, 1],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+
+      {/* Status indicator */}
+      <div className="absolute top-4 right-4 glass-card-enhanced p-2">
+        <div className="flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-amber-500" />
+          <span className="text-xs text-text-secondary">
+            Данные не структурированы
+          </span>
         </div>
+      </div>
+
+      {/* Floating particles effect */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-stellar-accent rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0, 0.6, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
     </div>
   );

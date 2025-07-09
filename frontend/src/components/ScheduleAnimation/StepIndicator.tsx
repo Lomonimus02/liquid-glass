@@ -1,173 +1,184 @@
-// Файл: StepIndicator.tsx (ИЗМЕНЕН)
-
-import { ScheduleStep } from "./types";
-import { useEffect, useRef, useState } from "react";
-import Lottie from 'lottie-react';
-
-// Импортируем анимацию галочки
-import successAnimationData from '../animations/Success.json';
-
-
-// "Компонент-помощник" для управления анимациями (остается без изменений)
-const StepLottieIcon = ({ stepAnimationData, successAnimationData, isActive, isCompleted, className }) => {
-  const stepLottieRef = useRef(null);
-  const successLottieRef = useRef(null);
-
-  useEffect(() => {
-    const instance = stepLottieRef.current;
-    if (instance) {
-      if (isActive) {
-        // Сразу запускаем анимацию
-        instance.goToAndPlay(0, true);
-
-        // Перезапускаем анимацию каждые 2 секунды для активности
-        const interval = setInterval(() => {
-          instance.goToAndPlay(0, true);
-        }, 2000);
-        return () => clearInterval(interval);
-      } else {
-        instance.stop();
-      }
-    }
-  }, [isActive]);
-
-  useEffect(() => {
-    const instance = successLottieRef.current;
-    if (instance && isCompleted) {
-      instance.goToAndPlay(0, true);
-    }
-  }, [isCompleted]);
-
-  return (
-    <div className={`relative ${className}`}>
-      <div className={`absolute inset-0 transition-opacity duration-500 ${isCompleted ? 'opacity-0' : 'opacity-100'}`}>
-        <Lottie
-          lottieRef={stepLottieRef}
-          animationData={stepAnimationData}
-          loop={true}
-          autoplay={isActive}
-          style={{
-            filter: isActive ? 'brightness(1.2) saturate(1.3)' : 'brightness(0.7) saturate(0.8)',
-            transform: isActive ? 'scale(1.05)' : 'scale(1)'
-          }}
-          className="w-full h-full transition-all duration-300"
-        />
-      </div>
-      <div className={`absolute inset-0 transition-opacity duration-500 ${isCompleted ? 'opacity-100' : 'opacity-0'}`}>
-        <Lottie lottieRef={successLottieRef} animationData={successAnimationData} loop={false} autoplay={false} className="w-full h-full" />
-      </div>
-    </div>
-  );
-};
-
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle, Circle, PlayCircle, Calendar, BarChart, AlertTriangle, BookOpen } from 'lucide-react';
 
 interface StepIndicatorProps {
-  steps: ScheduleStep[];
-  currentStep: number;
-  onStepClick: (stepIndex: number) => void;
+  steps: Array<{
+    id: number;
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    duration: number;
+    color: string;
+  }>;
+  activeStep: number;
+  onStepClick: (step: number) => void;
 }
 
-const StepIndicator = ({ steps, currentStep, onStepClick }: StepIndicatorProps) => {
-  // --- НОВОЕ: Состояние для отсчета времени ---
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, activeStep, onStepClick }) => {
+  const [progress, setProgress] = useState(0);
 
-  // --- НОВОЕ: Логика для управления таймером ---
   useEffect(() => {
-    // Очищаем предыдущий таймер, если он был
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    
-    // Сбрасываем счетчик для нового этапа
-    setElapsedTime(0);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          return 0;
+        }
+        return prev + (100 / (steps[activeStep]?.duration || 3000)) * 100;
+      });
+    }, 100);
 
-    const currentStepData = steps[currentStep];
-    // Запускаем таймер только если текущий этап существует
-    if (currentStepData) {
-      const duration = currentStepData.duration;
-      
-      timerRef.current = setInterval(() => {
-        setElapsedTime(prevTime => {
-          const newTime = prevTime + 100;
-          if (newTime >= duration) {
-            if(timerRef.current) clearInterval(timerRef.current);
-            return duration; // Останавливаемся на максимальном значении
-          }
-          return newTime;
-        });
-      }, 100); // Обновляем каждые 0.1 секунды
-    }
+    return () => clearInterval(interval);
+  }, [activeStep, steps]);
 
-    // Функция очистки при смене этапа или размонтировании компонента
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [currentStep, steps]); // Перезапускаем эффект при смене этапа
+  const getStepIcon = (stepId: number) => {
+    switch (stepId) {
+      case 0:
+        return <BookOpen className="w-6 h-6" />;
+      case 1:
+        return <BarChart className="w-6 h-6" />;
+      case 2:
+        return <AlertTriangle className="w-6 h-6" />;
+      case 3:
+        return <Calendar className="w-6 h-6" />;
+      default:
+        return <Circle className="w-6 h-6" />;
+    }
+  };
+
+  const getStepStatus = (stepIndex: number) => {
+    if (stepIndex < activeStep) return 'completed';
+    if (stepIndex === activeStep) return 'active';
+    return 'pending';
+  };
 
   return (
-    <div className="relative">
-      <div className="space-y-8">
-        {steps.map((step, index) => {
-          const isActive = index === currentStep;
-          const isCompleted = index < currentStep;
-          
-          return (
-            <div
-              key={step.id}
-              className={`relative flex items-start gap-6 cursor-pointer transition-all duration-300 ${
-                isActive ? 'scale-105' : 'hover:scale-102'
-              }`}
-              onClick={() => onStepClick(index)}
-            >
-              {/* --- ИЗМЕНЕНИЕ №1: Увеличиваем размер контейнера иконки --- */}
-              <div className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-all duration-300 glass-card ${
-                isActive ? 'ring-2 ring-stellar-accent glow-effect' : isCompleted ? 'ring-1 ring-stellar-accent/50' : ''
-              }`}>
-                
-                <StepLottieIcon
-                  stepAnimationData={step.animationData}
-                  successAnimationData={successAnimationData}
-                  isActive={isActive}
-                  isCompleted={isCompleted}
-                  // --- ИЗМЕНЕНИЕ №2: Увеличиваем размер самой иконки ---
-                  className="w-10 h-10" 
-                />
+    <div className="flex items-center justify-center gap-6 px-4 py-6 glass-card-supreme rounded-3xl">
+      {steps.map((step, index) => {
+        const status = getStepStatus(index);
+        const isActive = index === activeStep;
+        const isCompleted = index < activeStep;
+        
+        return (
+          <motion.div
+            key={step.id}
+            className="flex flex-col items-center gap-3 relative cursor-pointer"
+            onClick={() => onStepClick(index)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {/* Step circle with icon */}
+            <div className="relative">
+              <motion.div
+                className={`w-20 h-20 rounded-3xl flex items-center justify-center transition-all duration-300 glass-card-ultra ${
+                  isActive 
+                    ? 'bg-stellar-primary/20 border-stellar-primary/50' 
+                    : isCompleted 
+                    ? 'bg-stellar-accent/20 border-stellar-accent/50' 
+                    : 'bg-glass-secondary border-glass-border'
+                }`}
+                animate={{
+                  scale: isActive ? 1.1 : 1,
+                  borderWidth: isActive ? 3 : 1,
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {isCompleted ? (
+                  <CheckCircle className="w-8 h-8 text-stellar-accent" />
+                ) : (
+                  <motion.div
+                    className={`${
+                      isActive 
+                        ? 'text-stellar-primary' 
+                        : 'text-text-secondary'
+                    }`}
+                    animate={{
+                      rotate: isActive ? 360 : 0,
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: isActive ? Infinity : 0,
+                      ease: "linear"
+                    }}
+                  >
+                    {getStepIcon(step.id)}
+                  </motion.div>
+                )}
+              </motion.div>
 
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className={`text-xl font-bold ${
-                    isActive ? 'text-stellar-accent' : isCompleted ? 'text-stellar-primary' : 'text-text-secondary'
-                  }`}>
-                    {step.title}
-                  </h3>
-                  
-                  {/* --- ИЗМЕНЕНИЕ №3: Отображение таймера --- */}
-                  <span className={`text-xs px-2 py-1 rounded-full transition-colors duration-300 ${
-                    isActive ? 'bg-stellar-accent/20 text-stellar-accent' : 'bg-glass-secondary text-text-secondary'
-                  }`}>
-                    {/* Показываем активный таймер для текущего этапа, и статичный для остальных */}
-                    {isActive 
-                      ? `${(elapsedTime / 1000).toFixed(1)}s` 
-                      : `${(step.duration / 1000).toFixed(1)}s`
-                    }
-                  </span>
-                </div>
-                
-                <p className={`text-base leading-relaxed ${
-                  isActive ? 'text-text-primary' : 'text-text-secondary'
-                }`}>
-                  {step.description}
-                </p>
-              </div>
+              {/* Progress ring for active step */}
+              {isActive && (
+                <motion.div
+                  className="absolute -inset-2 rounded-full border-2 border-transparent"
+                  style={{
+                    background: `conic-gradient(from 0deg, ${step.color} ${progress}%, transparent ${progress}%)`,
+                    borderRadius: '50%',
+                  }}
+                  animate={{ rotate: 360 }}
+                  transition={{ 
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+              )}
+
+              {/* Glow effect for active step */}
+              {isActive && (
+                <motion.div
+                  className="absolute -inset-4 rounded-full opacity-30"
+                  style={{
+                    background: `radial-gradient(circle, ${step.color}40 0%, transparent 70%)`,
+                    filter: 'blur(15px)',
+                  }}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              )}
             </div>
-          );
-        })}
-      </div>
+
+            {/* Step info */}
+            <div className="text-center max-w-[120px]">
+              <motion.h4
+                className={`text-sm font-semibold mb-1 ${
+                  isActive 
+                    ? 'text-stellar-primary' 
+                    : isCompleted 
+                    ? 'text-stellar-accent' 
+                    : 'text-text-secondary'
+                }`}
+                animate={{
+                  scale: isActive ? 1.05 : 1,
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {step.title}
+              </motion.h4>
+              <p className="text-xs text-text-muted leading-tight">
+                {step.description}
+              </p>
+            </div>
+
+            {/* Connection line to next step */}
+            {index < steps.length - 1 && (
+              <motion.div
+                className="absolute top-10 left-20 w-16 h-0.5 bg-gradient-to-r from-stellar-primary/30 to-stellar-accent/30"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: isCompleted ? 1 : 0.3 }}
+                transition={{ duration: 0.5 }}
+                style={{ transformOrigin: 'left' }}
+              />
+            )}
+          </motion.div>
+        );
+      })}
     </div>
   );
 };
