@@ -6,31 +6,30 @@ interface Point {
   vx: number;
   vy: number;
   opacity: number;
-  size: number;
 }
 
 interface GeometricShape {
   id: number;
-  points: Point[];
-  center: { x: number; y: number };
+  vertices: Point[]; // Outer vertices of the shape
+  center: Point; // Center point for 3D effect
+  originalSize: number; // Original size to return to
+  currentSizeMultiplier: number; // Current size multiplier
+  sizePhase: number; // Phase for size animation
   rotationSpeed: number;
   rotation: number;
-  shapeType: 'triangle' | 'quad' | 'pentagon' | 'hexagon' | 'irregular';
-  irregularConnections: number[][]; // For irregular shapes
+  shapeType: 'triangle' | 'quad' | 'pentagon';
+  floatPhase: number; // Phase for floating animation
+  floatSpeed: number; // Speed of floating
 }
 
 interface GeometricBackgroundProps {
   shapeCount?: number;
-  minPoints?: number;
-  maxPoints?: number;
   animationSpeed?: number;
 }
 
 const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
-  shapeCount = 10, // Increased for more diversity
-  minPoints = 3,
-  maxPoints = 6, // Increased for hexagons
-  animationSpeed = 0.4 // Slightly faster for more chaos
+  shapeCount = 8,
+  animationSpeed = 0.5
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
@@ -38,98 +37,59 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Create a diverse geometric shape with more variety
+  // Create a geometric shape (triangle, quad, or pentagon)
   const createGeometricShape = useCallback((id: number): GeometricShape => {
-    const pointCount = Math.floor(Math.random() * (maxPoints - minPoints + 1)) + minPoints;
-    const centerX = Math.random() * dimensions.width;
-    const centerY = Math.random() * dimensions.height;
-    const radius = Math.random() * 100 + 30; // Size between 30-130px
-    
-    const points: Point[] = [];
-    
-    // Determine shape type with more variety
-    const shapeTypes: ('triangle' | 'quad' | 'pentagon' | 'hexagon' | 'irregular')[] = 
-      ['triangle', 'quad', 'pentagon', 'hexagon', 'irregular'];
+    const shapeTypes: ('triangle' | 'quad' | 'pentagon')[] = ['triangle', 'quad', 'pentagon'];
     const shapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
     
-    let irregularConnections: number[][] = [];
+    const centerX = Math.random() * dimensions.width;
+    const centerY = Math.random() * dimensions.height;
+    const originalSize = 40 + Math.random() * 60; // Size between 40-100px
     
-    if (shapeType === 'irregular') {
-      // Create irregular shape with random connections
-      const actualPointCount = Math.max(pointCount, 4);
+    const pointCount = shapeType === 'triangle' ? 3 : 
+                     shapeType === 'quad' ? 4 : 5;
+    
+    const vertices: Point[] = [];
+    
+    // Create vertices of the shape
+    for (let i = 0; i < pointCount; i++) {
+      const angle = (i / pointCount) * Math.PI * 2;
+      // Add slight randomness to make shapes not identical
+      const variance = (Math.random() - 0.5) * 0.3;
+      const radius = originalSize + variance * originalSize;
       
-      for (let i = 0; i < actualPointCount; i++) {
-        const angle = (i / actualPointCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.8;
-        const variance = (Math.random() - 0.5) * 0.6; // More randomness
-        const actualRadius = radius + variance * radius;
-        
-        points.push({
-          x: centerX + Math.cos(angle) * actualRadius,
-          y: centerY + Math.sin(angle) * actualRadius,
-          vx: (Math.random() - 0.5) * animationSpeed * 2, // More chaotic movement
-          vy: (Math.random() - 0.5) * animationSpeed * 2,
-          opacity: 0.4 + Math.random() * 0.6,
-          size: 1.5 // Fixed consistent size
-        });
-      }
-      
-      // Create irregular connections
-      for (let i = 0; i < actualPointCount; i++) {
-        const connections: number[] = [];
-        const connectionsCount = Math.floor(Math.random() * 3) + 1; // 1-3 connections per point
-        
-        for (let j = 0; j < connectionsCount; j++) {
-          const target = Math.floor(Math.random() * actualPointCount);
-          if (target !== i && !connections.includes(target)) {
-            connections.push(target);
-          }
-        }
-        irregularConnections.push(connections);
-      }
-    } else {
-      // Create regular shapes with more variation
-      const actualPointCount = shapeType === 'triangle' ? 3 : 
-                             shapeType === 'quad' ? 4 : 
-                             shapeType === 'pentagon' ? 5 : 6;
-      
-      for (let i = 0; i < actualPointCount; i++) {
-        const angle = (i / actualPointCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
-        const variance = (Math.random() - 0.5) * 0.4; // More variation
-        const actualRadius = radius + variance * radius;
-        
-        points.push({
-          x: centerX + Math.cos(angle) * actualRadius,
-          y: centerY + Math.sin(angle) * actualRadius,
-          vx: (Math.random() - 0.5) * animationSpeed * 1.5, // More chaotic movement
-          vy: (Math.random() - 0.5) * animationSpeed * 1.5,
-          opacity: 0.5 + Math.random() * 0.5,
-          size: 1.5 // Fixed consistent size
-        });
-      }
-    }
-
-    // Add center point for 3D effect (sometimes)
-    if (Math.random() > 0.3) { // 70% chance to have center point
-      points.push({
-        x: centerX,
-        y: centerY,
+      vertices.push({
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius,
         vx: (Math.random() - 0.5) * animationSpeed * 0.8,
         vy: (Math.random() - 0.5) * animationSpeed * 0.8,
-        opacity: 0.3 + Math.random() * 0.4,
-        size: 1.2 // Fixed consistent size for center points
+        opacity: 0.6 + Math.random() * 0.4
       });
     }
 
+    // Create center point for 3D effect
+    const center: Point = {
+      x: centerX,
+      y: centerY,
+      vx: (Math.random() - 0.5) * animationSpeed * 0.5,
+      vy: (Math.random() - 0.5) * animationSpeed * 0.5,
+      opacity: 0.7 + Math.random() * 0.3
+    };
+
     return {
       id,
-      points,
-      center: { x: centerX, y: centerY },
-      rotationSpeed: (Math.random() - 0.5) * 0.004, // More rotation variety
+      vertices,
+      center,
+      originalSize,
+      currentSizeMultiplier: 1.0,
+      sizePhase: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.01,
       rotation: 0,
       shapeType,
-      irregularConnections
+      floatPhase: Math.random() * Math.PI * 2,
+      floatSpeed: 0.02 + Math.random() * 0.03
     };
-  }, [dimensions, minPoints, maxPoints, animationSpeed]);
+  }, [dimensions, animationSpeed]);
 
   // Initialize shapes
   const initializeShapes = useCallback(() => {
