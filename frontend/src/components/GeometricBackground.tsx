@@ -166,9 +166,12 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         vertex.vy *= 0.9995;
       });
 
-      // Update center point
+      // Update center point with more active movement
+      shape.center.vx += (Math.random() - 0.5) * 0.008;
+      shape.center.vy += (Math.random() - 0.5) * 0.008;
+      
       shape.center.x += shape.center.vx;
-      shape.center.y += shape.center.vy + floatOffset * 0.008;
+      shape.center.y += shape.center.vy + floatOffset * 0.015;
 
       // Boundary bouncing for center
       if (shape.center.x <= 0 || shape.center.x >= canvas.width) {
