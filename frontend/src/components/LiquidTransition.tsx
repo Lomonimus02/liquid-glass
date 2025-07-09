@@ -20,9 +20,8 @@ const LiquidTransition: React.FC<LiquidTransitionProps> = ({
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100 * intensity, -100 * intensity]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+  const y = useTransform(scrollYProgress, [0, 1], [50 * intensity, -50 * intensity]);
+  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
   return (
     <motion.div
@@ -30,47 +29,54 @@ const LiquidTransition: React.FC<LiquidTransitionProps> = ({
       className={`relative ${className}`}
       style={{
         y,
-        opacity,
-        scale
+        opacity
       }}
     >
-      {/* Liquid background effect */}
+      {/* Seamless background blending */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Плавный градиентный фон без резких краев */}
         <motion.div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(circle at center, ${color}20 0%, transparent 70%)`,
-            transform: 'scale(1.5)',
+            background: `
+              radial-gradient(ellipse at center top, ${color}08 0%, transparent 40%),
+              radial-gradient(ellipse at center bottom, ${color}06 0%, transparent 40%),
+              linear-gradient(to bottom, transparent 0%, ${color}03 20%, ${color}05 50%, ${color}03 80%, transparent 100%)
+            `,
+            filter: 'blur(2px)',
           }}
           animate={{
-            scale: [1.5, 1.8, 1.5],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.4, 0.7, 0.4],
           }}
           transition={{
-            duration: 4,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
         
-        {/* Liquid waves */}
-        {[...Array(3)].map((_, i) => (
+        {/* Плавные волны без clip-path */}
+        {[...Array(2)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute inset-0"
             style={{
-              background: `linear-gradient(45deg, ${color}10 0%, transparent 50%, ${color}10 100%)`,
-              clipPath: `polygon(0 ${20 + i * 10}%, 100% ${30 + i * 10}%, 100% ${50 + i * 10}%, 0 ${40 + i * 10}%)`,
+              background: `
+                radial-gradient(ellipse 200% 60% at 50% ${30 + i * 20}%, ${color}04 0%, transparent 60%),
+                radial-gradient(ellipse 150% 40% at 50% ${60 + i * 15}%, ${color}02 0%, transparent 50%)
+              `,
+              filter: 'blur(1px)',
             }}
             animate={{
-              clipPath: [
-                `polygon(0 ${20 + i * 10}%, 100% ${30 + i * 10}%, 100% ${50 + i * 10}%, 0 ${40 + i * 10}%)`,
-                `polygon(0 ${30 + i * 10}%, 100% ${20 + i * 10}%, 100% ${40 + i * 10}%, 0 ${50 + i * 10}%)`,
-                `polygon(0 ${20 + i * 10}%, 100% ${30 + i * 10}%, 100% ${50 + i * 10}%, 0 ${40 + i * 10}%)`
-              ]
+              transform: [
+                `translateY(${i * 10}px) scale(1)`,
+                `translateY(${-i * 10}px) scale(1.1)`,
+                `translateY(${i * 10}px) scale(1)`
+              ],
+              opacity: [0.2, 0.4, 0.2]
             }}
             transition={{
-              duration: 3 + i,
+              duration: 4 + i * 2,
               repeat: Infinity,
               ease: "easeInOut"
             }}
@@ -78,7 +84,7 @@ const LiquidTransition: React.FC<LiquidTransitionProps> = ({
         ))}
       </div>
       
-      {/* Content */}
+      {/* Content with seamless integration */}
       <div className="relative z-10">
         {children}
       </div>
