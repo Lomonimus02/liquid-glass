@@ -348,26 +348,6 @@ const FeaturesSection = () => {
 };
 
 export default FeaturesSection;
-      title: "Уведомления в реальном времени",
-      description: "Мгновенные уведомления о важных событиях, оценках и изменениях в расписании",
-      iconClassName: "w-10 h-10"
-    },
-    {
-      isLottie: true,
-      animationData: ideaAnimationData,
-      title: "Интуитивный интерфейс",
-      description: "Современный дизайн, созданный с учетом потребностей всех пользователей",
-      iconClassName: "w-13 h-13"
-    }
-  ];
-
-  return (
-    <section ref={sectionRef} className="py-24 px-4 relative">
-      {/* Анимированные частицы в фоне */}
-      <ParticleSystem
-        particleCount={30}
-        colors={['rgba(2, 191, 122, 0.2)', 'rgba(2, 191, 122, 0.1)', 'rgba(255, 255, 255, 0.1)']}
-        speed={0.3}
         size={1}
         className="opacity-60"
       />
