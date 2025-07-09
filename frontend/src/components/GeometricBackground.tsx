@@ -371,9 +371,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         ctx.fill();
       });
 
-      // Draw center point with glow effect
-      const centerPulse = 1 + Math.sin(Date.now() * 0.004) * 0.3;
-      ctx.fillStyle = `rgba(120, 120, 120, ${shape.center.opacity})`; // Changed to neutral gray
+      // Draw center point with glow effect - slower animation
+      const centerPulse = 1 + Math.sin(Date.now() * 0.002 + shape.id) * 0.3; // Reduced speed from 0.004 to 0.002
+      ctx.fillStyle = `rgba(2, 191, 122, ${shape.center.opacity})`; // Brand green color
       ctx.beginPath();
       ctx.arc(shape.center.x, shape.center.y, 2 * centerPulse, 0, Math.PI * 2);
       ctx.fill();
