@@ -1,4 +1,4 @@
-// Файл: src/pages/Index.tsx (Обновленная версия с новыми sticky анимациями)
+// Файл: src/pages/Index.tsx (Обновленная версия с wow эффектами)
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -8,6 +8,8 @@ import StickyAnalyticsAnimation from "@/components/StickyAnalyticsAnimation";
 import StickyAIAnimation from "@/components/StickyAIAnimation";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import LiquidTransition from "@/components/LiquidTransition";
+import SmoothReveal from "@/components/SmoothReveal";
 
 const Index = () => {
   return (
@@ -20,35 +22,59 @@ const Index = () => {
         <Navigation />
 
         <main>
-          <section id="hero">
-            <HeroSection />
-          </section>
+          <SmoothReveal>
+            <section id="hero">
+              <HeroSection />
+            </section>
+          </SmoothReveal>
 
-          <section id="features">
-            <FeaturesSection />
-          </section>
+          <LiquidTransition>
+            <SmoothReveal direction="left" delay={0.2}>
+              <section id="features">
+                <FeaturesSection />
+              </section>
+            </SmoothReveal>
+          </LiquidTransition>
 
           {/* Sticky анимация с демонстрацией этапов создания расписания */}
-          <section id="schedule">
-            <StickyScheduleAnimation />
-          </section>
+          <LiquidTransition color="#02bf7a">
+            <SmoothReveal direction="right" delay={0.1}>
+              <section id="schedule">
+                <StickyScheduleAnimation />
+              </section>
+            </SmoothReveal>
+          </LiquidTransition>
 
           {/* Новая sticky анимация для аналитики */}
-          <section id="analytics">
-            <StickyAnalyticsAnimation />
-          </section>
+          <LiquidTransition color="#1a8c5c">
+            <SmoothReveal direction="up" delay={0.3}>
+              <section id="analytics">
+                <StickyAnalyticsAnimation />
+              </section>
+            </SmoothReveal>
+          </LiquidTransition>
 
           {/* Новая sticky анимация для ИИ-помощника */}
-          <section id="ai-assistant">
-            <StickyAIAnimation />
-          </section>
+          <LiquidTransition color="#0ea5e9">
+            <SmoothReveal direction="down" delay={0.2}>
+              <section id="ai-assistant">
+                <StickyAIAnimation />
+              </section>
+            </SmoothReveal>
+          </LiquidTransition>
 
-          <section id="contact">
-            <ContactSection />
-          </section>
+          <LiquidTransition>
+            <SmoothReveal direction="up" delay={0.4}>
+              <section id="contact">
+                <ContactSection />
+              </section>
+            </SmoothReveal>
+          </LiquidTransition>
         </main>
 
-        <Footer />
+        <SmoothReveal>
+          <Footer />
+        </SmoothReveal>
       </div>
     </div>
   );
