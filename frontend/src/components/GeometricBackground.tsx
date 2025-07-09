@@ -439,14 +439,14 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
   return (
     <div className="fixed inset-0 z-0">
-      {/* Enhanced gradient background with more depth */}
+      {/* Enhanced gradient background with neutral tones */}
       <div 
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(circle at 20% 80%, rgba(2, 191, 122, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(2, 191, 122, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, rgba(2, 191, 122, 0.02) 0%, transparent 50%),
+            radial-gradient(circle at 20% 80%, rgba(200, 200, 200, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(180, 180, 180, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(160, 160, 160, 0.02) 0%, transparent 50%),
             radial-gradient(circle at 60% 70%, rgba(240, 240, 240, 0.1) 0%, transparent 50%),
             linear-gradient(135deg, #ffffff 0%, #f8f9fa 25%, #ffffff 50%, #f5f5f5 75%, #ffffff 100%)
           `
@@ -460,28 +460,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         height={dimensions.height}
         className="absolute inset-0"
         style={{ 
-          background: 'transparent',
-          cursor: cursorInteraction ? 'none' : 'default'
+          background: 'transparent'
         }}
       />
-      
-      {/* Custom cursor when interaction is enabled */}
-      {cursorInteraction && (
-        <div 
-          className="fixed pointer-events-none z-50 transition-all duration-100"
-          style={{
-            left: `${mousePosition.x}px`,
-            top: `${mousePosition.y}px`,
-            width: '16px',
-            height: '16px',
-            borderRadius: '50%',
-            background: 'rgba(2, 191, 122, 0.3)',
-            boxShadow: '0 0 10px rgba(2, 191, 122, 0.5)',
-            transform: 'translate(-50%, -50%)',
-            backdropFilter: 'blur(2px)'
-          }}
-        />
-      )}
     </div>
   );
 };
