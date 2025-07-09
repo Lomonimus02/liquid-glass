@@ -86,7 +86,7 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
       
       {/* Main card */}
       <motion.div
-        className={`relative backdrop-blur-3xl border rounded-3xl overflow-hidden ${className.includes('frosted-glass') ? '' : 'glass-card-enhanced'}`}
+        className={`relative backdrop-blur-3xl border rounded-3xl overflow-hidden ${className.includes('frosted-glass') ? 'frosted-glass' : 'glass-card-enhanced'}`}
         style={{
           background: className.includes('frosted-glass') ? undefined : 'rgba(255, 255, 255, 0.03)',
           borderColor: className.includes('frosted-glass') ? undefined : 'rgba(255, 255, 255, 0.1)',
