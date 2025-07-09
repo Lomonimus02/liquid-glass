@@ -150,7 +150,7 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
     });
 
     // Draw connections
-    ctx.strokeStyle = 'rgba(150, 150, 150, 0.4)';
+    ctx.strokeStyle = 'rgba(2, 191, 122, 0.3)';
     ctx.lineWidth = 1;
     
     nodes.forEach(node => {
@@ -163,7 +163,7 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         );
 
         if (distance < connectionDistance) {
-          const opacity = Math.max(0.2, 1 - distance / connectionDistance);
+          const opacity = Math.max(0.15, 1 - distance / connectionDistance);
           
           // Enhanced opacity for mouse interaction
           const nodeMouseDistance = Math.sqrt(
@@ -175,10 +175,10 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
           
           let finalOpacity = opacity;
           if (nodeMouseDistance < mouseInteractionRadius || connectedNodeMouseDistance < mouseInteractionRadius) {
-            finalOpacity = Math.min(1, opacity * 2);
+            finalOpacity = Math.min(0.8, opacity * 2);
           }
 
-          ctx.strokeStyle = `rgba(150, 150, 150, ${finalOpacity})`;
+          ctx.strokeStyle = `rgba(2, 191, 122, ${finalOpacity})`;
           ctx.beginPath();
           ctx.moveTo(node.x, node.y);
           ctx.lineTo(connectedNode.x, connectedNode.y);
