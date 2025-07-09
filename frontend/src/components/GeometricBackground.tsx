@@ -210,7 +210,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         }
       }
 
-      const baseOpacity = 0.6 + Math.sin(Date.now() * 0.001 + shape.id) * 0.1; // Gentle breathing effect
+      const baseOpacity = 0.6; // Fixed opacity without breathing effect
 
       // Draw connections based on shape type
       if (shape.shapeType === 'irregular') {
