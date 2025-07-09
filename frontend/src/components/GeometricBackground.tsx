@@ -369,7 +369,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       // Draw 3D effect lines from center to vertices with varying opacity
       actualVertices.forEach((vertex, index) => {
         const lineOpacity = 0.3 + Math.sin(Date.now() * 0.002 + index) * 0.1;
-        ctx.strokeStyle = `rgba(2, 191, 122, ${lineOpacity})`;
+        ctx.strokeStyle = `rgba(120, 120, 120, ${lineOpacity})`; // Changed to neutral gray
         ctx.lineWidth = 0.8;
         
         ctx.beginPath();
@@ -381,7 +381,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       // Draw vertices with pulsing effect
       actualVertices.forEach((vertex, index) => {
         const pulse = 1 + Math.sin(Date.now() * 0.003 + index) * 0.2;
-        ctx.fillStyle = `rgba(2, 191, 122, ${vertex.opacity})`;
+        ctx.fillStyle = `rgba(120, 120, 120, ${vertex.opacity})`; // Changed to neutral gray
         ctx.beginPath();
         ctx.arc(vertex.x, vertex.y, 2 * pulse, 0, Math.PI * 2);
         ctx.fill();
@@ -389,7 +389,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
       // Draw center point with glow effect
       const centerPulse = 1 + Math.sin(Date.now() * 0.004) * 0.3;
-      ctx.fillStyle = `rgba(2, 191, 122, ${shape.center.opacity})`;
+      ctx.fillStyle = `rgba(120, 120, 120, ${shape.center.opacity})`; // Changed to neutral gray
       ctx.beginPath();
       ctx.arc(shape.center.x, shape.center.y, 2 * centerPulse, 0, Math.PI * 2);
       ctx.fill();
