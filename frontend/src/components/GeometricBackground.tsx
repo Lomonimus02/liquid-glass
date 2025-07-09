@@ -250,14 +250,15 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         Math.pow(mouse.y - shape.center.y, 2)
       );
 
-      // Mouse influence on center
+      // Mouse influence on center (reduced for smoother interaction)
       if (cursorInteraction && distanceToMouse < 200) {
         const mouseForce = (200 - distanceToMouse) / 200;
         const angle = Math.atan2(mouse.y - shape.center.y, mouse.x - shape.center.x);
         
-        // Attraction towards mouse
-        shape.center.vx += Math.cos(angle) * shape.mouseAttraction * mouseForce;
-        shape.center.vy += Math.sin(angle) * shape.mouseAttraction * mouseForce;
+        // Reduced attraction force and smoothed with sine function
+        const smoothedForce = Math.sin(mouseForce * Math.PI * 0.5) * shape.mouseAttraction * 0.7;
+        shape.center.vx += Math.cos(angle) * smoothedForce;
+        shape.center.vy += Math.sin(angle) * smoothedForce;
       }
 
       // Update center point with organic movement
