@@ -302,13 +302,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         ctx.arc(point.x, point.y, Math.max(0.2, pointSize), 0, Math.PI * 2);
         ctx.fill();
         
-        // Add slight glow for some points occasionally
-        if (Math.random() > 0.9) { // Reduced frequency
-          ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity * 0.2})`;
-          ctx.beginPath();
-          ctx.arc(point.x, point.y, pointSize * 1.3, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        // Removed glow effect to prevent size variations
       });
     });
 
