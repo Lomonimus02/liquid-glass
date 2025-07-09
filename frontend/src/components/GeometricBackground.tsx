@@ -306,9 +306,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         vertex.opacity = 0.4 + Math.abs(organicDeformation) * 0.3;
       });
 
-      // Draw connections between cursor and nearby shapes
-      if (cursorInteraction && distanceToMouse < 180) {
-        const connectionOpacity = (180 - distanceToMouse) / 180 * 0.4;
+      // Draw connections between cursor and nearby shapes - increased distance and brightness
+      if (cursorInteraction && distanceToMouse < 280) {
+        const connectionOpacity = (280 - distanceToMouse) / 280 * 0.5; // Increased distance to 280 and opacity to 0.5
         ctx.strokeStyle = `rgba(2, 191, 122, ${connectionOpacity})`; // Brand green color
         ctx.lineWidth = 1;
         ctx.beginPath();
