@@ -228,7 +228,7 @@ const FeaturesSection = () => {
                     intensity={0.8}
                   >
                     <div 
-                      className="flex flex-col h-full text-center relative z-10"
+                      className="flex flex-col h-full text-center relative z-10 interactive-element"
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
@@ -243,10 +243,10 @@ const FeaturesSection = () => {
                         ) : (
                           <motion.div
                             animate={hoveredIndex === index ? {
-                              scale: [1, 1.2, 1],
-                              rotate: [0, 10, 0]
+                              scale: [1, 1.1, 1],
+                              rotate: [0, 5, 0]
                             } : {}}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.2 }}
                           >
                             <feature.icon className={`w-12 h-12 ${feature.color || 'text-stellar-primary'}`} />
                           </motion.div>
@@ -254,24 +254,21 @@ const FeaturesSection = () => {
                       </div>
 
                       {/* Заголовок */}
-                      <KineticTypography
-                        text={feature.title}
-                        className="text-lg font-semibold mb-3 text-text-primary"
-                        animation="bounce"
-                        stagger={0.05}
-                      />
+                      <h3 className="text-lg font-semibold mb-3 text-text-primary">
+                        {feature.title}
+                      </h3>
 
                       {/* Описание */}
                       <motion.p 
                         className="text-text-secondary text-sm leading-relaxed flex-grow"
                         initial={{ opacity: 0.7 }}
                         animate={{ opacity: hoveredIndex === index ? 1 : 0.7 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.2 }}
                       >
                         {feature.description}
                       </motion.p>
 
-                      {/* Hover эффект */}
+                      {/* Simplified Hover эффект */}
                       <AnimatePresence>
                         {hoveredIndex === index && (
                           <motion.div
@@ -279,28 +276,28 @@ const FeaturesSection = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.2 }}
                           >
                             <div className="absolute inset-0 bg-gradient-to-br from-stellar-primary/5 to-stellar-accent/5 rounded-3xl" />
                             
-                            {/* Floating particles on hover */}
-                            {[...Array(5)].map((_, i) => (
+                            {/* Reduced floating particles on hover */}
+                            {[...Array(3)].map((_, i) => (
                               <motion.div
                                 key={i}
-                                className="absolute w-2 h-2 bg-stellar-accent rounded-full"
+                                className="absolute w-1 h-1 bg-stellar-accent rounded-full"
                                 style={{
-                                  left: `${Math.random() * 100}%`,
-                                  top: `${Math.random() * 100}%`,
+                                  left: `${20 + i * 30}%`,
+                                  top: `${20 + i * 25}%`,
                                 }}
                                 animate={{
-                                  y: [0, -20, 0],
-                                  opacity: [0, 1, 0],
+                                  y: [0, -15, 0],
+                                  opacity: [0, 0.8, 0],
                                   scale: [0, 1, 0],
                                 }}
                                 transition={{
-                                  duration: 2,
+                                  duration: 1.5,
                                   repeat: Infinity,
-                                  delay: i * 0.2,
+                                  delay: i * 0.3,
                                   ease: "easeInOut"
                                 }}
                               />
