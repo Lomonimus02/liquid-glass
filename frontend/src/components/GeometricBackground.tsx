@@ -218,8 +218,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         particle.vx *= 0.98;
         particle.vy *= 0.98;
 
-        // Draw particle with neutral color
-        ctx.fillStyle = `rgba(120, 120, 120, ${particle.opacity})`; // Changed to neutral gray
+        // Draw particle with brand color
+        ctx.fillStyle = `rgba(2, 191, 122, ${particle.opacity})`; // Brand green color
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
