@@ -20,11 +20,11 @@ interface NetworkBackgroundProps {
 }
 
 const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
-  nodeCount = 80,
-  maxConnections = 3,
-  connectionDistance = 150,
-  animationSpeed = 0.5,
-  mouseInteractionRadius = 200
+  nodeCount = 50,
+  maxConnections = 6,
+  connectionDistance = 180,
+  animationSpeed = 0.2,
+  mouseInteractionRadius = 150
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
