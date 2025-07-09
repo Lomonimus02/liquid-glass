@@ -181,11 +181,11 @@ const FeaturesSection = () => {
     >
       {/* Particle system для features */}
       <ParticleSystem
-        particleCount={15}
+        particleCount={25}
         colors={['rgba(2, 191, 122, 0.2)', 'rgba(2, 191, 122, 0.1)', 'rgba(255, 255, 255, 0.05)']}
-        speed={0.2}
+        speed={0.3}
         size={1}
-        className="opacity-30"
+        className="opacity-40"
       />
 
       <div className="max-w-7xl mx-auto">
