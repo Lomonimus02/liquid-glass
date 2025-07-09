@@ -134,17 +134,13 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Subtitle */}
-        <motion.div 
+        <motion.p 
           className="text-xl md:text-2xl text-text-secondary mb-8 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <KineticTypography 
-            text="Революционная система управления образовательным процессом с"
-            animation="wave"
-            stagger={0.05}
-          />
+          Революционная система управления образовательным процессом с 
           <motion.span 
             className="text-stellar-accent font-semibold"
             animate={{
@@ -162,12 +158,8 @@ const HeroSection = () => {
           >
             {" "}автоматизированным составлением расписания
           </motion.span> 
-          <KineticTypography 
-            text=" и интеллектуальной аналитикой"
-            animation="slide"
-            stagger={0.03}
-          />
-        </motion.div>
+          и интеллектуальной аналитикой
+        </motion.p>
 
         {/* Подводка к карточкам */}
         <motion.div 
@@ -176,12 +168,9 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <KineticTypography 
-            text="Начните сотрудничать с нами и получите"
-            className="text-lg text-text-secondary"
-            animation="bounce"
-            stagger={0.1}
-          />
+          <p className="text-lg text-text-secondary">
+            Начните сотрудничать с нами и получите
+          </p>
         </motion.div>
 
         {/* CTA Button with magnetic effect */}
