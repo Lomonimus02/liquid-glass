@@ -393,10 +393,18 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
     
+    // Add mouse event listeners for cursor interaction
+    if (cursorInteraction) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
+    
     return () => {
       window.removeEventListener('resize', updateDimensions);
+      if (cursorInteraction) {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
     };
-  }, [updateDimensions]);
+  }, [updateDimensions, handleMouseMove, cursorInteraction]);
 
   useEffect(() => {
     if (dimensions.width > 0 && dimensions.height > 0) {
