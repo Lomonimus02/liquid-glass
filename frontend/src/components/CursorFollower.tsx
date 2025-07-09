@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 interface CursorFollowerProps {
@@ -20,33 +20,53 @@ const CursorFollower: React.FC<CursorFollowerProps> = ({ children }) => {
   const trailX = useSpring(mouseX, { damping: 30, stiffness: 200 });
   const trailY = useSpring(mouseY, { damping: 30, stiffness: 200 });
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+  // Throttle function for mouse movement
+  const throttleRef = useRef<NodeJS.Timeout>();
+  const handleMouseMoveThrottled = useCallback((e: MouseEvent) => {
+    if (throttleRef.current) {
+      clearTimeout(throttleRef.current);
+    }
+    
+    throttleRef.current = setTimeout(() => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
       setIsVisible(true);
+    }, 16); // ~60fps
+  }, [mouseX, mouseY]);
+
+  const handleMouseEnter = useCallback(() => setIsHovering(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovering(false), []);
+
+  useEffect(() => {
+    // Use event delegation instead of adding listeners to all elements
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.matches('button, a, h1, h2, h3, [data-magnetic], .interactive-element')) {
+        setIsHovering(true);
+      }
     };
 
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.matches('button, a, h1, h2, h3, [data-magnetic], .interactive-element')) {
+        setIsHovering(false);
+      }
+    };
 
-    // Добавляем слушатели к интерактивным элементам
-    const interactiveElements = document.querySelectorAll('button, a, h1, h2, h3, p, span, [data-magnetic]');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
-
-    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mousemove', handleMouseMoveThrottled);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
-      });
+      document.removeEventListener('mousemove', handleMouseMoveThrottled);
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
+      
+      if (throttleRef.current) {
+        clearTimeout(throttleRef.current);
+      }
     };
-  }, [mouseX, mouseY]);
+  }, [handleMouseMoveThrottled]);
 
   return (
     <>
