@@ -101,3 +101,68 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+## user_problem_statement: "При наведении на раздел 'Преимущества системы' курсор с эффектом trail 'застрявает' и перестает двигаться, также все остальное приложение начинает работать медленно. Исправь это"
+
+## frontend:
+  - task: "Fix cursor trail performance issue in Features section"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CursorFollower.tsx"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported cursor trail getting stuck and application becoming slow when hovering over Features section"
+      - working: false
+        agent: "main"
+        comment: "First attempt: Added throttling to mouse movement (16ms), reduced animations, optimized event listeners"
+      - working: false
+        agent: "user"
+        comment: "User reported cursor and trail became very sluggish after initial fix"
+      - working: true
+        agent: "main"
+        comment: "Second attempt: Removed throttling, optimized spring configuration, balanced performance and responsiveness. All tests passed successfully."
+
+  - task: "Optimize FeaturesSection performance"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/FeaturesSection.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Memoized LottiePlayer component, reduced hover animations complexity, simplified typography elements"
+
+  - task: "Optimize ParticleSystem performance"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/ParticleSystem.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Removed frame throttling, optimized animation loop, improved cleanup mechanism"
+
+## metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+## test_plan:
+  current_focus:
+    - "Fix cursor trail performance issue in Features section"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+## agent_communication:
+  - agent: "main"
+    message: "Successfully fixed cursor trail performance issue. Removed throttling that was causing sluggish behavior, optimized spring configuration for better responsiveness, and balanced performance optimizations. All automated tests passed showing smooth cursor movement, responsive hover effects, and good performance during scrolling."
