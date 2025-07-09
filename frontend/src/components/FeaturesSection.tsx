@@ -174,35 +174,26 @@ const FeaturesSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 px-4 relative overflow-hidden"
+      className="py-16 md:py-20 px-4 relative"
       style={{
         background: 'transparent'
       }}
     >
-      {/* Particle system для features */}
-      <ParticleSystem
-        particleCount={25}
-        colors={['rgba(2, 191, 122, 0.2)', 'rgba(2, 191, 122, 0.1)', 'rgba(255, 255, 255, 0.05)']}
-        speed={0.3}
-        size={1}
-        className="opacity-40"
-      />
-
       <div className="max-w-7xl mx-auto">
         {/* Заголовок секции */}
         <SmoothReveal direction="up" delay={0.1}>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gradient mb-4 md:mb-6 px-4">
               Преимущества системы
             </h2>
-            <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto px-4">
               Stellar School предлагает полный спектр инструментов для современного образования
             </p>
           </div>
         </SmoothReveal>
 
-        {/* Основная сетка карточек */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+        {/* Основная сетка карточек - улучшенная мобильная адаптация */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
           {features.map((feature, index) => (
             <SmoothReveal 
               key={index}
@@ -217,12 +208,12 @@ const FeaturesSection = () => {
               >
                 <MagneticElement strength={0.1} className="h-full">
                   <Interactive3DCard
-                    className="h-full"
+                    className="h-full min-h-[280px] sm:min-h-[320px]"
                     glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
                     intensity={0.8}
                   >
                     <div 
-                      className="flex flex-col h-full text-center relative z-10 interactive-element"
+                      className="flex flex-col h-full text-center relative z-10 interactive-element p-4 md:p-6"
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
@@ -232,7 +223,7 @@ const FeaturesSection = () => {
                           <LottiePlayer 
                             animationData={feature.animationData} 
                             isHovered={hoveredIndex === index}
-                            className={feature.iconClassName || "w-12 h-12"}
+                            className={`${feature.iconClassName || "w-12 h-12"} md:w-14 md:h-14`}
                           />
                         ) : (
                           <motion.div
@@ -242,19 +233,19 @@ const FeaturesSection = () => {
                             } : {}}
                             transition={{ duration: 0.2 }}
                           >
-                            <feature.icon className={`w-12 h-12 ${feature.color || 'text-stellar-primary'}`} />
+                            <feature.icon className={`w-12 h-12 md:w-14 md:h-14 ${feature.color || 'text-stellar-primary'}`} />
                           </motion.div>
                         )}
                       </div>
 
                       {/* Заголовок */}
-                      <h3 className="text-lg font-semibold mb-3 text-text-primary">
+                      <h3 className="text-lg md:text-xl font-semibold mb-3 text-text-primary leading-tight">
                         {feature.title}
                       </h3>
 
                       {/* Описание */}
                       <motion.p 
-                        className="text-text-secondary text-sm leading-relaxed flex-grow"
+                        className="text-text-secondary text-sm md:text-base leading-relaxed flex-grow"
                         initial={{ opacity: 0.7 }}
                         animate={{ opacity: hoveredIndex === index ? 1 : 0.7 }}
                         transition={{ duration: 0.2 }}
@@ -278,7 +269,7 @@ const FeaturesSection = () => {
                             {[...Array(3)].map((_, i) => (
                               <motion.div
                                 key={i}
-                                className="absolute w-1 h-1 bg-stellar-accent rounded-full"
+                                className="absolute w-1 h-1 bg-stellar-accent rounded-full hidden md:block"
                                 style={{
                                   left: `${20 + i * 30}%`,
                                   top: `${20 + i * 25}%`,
@@ -309,18 +300,18 @@ const FeaturesSection = () => {
 
         {/* Дополнительная информация */}
         <SmoothReveal direction="up" delay={0.5}>
-          <div className="text-center mt-16">
+          <div className="text-center mt-12 md:mt-16">
             <Interactive3DCard 
               className="max-w-4xl mx-auto"
               glowColor="#02bf7a"
               intensity={0.6}
             >
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gradient mb-4">
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-bold text-gradient mb-4">
                   Готовы к революции в образовании?
                 </h3>
                 <motion.p 
-                  className="text-text-secondary"
+                  className="text-text-secondary text-sm md:text-base"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
