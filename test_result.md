@@ -105,6 +105,18 @@
 ## user_problem_statement: "Убери след за курсором, также сделай другой интерактивный фон, как на фото, чтобы он также реагировал на курсор."
 
 ## frontend:
+  - task: "Replace dark background color with brand color"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/index.css"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Successfully replaced the background color to use the brand color rgb(230, 255, 245) consistently throughout the application. Updated the body background from transparent to the brand color for better consistency."
+
   - task: "Fix cursor trail performance issue in Features section"
     implemented: true
     working: true
