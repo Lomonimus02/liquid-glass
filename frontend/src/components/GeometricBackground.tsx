@@ -51,18 +51,16 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     
     const vertices: Point[] = [];
     
-    // Create vertices of the shape
+    // Create vertices with FIXED relative positions (no random variance)
     for (let i = 0; i < pointCount; i++) {
       const angle = (i / pointCount) * Math.PI * 2;
-      // Add slight randomness to make shapes not identical
-      const variance = (Math.random() - 0.5) * 0.3;
-      const radius = originalSize + variance * originalSize;
+      const radius = originalSize; // Fixed radius, no variance
       
       vertices.push({
         x: centerX + Math.cos(angle) * radius,
         y: centerY + Math.sin(angle) * radius,
-        vx: (Math.random() - 0.5) * animationSpeed * 1.5, // Increased movement speed
-        vy: (Math.random() - 0.5) * animationSpeed * 1.5, // Increased movement speed
+        vx: 0, // No individual movement
+        vy: 0, // No individual movement
         opacity: 0.6 + Math.random() * 0.4
       });
     }
@@ -71,8 +69,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     const center: Point = {
       x: centerX,
       y: centerY,
-      vx: (Math.random() - 0.5) * animationSpeed * 1.2, // Increased movement speed
-      vy: (Math.random() - 0.5) * animationSpeed * 1.2, // Increased movement speed
+      vx: (Math.random() - 0.5) * animationSpeed * 1.2, // Only center moves
+      vy: (Math.random() - 0.5) * animationSpeed * 1.2, // Only center moves
       opacity: 0.7 + Math.random() * 0.3
     };
 
