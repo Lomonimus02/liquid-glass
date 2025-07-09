@@ -217,7 +217,6 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.4})`;
       ctx.lineWidth = 1;
       
-      const centerPoint = shape.points[shape.points.length - 1];
       for (let i = 0; i < mainPointCount; i++) {
         const point = shape.points[i];
         
