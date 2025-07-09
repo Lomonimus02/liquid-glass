@@ -340,5 +340,7 @@
     message: "Added chaotic lines and smooth transitions for enhanced visual appeal. Implemented fade-in animations for new shapes, dissolve-out animations for old ones, and random chaotic lines around each shape. Added small movement variations for organic feel. Eliminated jarring transitions - shapes now smoothly appear and disappear instead of abrupt changes."
   - agent: "main"
     message: "Final optimization: Created more diverse shapes (triangles, quads, pentagons, hexagons, irregular), removed flickering chaotic lines, eliminated shape dissolution - shapes now fly continuously until page reload. Added more chaotic movement patterns, random bounce strengths, and irregular connection patterns for enhanced visual diversity."
+  - agent: "main"
+    message: "Fixed unwanted size changes: Removed pulsation effects from point sizes and opacity breathing effects. Shapes now maintain consistent stable sizes while flying around. Eliminated Math.sin-based size variations that were causing points to grow and shrink unexpectedly."
   - agent: "testing"
     message: "Completed comprehensive backend API testing. Created and executed tests for all backend endpoints including root endpoint, status check creation/retrieval, database connectivity, and error handling. All tests passed successfully. The backend is functioning correctly with proper MongoDB integration and error handling. Created a reusable backend_test.py script for future testing."
