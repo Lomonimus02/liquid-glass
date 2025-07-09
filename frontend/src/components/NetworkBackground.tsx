@@ -202,8 +202,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         nodeOpacity = Math.min(1, node.opacity + force * 0.3);
       }
 
-      // Draw node with darker color to be more visible
-      ctx.fillStyle = `rgba(100, 100, 100, ${nodeOpacity})`;
+      // Draw node with main brand color
+      ctx.fillStyle = `rgba(2, 191, 122, ${nodeOpacity})`;
       ctx.beginPath();
       ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
       ctx.fill();
@@ -216,8 +216,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
           node.x, node.y, glowRadius
         );
         
-        gradient.addColorStop(0, `rgba(180, 180, 180, ${nodeOpacity * 0.4})`);
-        gradient.addColorStop(1, 'rgba(180, 180, 180, 0)');
+        gradient.addColorStop(0, `rgba(2, 191, 122, ${nodeOpacity * 0.4})`);
+        gradient.addColorStop(1, 'rgba(2, 191, 122, 0)');
         
         ctx.fillStyle = gradient;
         ctx.beginPath();
