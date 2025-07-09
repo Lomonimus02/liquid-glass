@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Fix size calculation causing unwanted scaling"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Found the real issue! The actualVertices calculation was recalculating positions relative to center even with multiplier 1.0, causing apparent size changes. Now using direct vertex coordinates without any size calculations."
+
   - task: "Completely remove size changes from geometric shapes"
     implemented: true
     working: true
