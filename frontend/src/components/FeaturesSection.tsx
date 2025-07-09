@@ -316,12 +316,9 @@ const FeaturesSection = () => {
               intensity={0.6}
             >
               <div className="p-8">
-                <KineticTypography
-                  text="Готовы к революции в образовании?"
-                  className="text-2xl font-bold text-gradient mb-4"
-                  animation="wave"
-                  stagger={0.08}
-                />
+                <h3 className="text-2xl font-bold text-gradient mb-4">
+                  Готовы к революции в образовании?
+                </h3>
                 <motion.p 
                   className="text-text-secondary"
                   initial={{ opacity: 0, y: 20 }}
