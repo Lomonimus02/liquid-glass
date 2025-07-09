@@ -103,7 +103,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
           vx: (Math.random() - 0.5) * animationSpeed * 1.5, // More chaotic movement
           vy: (Math.random() - 0.5) * animationSpeed * 1.5,
           opacity: 0.5 + Math.random() * 0.5,
-          size: Math.random() * 2.5 + 0.8
+          size: 1.5 // Fixed consistent size
         });
       }
     }
