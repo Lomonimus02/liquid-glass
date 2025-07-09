@@ -21,31 +21,24 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({
   const particlesRef = useRef<any[]>([]);
   const isActiveRef = useRef(true);
 
-  // Throttle animation frames to 30fps instead of 60fps
-  const lastTimeRef = useRef(0);
-  const frameInterval = 1000 / 30; // 30 FPS
-
-  const animate = useCallback((currentTime: number) => {
+  // Optimized animation loop without throttling
+  const animate = useCallback(() => {
     if (!isActiveRef.current) return;
 
-    if (currentTime - lastTimeRef.current >= frameInterval) {
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext('2d');
-      
-      if (!canvas || !ctx) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    
+    if (!canvas || !ctx) return;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particlesRef.current.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
-
-      lastTimeRef.current = currentTime;
-    }
+    particlesRef.current.forEach((particle) => {
+      particle.update();
+      particle.draw();
+    });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [frameInterval]);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
