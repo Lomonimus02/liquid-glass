@@ -116,7 +116,7 @@ const Navigation = () => {
             >
               <Button 
                 onClick={() => scrollToSection('contact')}
-                className="glass-button bg-primary hover:bg-primary/90 text-primary-foreground glass-shimmer-effect"
+                className="frosted-glass bg-primary hover:bg-primary/90 text-primary-foreground glass-shimmer-effect"
               >
                 Попробовать
               </Button>
