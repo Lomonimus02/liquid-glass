@@ -167,7 +167,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     });
   }, []);
 
-  // Simple animation loop with pseudo-3D effect
+  // Simple animation loop with pseudo-3D effect, smooth transitions, and chaotic elements
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -186,6 +186,15 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.lifetime += 16; // Assuming 60fps
       shape.rotation += shape.rotationSpeed;
 
+      // Handle fade in transition
+      if (shape.isFadingIn) {
+        shape.fadeInProgress += 0.02; // Fade in over ~1 second
+        if (shape.fadeInProgress >= 1) {
+          shape.isFadingIn = false;
+          shape.fadeInProgress = 1;
+        }
+      }
+
       // Check if shape should start dissolving
       if (shape.lifetime > shape.maxLifetime && !shape.isDissolving) {
         shape.isDissolving = true;
@@ -202,8 +211,24 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         }
       }
 
-      // Update points with gentle movement
+      // Update chaotic lines
+      shape.chaoticLines.forEach((line, lineIndex) => {
+        line.lifetime += 16;
+        if (line.lifetime > line.maxLifetime) {
+          // Replace with new chaotic line
+          const newLine = generateChaoticLines(shape.center, 60)[0];
+          if (newLine) {
+            shape.chaoticLines[lineIndex] = newLine;
+          }
+        }
+      });
+
+      // Update points with gentle movement and small random variations
       shape.points.forEach(point => {
+        // Add small random variations for organic feel
+        point.vx += (Math.random() - 0.5) * 0.01;
+        point.vy += (Math.random() - 0.5) * 0.01;
+        
         point.x += point.vx;
         point.y += point.vy;
 
@@ -232,10 +257,29 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       centerPoint.x = shape.center.x;
       centerPoint.y = shape.center.y;
 
-      // Calculate opacity based on dissolve progress
-      const baseOpacity = shape.isDissolving ? 
-        Math.max(0, 1 - shape.dissolveProgress) : 
-        Math.min(1, shape.lifetime / 1000);
+      // Calculate opacity based on dissolve progress and fade in
+      let baseOpacity = 1;
+      
+      if (shape.isFadingIn) {
+        baseOpacity = shape.fadeInProgress;
+      } else if (shape.isDissolving) {
+        baseOpacity = Math.max(0, 1 - shape.dissolveProgress);
+      } else {
+        baseOpacity = Math.min(1, shape.lifetime / 1000);
+      }
+
+      // Draw chaotic lines first (behind the main shape)
+      shape.chaoticLines.forEach(line => {
+        const lineOpacity = baseOpacity * line.opacity * (1 - line.lifetime / line.maxLifetime);
+        if (lineOpacity > 0) {
+          ctx.strokeStyle = `rgba(2, 191, 122, ${lineOpacity})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(line.startX, line.startY);
+          ctx.lineTo(line.endX, line.endY);
+          ctx.stroke();
+        }
+      });
 
       // Draw perimeter connections (outer shape)
       ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.6})`;
@@ -248,7 +292,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         
         let opacity = baseOpacity * 0.6;
         if (shape.isDissolving) {
-          opacity *= (1 - shape.dissolveProgress * 0.5 + Math.random() * 0.3);
+          opacity *= (1 - shape.dissolveProgress * 0.5 + Math.random() * 0.2);
         }
         
         ctx.strokeStyle = `rgba(2, 191, 122, ${Math.max(0, opacity)})`;
@@ -267,7 +311,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         
         let opacity = baseOpacity * 0.4;
         if (shape.isDissolving) {
-          opacity *= (1 - shape.dissolveProgress * 0.3 + Math.random() * 0.2);
+          opacity *= (1 - shape.dissolveProgress * 0.3 + Math.random() * 0.15);
         }
         
         ctx.strokeStyle = `rgba(2, 191, 122, ${Math.max(0, opacity)})`;
@@ -301,7 +345,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         
         // Add dissolve effect to points
         if (shape.isDissolving) {
-          pointOpacity *= (1 - shape.dissolveProgress + Math.random() * 0.2);
+          pointOpacity *= (1 - shape.dissolveProgress + Math.random() * 0.15);
           pointSize *= (1 - shape.dissolveProgress * 0.5);
         }
         
@@ -313,7 +357,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [createGeometricShape, dissolveSpeed]);
+  }, [createGeometricShape, dissolveSpeed, generateChaoticLines]);
 
   useEffect(() => {
     updateDimensions();
