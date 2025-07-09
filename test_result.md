@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-## user_problem_statement: "Отлично, теперь нужно исправить проблему с динамичным фоном, сейчас на сайте есть динамичный фон(что то похожее на волны) они выглядят не очень хорошо - просто линии которые пересакются друг с другом, нужно что ты они сливались с фоном не создавая никаких резких краев. Также нужно сделать так чтобы между секиями не было видимых 'разделелений', особенно которые заметно при наведении на увеличивающиеся элементы которые находятся почти на стыке секций"
+## user_problem_statement: "Убери след за курсором, также сделай другой интерактивный фон, как на фото, чтобы он также реагировал на курсор."
 
 ## frontend:
   - task: "Fix cursor trail performance issue in Features section"
@@ -125,6 +125,30 @@
       - working: true
         agent: "main"
         comment: "Second attempt: Removed throttling, optimized spring configuration, balanced performance and responsiveness. All tests passed successfully."
+
+  - task: "Remove cursor trail completely"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Completely removed CursorFollower component from App.tsx - no more cursor trail effects"
+
+  - task: "Create interactive network background"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/NetworkBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created new NetworkBackground component with interconnected nodes and lines that react to cursor movement, replaced Advanced3DBackground"
 
   - task: "Remove background particles from Features section"
     implemented: true
