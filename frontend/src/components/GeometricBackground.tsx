@@ -114,7 +114,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     });
   }, []);
 
-  // Animation loop with diverse shapes that just fly around
+  // Animation loop with smooth size changes and floating effect
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -128,142 +128,103 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     const shapes = shapesRef.current;
     if (shapes.length === 0) return;
 
-    // Update shapes - they just fly around without dissolving
+    // Update shapes with floating and size animation
     shapes.forEach((shape) => {
+      // Update rotation
       shape.rotation += shape.rotationSpeed;
+      
+      // Update size phase for smooth size changes
+      shape.sizePhase += 0.015; // Slow size animation
+      // Size multiplier oscillates between 0.85 and 1.15 (returns to original)
+      shape.currentSizeMultiplier = 1.0 + Math.sin(shape.sizePhase) * 0.15;
+      
+      // Update float phase for floating effect
+      shape.floatPhase += shape.floatSpeed;
+      const floatOffset = Math.sin(shape.floatPhase) * 10; // Gentle floating
 
-      // Update points with more chaotic movement
-      shape.points.forEach(point => {
-        // Add more random variations for chaotic movement
-        point.vx += (Math.random() - 0.5) * 0.02;
-        point.vy += (Math.random() - 0.5) * 0.02;
-        
-        point.x += point.vx;
-        point.y += point.vy;
+      // Update vertices with floating movement
+      shape.vertices.forEach(vertex => {
+        vertex.x += vertex.vx;
+        vertex.y += vertex.vy + floatOffset * 0.01;
 
-        // Boundary bouncing with more variety
-        if (point.x <= 0 || point.x >= canvas.width) {
-          point.vx *= -(0.6 + Math.random() * 0.4); // Random bounce strength
-          point.x = Math.max(0, Math.min(canvas.width, point.x));
+        // Boundary bouncing
+        if (vertex.x <= 0 || vertex.x >= canvas.width) {
+          vertex.vx *= -0.8;
+          vertex.x = Math.max(0, Math.min(canvas.width, vertex.x));
         }
-        if (point.y <= 0 || point.y >= canvas.height) {
-          point.vy *= -(0.6 + Math.random() * 0.4); // Random bounce strength
-          point.y = Math.max(0, Math.min(canvas.height, point.y));
+        if (vertex.y <= 0 || vertex.y >= canvas.height) {
+          vertex.vy *= -0.8;
+          vertex.y = Math.max(0, Math.min(canvas.height, vertex.y));
         }
 
-        // Variable velocity damping
-        point.vx *= (0.995 + Math.random() * 0.01);
-        point.vy *= (0.995 + Math.random() * 0.01);
+        // Gentle velocity damping
+        vertex.vx *= 0.998;
+        vertex.vy *= 0.998;
       });
 
-      // Update center based on main points (exclude center point if it exists)
-      const mainPoints = shape.points.slice(0, -1);
-      if (mainPoints.length > 0) {
-        shape.center.x = mainPoints.reduce((sum, p) => sum + p.x, 0) / mainPoints.length;
-        shape.center.y = mainPoints.reduce((sum, p) => sum + p.y, 0) / mainPoints.length;
+      // Update center point
+      shape.center.x += shape.center.vx;
+      shape.center.y += shape.center.vy + floatOffset * 0.008;
 
-        // Update center point position if it exists
-        if (shape.points.length > mainPoints.length) {
-          const centerPoint = shape.points[shape.points.length - 1];
-          centerPoint.x = shape.center.x;
-          centerPoint.y = shape.center.y;
-        }
+      // Boundary bouncing for center
+      if (shape.center.x <= 0 || shape.center.x >= canvas.width) {
+        shape.center.vx *= -0.8;
+        shape.center.x = Math.max(0, Math.min(canvas.width, shape.center.x));
+      }
+      if (shape.center.y <= 0 || shape.center.y >= canvas.height) {
+        shape.center.vy *= -0.8;
+        shape.center.y = Math.max(0, Math.min(canvas.height, shape.center.y));
       }
 
-      const baseOpacity = 0.6; // Fixed opacity without breathing effect
+      // Gentle velocity damping for center
+      shape.center.vx *= 0.998;
+      shape.center.vy *= 0.998;
 
-      // Draw connections based on shape type
-      if (shape.shapeType === 'irregular') {
-        // Draw irregular connections
-        shape.irregularConnections.forEach((connections, pointIndex) => {
-          connections.forEach(targetIndex => {
-            const startPoint = shape.points[pointIndex];
-            const endPoint = shape.points[targetIndex];
-            
-            if (startPoint && endPoint) {
-              ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.5})`;
-              ctx.lineWidth = 1.0; // Fixed line width
-              ctx.beginPath();
-              ctx.moveTo(startPoint.x, startPoint.y);
-              ctx.lineTo(endPoint.x, endPoint.y);
-              ctx.stroke();
-            }
-          });
-        });
-      } else {
-        // Draw regular perimeter connections
-        const mainPointCount = shape.points.length > 3 ? shape.points.length - 1 : shape.points.length;
+      // Calculate actual vertices positions with size animation
+      const actualVertices = shape.vertices.map(vertex => ({
+        x: shape.center.x + (vertex.x - shape.center.x) * shape.currentSizeMultiplier,
+        y: shape.center.y + (vertex.y - shape.center.y) * shape.currentSizeMultiplier,
+        opacity: vertex.opacity
+      }));
+
+      // Draw perimeter connections
+      ctx.strokeStyle = `rgba(2, 191, 122, 0.6)`;
+      ctx.lineWidth = 1.2;
+      
+      for (let i = 0; i < actualVertices.length; i++) {
+        const current = actualVertices[i];
+        const next = actualVertices[(i + 1) % actualVertices.length];
         
-        for (let i = 0; i < mainPointCount; i++) {
-          const currentPoint = shape.points[i];
-          const nextPoint = shape.points[(i + 1) % mainPointCount];
-          
-          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.7})`;
-          ctx.lineWidth = 1.2; // Fixed line width
-          ctx.beginPath();
-          ctx.moveTo(currentPoint.x, currentPoint.y);
-          ctx.lineTo(nextPoint.x, nextPoint.y);
-          ctx.stroke();
-        }
-
-        // Draw connections to center point for 3D effect (if center point exists)
-        if (shape.points.length > mainPointCount) {
-          const centerPoint = shape.points[shape.points.length - 1];
-          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.4})`;
-          ctx.lineWidth = 0.8;
-          
-          for (let i = 0; i < mainPointCount; i++) {
-            const point = shape.points[i];
-            ctx.beginPath();
-            ctx.moveTo(point.x, point.y);
-            ctx.lineTo(centerPoint.x, centerPoint.y);
-            ctx.stroke();
-          }
-        }
-
-        // For quadrilaterals and hexagons, add diagonal connections
-        if (shape.shapeType === 'quad' && mainPointCount >= 4) {
-          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.3})`;
-          ctx.lineWidth = 0.6;
-          
-          ctx.beginPath();
-          ctx.moveTo(shape.points[0].x, shape.points[0].y);
-          ctx.lineTo(shape.points[2].x, shape.points[2].y);
-          ctx.stroke();
-          
-          ctx.beginPath();
-          ctx.moveTo(shape.points[1].x, shape.points[1].y);
-          ctx.lineTo(shape.points[3].x, shape.points[3].y);
-          ctx.stroke();
-        }
-        
-        if (shape.shapeType === 'hexagon' && mainPointCount >= 6) {
-          ctx.strokeStyle = `rgba(2, 191, 122, ${baseOpacity * 0.25})`;
-          ctx.lineWidth = 0.5;
-          
-          // Draw some inner connections for hexagon
-          for (let i = 0; i < mainPointCount; i += 2) {
-            const targetIndex = (i + 3) % mainPointCount;
-            ctx.beginPath();
-            ctx.moveTo(shape.points[i].x, shape.points[i].y);
-            ctx.lineTo(shape.points[targetIndex].x, shape.points[targetIndex].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw points with consistent size
-      shape.points.forEach((point, index) => {
-        const pointOpacity = baseOpacity * point.opacity;
-        const pointSize = point.size; // Fixed size without pulsation
-        
-        ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity})`;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, Math.max(0.2, pointSize), 0, Math.PI * 2);
-        ctx.fill();
-        
-        // Removed glow effect to prevent size variations
+        ctx.moveTo(current.x, current.y);
+        ctx.lineTo(next.x, next.y);
+        ctx.stroke();
+      }
+
+      // Draw 3D effect lines from center to vertices
+      ctx.strokeStyle = `rgba(2, 191, 122, 0.4)`;
+      ctx.lineWidth = 0.8;
+      
+      actualVertices.forEach(vertex => {
+        ctx.beginPath();
+        ctx.moveTo(shape.center.x, shape.center.y);
+        ctx.lineTo(vertex.x, vertex.y);
+        ctx.stroke();
       });
+
+      // Draw vertices
+      actualVertices.forEach(vertex => {
+        ctx.fillStyle = `rgba(2, 191, 122, ${vertex.opacity})`;
+        ctx.beginPath();
+        ctx.arc(vertex.x, vertex.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Draw center point
+      ctx.fillStyle = `rgba(2, 191, 122, ${shape.center.opacity})`;
+      ctx.beginPath();
+      ctx.arc(shape.center.x, shape.center.y, 1.5, 0, Math.PI * 2);
+      ctx.fill();
     });
 
     animationRef.current = requestAnimationFrame(animate);
