@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 interface ParticleSystemProps {
@@ -19,6 +19,33 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const particlesRef = useRef<any[]>([]);
+  const isActiveRef = useRef(true);
+
+  // Throttle animation frames to 30fps instead of 60fps
+  const lastTimeRef = useRef(0);
+  const frameInterval = 1000 / 30; // 30 FPS
+
+  const animate = useCallback((currentTime: number) => {
+    if (!isActiveRef.current) return;
+
+    if (currentTime - lastTimeRef.current >= frameInterval) {
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      
+      if (!canvas || !ctx) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particlesRef.current.forEach((particle) => {
+        particle.update();
+        particle.draw();
+      });
+
+      lastTimeRef.current = currentTime;
+    }
+
+    animationRef.current = requestAnimationFrame(animate);
+  }, [frameInterval]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,6 +53,8 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    isActiveRef.current = true;
 
     // Функция для изменения размера canvas
     const resizeCanvas = () => {
@@ -95,27 +124,17 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({
       particlesRef.current.push(new Particle());
     }
 
-    // Анимационный цикл
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particlesRef.current.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
+    // Запуск анимации
+    animationRef.current = requestAnimationFrame(animate);
 
     return () => {
+      isActiveRef.current = false;
       window.removeEventListener('resize', resizeCanvas);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [particleCount, colors, speed, size]);
+  }, [particleCount, colors, speed, size, animate]);
 
   return (
     <canvas
