@@ -153,17 +153,17 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
         // Boundary bouncing
         if (vertex.x <= 0 || vertex.x >= canvas.width) {
-          vertex.vx *= -0.8;
+          vertex.vx *= -0.7; // Softer bounce
           vertex.x = Math.max(0, Math.min(canvas.width, vertex.x));
         }
         if (vertex.y <= 0 || vertex.y >= canvas.height) {
-          vertex.vy *= -0.8;
+          vertex.vy *= -0.7; // Softer bounce
           vertex.y = Math.max(0, Math.min(canvas.height, vertex.y));
         }
 
-        // Gentle velocity damping
-        vertex.vx *= 0.998;
-        vertex.vy *= 0.998;
+        // Gentler velocity damping for more sustained movement
+        vertex.vx *= 0.9995;
+        vertex.vy *= 0.9995;
       });
 
       // Update center point
