@@ -3,22 +3,28 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 interface Point {
   x: number;
   y: number;
+  z: number; // Added Z coordinate for 3D effect
   vx: number;
   vy: number;
+  vz: number; // Added Z velocity
   opacity: number;
   size: number;
+  depth: number; // Depth for 3D perspective
 }
 
 interface GeometricShape {
   id: number;
   points: Point[];
-  center: { x: number; y: number };
+  center: { x: number; y: number; z: number }; // Added Z coordinate
   lifetime: number;
   maxLifetime: number;
   isDissolving: boolean;
   dissolveProgress: number;
   rotationSpeed: number;
   rotation: number;
+  rotationX: number; // Added X rotation
+  rotationY: number; // Added Y rotation
+  rotationZ: number; // Added Z rotation
 }
 
 interface GeometricBackgroundProps {
