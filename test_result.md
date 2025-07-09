@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Add organic breathing effect to geometric shapes"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Added gentle breathing effect to shapes. Vertices now have individual radius phases that create small variations (±12%) in line lengths. Each vertex breathes at slightly different speed for organic feel. Shapes maintain their basic structure while connections subtly change length."
+
   - task: "Fix shape deformation by making shapes move as solid units"
     implemented: true
     working: true
