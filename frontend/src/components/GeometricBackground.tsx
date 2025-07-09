@@ -175,17 +175,17 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
       // Boundary bouncing for center
       if (shape.center.x <= 0 || shape.center.x >= canvas.width) {
-        shape.center.vx *= -0.8;
+        shape.center.vx *= -0.7; // Softer bounce
         shape.center.x = Math.max(0, Math.min(canvas.width, shape.center.x));
       }
       if (shape.center.y <= 0 || shape.center.y >= canvas.height) {
-        shape.center.vy *= -0.8;
+        shape.center.vy *= -0.7; // Softer bounce
         shape.center.y = Math.max(0, Math.min(canvas.height, shape.center.y));
       }
 
-      // Gentle velocity damping for center
-      shape.center.vx *= 0.998;
-      shape.center.vy *= 0.998;
+      // Gentler velocity damping for center for more sustained movement
+      shape.center.vx *= 0.9995;
+      shape.center.vy *= 0.9995;
 
       // Calculate actual vertices positions with size animation
       const actualVertices = shape.vertices.map(vertex => ({
