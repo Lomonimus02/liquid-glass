@@ -134,31 +134,34 @@
   }
 }
 
-/* Enhanced Glassmorphism utility classes */
+/* Enhanced Deep Glassmorphism utility classes */
 @layer components {
+  /* Deep Glass Effect - Level 1 */
   .glass-card {
-    @apply backdrop-blur-xl border rounded-3xl transition-all duration-300 relative overflow-hidden;
-    background: rgba(255, 255, 255, 0.1); /* More glass-like with white tint */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(16px) saturate(1.2); /* Enhanced glass effect */
+    @apply backdrop-blur-3xl border rounded-3xl transition-all duration-300 relative overflow-hidden;
+    background: rgba(255, 255, 255, 0.06); /* Deep glass with subtle white tint */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(40px) saturate(1.4) brightness(1.05); /* Deep glass effect */
     box-shadow:
-      0 8px 32px rgba(2, 191, 122, 0.1),
-      0 16px 64px rgba(2, 191, 122, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 8px 32px rgba(2, 191, 122, 0.12),
+      0 16px 64px rgba(2, 191, 122, 0.08),
+      0 24px 96px rgba(2, 191, 122, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
       inset 0 -1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .glass-card:hover {
-    background: rgba(255, 255, 255, 0.15); /* Brighter on hover */
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(20px) saturate(1.4); /* Stronger blur on hover */
+    background: rgba(255, 255, 255, 0.1); /* Brighter on hover */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(48px) saturate(1.6) brightness(1.1); /* Deeper blur on hover */
     box-shadow:
-      0 12px 48px rgba(2, 191, 122, 0.15),
-      0 24px 96px rgba(2, 191, 122, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      0 12px 48px rgba(2, 191, 122, 0.18),
+      0 24px 96px rgba(2, 191, 122, 0.12),
+      0 32px 128px rgba(2, 191, 122, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
       inset 0 -1px 0 rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-    z-index: 20; /* Поднимаем hover элементы выше фона */
+    z-index: 20;
   }
 
   .glass-card::before {
@@ -171,7 +174,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.15),
       transparent
     );
     transition: left 0.5s;
@@ -181,24 +184,26 @@
     left: 100%;
   }
 
+  /* Deep Glass Effect - Level 2 Enhanced */
   .glass-card-enhanced {
-    @apply backdrop-blur-2xl border rounded-3xl transition-all duration-500 relative overflow-hidden;
-    background: rgba(255, 255, 255, 0.08); /* More subtle glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(24px) saturate(1.3); /* Strong glass effect */
+    @apply backdrop-blur-3xl border rounded-3xl transition-all duration-500 relative overflow-hidden;
+    background: rgba(255, 255, 255, 0.04); /* Ultra subtle glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(50px) saturate(1.5) brightness(1.1); /* Ultra deep glass effect */
     box-shadow:
-      0 8px 32px rgba(2, 191, 122, 0.12),
-      0 16px 64px rgba(2, 191, 122, 0.08),
-      0 24px 96px rgba(2, 191, 122, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 8px 32px rgba(2, 191, 122, 0.15),
+      0 16px 64px rgba(2, 191, 122, 0.1),
+      0 24px 96px rgba(2, 191, 122, 0.07),
+      0 32px 128px rgba(2, 191, 122, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
       inset 0 -1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .glass-card-enhanced:hover {
-    background: rgba(255, 255, 255, 0.12); /* Brighter on hover */
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(28px) saturate(1.5); /* Enhanced blur on hover */
-    z-index: 20; /* Поднимаем hover элементы выше фона */
+    background: rgba(255, 255, 255, 0.08); /* Brighter on hover */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(60px) saturate(1.7) brightness(1.2); /* Maximum blur on hover */
+    z-index: 20;
     transform: translateY(-4px) scale(1.02);
   }
 
@@ -211,7 +216,7 @@
     bottom: 0;
     background: radial-gradient(
       circle at 50% 0%,
-      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.08),
       transparent 50%
     );
     opacity: 0;
@@ -222,35 +227,63 @@
     opacity: 1;
   }
 
+  /* Deep Glass Effect - Level 3 Subtle */
   .glass-card-subtle {
-    @apply backdrop-blur-md border rounded-3xl transition-all duration-300 relative;
-    background: rgba(255, 255, 255, 0.12); /* Glass-like appearance */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(12px) saturate(1.1); /* Subtle glass effect */
+    @apply backdrop-blur-2xl border rounded-3xl transition-all duration-300 relative;
+    background: rgba(255, 255, 255, 0.08); /* Subtle glass appearance */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(35px) saturate(1.2) brightness(1.05); /* Subtle but deep glass effect */
     box-shadow:
-      0 4px 16px rgba(2, 191, 122, 0.06),
-      0 8px 24px rgba(2, 191, 122, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      0 4px 16px rgba(2, 191, 122, 0.08),
+      0 8px 24px rgba(2, 191, 122, 0.06),
+      0 16px 48px rgba(2, 191, 122, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
-  /* Ultra glass effect for maximum transparency with blur */
+  /* Ultra Deep Glass Effect - Level 4 Maximum */
   .glass-card-ultra {
     @apply backdrop-blur-3xl border rounded-3xl transition-all duration-400 relative overflow-hidden;
-    background: rgba(255, 255, 255, 0.05); /* Very subtle glass tint */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(32px) saturate(1.4) brightness(1.1); /* Maximum glass effect */
+    background: rgba(255, 255, 255, 0.02); /* Ultra minimal glass tint */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(70px) saturate(1.6) brightness(1.15); /* Maximum glass effect */
     box-shadow:
-      0 8px 32px rgba(2, 191, 122, 0.08),
-      0 16px 64px rgba(2, 191, 122, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 8px 32px rgba(2, 191, 122, 0.1),
+      0 16px 64px rgba(2, 191, 122, 0.06),
+      0 24px 96px rgba(2, 191, 122, 0.04),
+      0 32px 128px rgba(2, 191, 122, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
       inset 0 -1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .glass-card-ultra:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(36px) saturate(1.6) brightness(1.2);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(80px) saturate(1.8) brightness(1.25);
     transform: translateY(-3px);
+    z-index: 20;
+  }
+
+  /* Ultra Deep Glass Effect - Level 5 Supreme */
+  .glass-card-supreme {
+    @apply backdrop-blur-3xl border rounded-3xl transition-all duration-500 relative overflow-hidden;
+    background: rgba(255, 255, 255, 0.01); /* Almost invisible glass tint */
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(90px) saturate(1.8) brightness(1.2) contrast(1.1); /* Supreme glass effect */
+    box-shadow:
+      0 8px 32px rgba(2, 191, 122, 0.08),
+      0 16px 64px rgba(2, 191, 122, 0.05),
+      0 24px 96px rgba(2, 191, 122, 0.03),
+      0 32px 128px rgba(2, 191, 122, 0.02),
+      0 48px 192px rgba(2, 191, 122, 0.01),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .glass-card-supreme:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(100px) saturate(2.0) brightness(1.3) contrast(1.15);
+    transform: translateY(-5px) scale(1.01);
     z-index: 20;
   }
 
