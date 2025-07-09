@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Improve movement and size animation smoothness"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Enhanced geometric background with more active movement and smoother size animation. Increased movement speed multipliers (vertices: 1.5x, center: 1.2x), slowed size animation from 0.015 to 0.005 for smoother effect, added slight acceleration for natural movement, reduced velocity damping for sustained movement (0.9995 vs 0.998), and softened bouncing (-0.7 vs -0.8)."
+
   - task: "Recreate GeometricBackground with proper 3D shapes"
     implemented: true
     working: true
