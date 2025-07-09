@@ -339,7 +339,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         // Add slight curve for organic feel
         const midX = (current.x + next.x) / 2;
         const midY = (current.y + next.y) / 2;
-        const curve = Math.sin(Date.now() * 0.001 + i) * 3;
+        const curve = Math.sin(Date.now() * 0.0005 + i) * 3; // Reduced speed from 0.001 to 0.0005
         
         ctx.quadraticCurveTo(
           midX + curve,
