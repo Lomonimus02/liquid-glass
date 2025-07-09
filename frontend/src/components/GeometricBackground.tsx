@@ -134,18 +134,22 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.rotation += shape.rotationSpeed;
       
       // Update size phase for smooth size changes
-      shape.sizePhase += 0.015; // Slow size animation
+      shape.sizePhase += 0.005; // Much slower size animation for smoother effect
       // Size multiplier oscillates between 0.85 and 1.15 (returns to original)
       shape.currentSizeMultiplier = 1.0 + Math.sin(shape.sizePhase) * 0.15;
       
       // Update float phase for floating effect
       shape.floatPhase += shape.floatSpeed;
-      const floatOffset = Math.sin(shape.floatPhase) * 10; // Gentle floating
+      const floatOffset = Math.sin(shape.floatPhase) * 8; // Gentle floating
 
-      // Update vertices with floating movement
+      // Update vertices with more active movement
       shape.vertices.forEach(vertex => {
+        // Add slight acceleration for more natural movement
+        vertex.vx += (Math.random() - 0.5) * 0.01;
+        vertex.vy += (Math.random() - 0.5) * 0.01;
+        
         vertex.x += vertex.vx;
-        vertex.y += vertex.vy + floatOffset * 0.01;
+        vertex.y += vertex.vy + floatOffset * 0.02;
 
         // Boundary bouncing
         if (vertex.x <= 0 || vertex.x >= canvas.width) {
