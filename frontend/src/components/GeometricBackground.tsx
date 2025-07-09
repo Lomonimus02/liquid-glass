@@ -167,7 +167,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.center.vx *= 0.9995;
       shape.center.vy *= 0.9995;
 
-      // Update vertices with gentle breathing effect
+      // Update vertices with gentle breathing effect using FIXED angles
       shape.vertices.forEach((vertex, index) => {
         // Update radius phase for breathing
         vertex.radiusPhase += 0.01 + (index * 0.002); // Different speeds for organic feel
@@ -176,12 +176,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         const breathingMultiplier = 1.0 + Math.sin(vertex.radiusPhase) * 0.12;
         const currentRadius = vertex.originalRadius * breathingMultiplier;
         
-        // Calculate angle from center to vertex
-        const angle = Math.atan2(vertex.y - shape.center.y, vertex.x - shape.center.x);
-        
-        // Update vertex position with new radius but same angle
-        vertex.x = shape.center.x + Math.cos(angle) * currentRadius;
-        vertex.y = shape.center.y + Math.sin(angle) * currentRadius;
+        // Use FIXED original angle to maintain geometry
+        vertex.x = shape.center.x + Math.cos(vertex.originalAngle) * currentRadius;
+        vertex.y = shape.center.y + Math.sin(vertex.originalAngle) * currentRadius;
       });
 
       // Use direct vertex positions without any size calculations
