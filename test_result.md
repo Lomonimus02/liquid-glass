@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Fix shape deformation by making shapes move as solid units"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "FOUND THE REAL ISSUE! Vertices were moving independently causing shape deformation that looked like size changes. Now shapes move as solid units - only center moves, vertices follow maintaining fixed relative positions. Removed random variance in vertex creation for perfect geometry."
+
   - task: "Fix size calculation causing unwanted scaling"
     implemented: true
     working: true
