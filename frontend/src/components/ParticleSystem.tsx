@@ -118,7 +118,7 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({
     }
 
     // Запуск анимации
-    animationRef.current = requestAnimationFrame(animate);
+    animate();
 
     return () => {
       isActiveRef.current = false;
