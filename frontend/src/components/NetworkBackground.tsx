@@ -187,7 +187,7 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
       });
     });
 
-    // Draw nodes
+    // Draw nodes (smaller, no glow)
     nodes.forEach(node => {
       const mouseDistance = Math.sqrt(
         Math.pow(mouse.x - node.x, 2) + Math.pow(mouse.y - node.y, 2)
@@ -196,34 +196,18 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
       let nodeSize = node.size;
       let nodeOpacity = node.opacity;
       
+      // Slight size increase on hover but no glow
       if (mouseDistance < mouseInteractionRadius) {
         const force = (mouseInteractionRadius - mouseDistance) / mouseInteractionRadius;
-        nodeSize = node.size * (1 + force * 0.5);
-        nodeOpacity = Math.min(1, node.opacity + force * 0.3);
+        nodeSize = node.size * (1 + force * 0.2);
+        nodeOpacity = Math.min(1, node.opacity + force * 0.2);
       }
 
-      // Draw node with main brand color
+      // Draw node with main brand color - smaller and cleaner
       ctx.fillStyle = `rgba(2, 191, 122, ${nodeOpacity})`;
       ctx.beginPath();
       ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
       ctx.fill();
-
-      // Add glow effect for nodes near mouse
-      if (mouseDistance < mouseInteractionRadius) {
-        const glowRadius = nodeSize * 4;
-        const gradient = ctx.createRadialGradient(
-          node.x, node.y, 0,
-          node.x, node.y, glowRadius
-        );
-        
-        gradient.addColorStop(0, `rgba(2, 191, 122, ${nodeOpacity * 0.4})`);
-        gradient.addColorStop(1, 'rgba(2, 191, 122, 0)');
-        
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, glowRadius, 0, Math.PI * 2);
-        ctx.fill();
-      }
     });
 
     animationRef.current = requestAnimationFrame(animate);
