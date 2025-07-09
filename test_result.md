@@ -105,6 +105,18 @@
 ## user_problem_statement: "Убери след за курсором, также сделай другой интерактивный фон, как на фото, чтобы он также реагировал на курсор."
 
 ## frontend:
+  - task: "Update geometric shapes to use brand colors and slower animation"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Successfully updated geometric shapes to use brand green color rgba(2, 191, 122) instead of gray. Also slowed down all animations: shape deformation speeds reduced by 50%, curve animations slowed down from 0.001 to 0.0005, vertex pulsing reduced from 0.003 to 0.0015, and center pulse reduced from 0.004 to 0.002. The shapes now have beautiful brand-colored appearance with smoother, more gentle animations."
+
   - task: "Replace dark background color with brand color"
     implemented: true
     working: true
