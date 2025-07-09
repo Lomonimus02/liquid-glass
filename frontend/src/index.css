@@ -451,10 +451,16 @@
     );
     animation: glass-shimmer 2s ease-in-out infinite;
     z-index: 1;
+    pointer-events: none;
   }
 
   .glass-button:hover::before {
     animation: glass-shimmer 1s ease-in-out infinite;
+  }
+
+  .glass-button > * {
+    position: relative;
+    z-index: 2;
   }
 
   /* REAL Frosted Glass Effect - Настоящее матовое стекло */
