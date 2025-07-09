@@ -50,7 +50,6 @@ interface GeometricBackgroundProps {
 }
 
 const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
-  shapeCount = 8,
   animationSpeed = 0.5,
   cursorInteraction = true,
   particleTrails = true
@@ -63,6 +62,13 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Calculate responsive shape count based on screen size
+  const getShapeCount = useCallback(() => {
+    const area = dimensions.width * dimensions.height;
+    const baseCount = Math.max(6, Math.floor(area / 200000)); // 1 shape per ~200k pixels
+    return Math.min(baseCount, 15); // Cap at 15 shapes for performance
+  }, [dimensions]);
 
   // Mouse movement handler
   const handleMouseMove = useCallback((e: MouseEvent) => {
