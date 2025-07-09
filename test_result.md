@@ -399,6 +399,18 @@
         agent: "main"
         comment: "Enhanced geometric background with more active movement and smoother size animation. Increased movement speed multipliers (vertices: 1.5x, center: 1.2x), slowed size animation from 0.015 to 0.005 for smoother effect, added slight acceleration for natural movement, reduced velocity damping for sustained movement (0.9995 vs 0.998), and softened bouncing (-0.7 vs -0.8)."
 
+  - task: "Fix z-index layering for geometric background and glassmorphism cards"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx, /app/frontend/src/index.css, /app/frontend/src/pages/Index.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "FIXED Z-INDEX LAYERING ISSUE: The geometric background shapes were appearing over glassmorphism cards instead of behind them. Fixed by: 1) Changed GeometricBackground container from z-0 to z-[1] and canvas to z-[2] 2) Added explicit z-index: 10 to all glassmorphism classes (.frosted-glass, .glass-card, .glass-card-enhanced, .glass-card-subtle, .glass-card-ultra, .glass-card-supreme) 3) Added z-index: 20 for hover states 4) Added z-10 to all page sections to ensure proper stacking context. Now the layering is: Background color (z-[1]) → Geometric shapes (z-[2]) → Glass cards (z-10) → Hover states (z-20) → Navigation (z-50). The glassmorphism effect now properly blurs the geometric background while maintaining visual hierarchy."
+
   - task: "Enhance GeometricBackground with organic shapes and cursor interaction"
     implemented: true
     working: true
