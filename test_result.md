@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Fix shape scaling issue in GeometricBackground"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Fixed shape scaling chaos by setting all points to consistent fixed sizes (1.5 for regular points, 1.2 for center points), removed random line width variations, and eliminated glow effects that caused visual size changes. Shapes now maintain stable sizes while floating around."
+
 ## backend:
   - task: "Backend API connectivity"
     implemented: true
