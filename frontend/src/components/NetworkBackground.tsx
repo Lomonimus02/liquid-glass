@@ -133,8 +133,8 @@ const NetworkBackground: React.FC<NetworkBackgroundProps> = ({
         const force = (mouseInteractionRadius - mouseDistance) / mouseInteractionRadius;
         const angle = Math.atan2(node.y - mouse.y, node.x - mouse.x);
         
-        node.vx += Math.cos(angle) * force * 0.02;
-        node.vy += Math.sin(angle) * force * 0.02;
+        node.vx += Math.cos(angle) * force * 0.01;
+        node.vy += Math.sin(angle) * force * 0.01;
         
         // Increase opacity when near mouse
         node.opacity = Math.min(1, 0.5 + force * 0.5);
