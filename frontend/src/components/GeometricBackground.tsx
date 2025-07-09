@@ -422,10 +422,10 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   }, [isInitialized, animate]);
 
   return (
-    <div className="fixed inset-0 z-0">
+    <div className="fixed inset-0 z-[1]">
       {/* Exact brand green background color - FORCED */}
       <div 
-        className="absolute inset-0"
+        className="absolute inset-0 z-[1]"
         style={{
           backgroundColor: 'rgb(230, 255, 245)',
           background: 'rgb(230, 255, 245) !important'
@@ -437,7 +437,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         ref={canvasRef}
         width={dimensions.width}
         height={dimensions.height}
-        className="absolute inset-0"
+        className="absolute inset-0 z-[2]"
         style={{ 
           background: 'transparent'
         }}
