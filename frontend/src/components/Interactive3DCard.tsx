@@ -86,14 +86,14 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
       
       {/* Main card */}
       <motion.div
-        className="relative backdrop-blur-3xl border rounded-3xl overflow-hidden"
+        className={`relative backdrop-blur-3xl border rounded-3xl overflow-hidden ${className.includes('frosted-glass') ? '' : 'glass-card-enhanced'}`}
         style={{
-          background: 'rgba(255, 255, 255, 0.03)', /* Минимальный белый оттенок для стекла */
-          borderColor: 'rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(60px) saturate(1.8) brightness(1.15)', /* Глубокое размытие для матового стекла */
-          boxShadow: isHovering 
+          background: className.includes('frosted-glass') ? undefined : 'rgba(255, 255, 255, 0.03)',
+          borderColor: className.includes('frosted-glass') ? undefined : 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: className.includes('frosted-glass') ? undefined : 'blur(60px) saturate(1.8) brightness(1.15)',
+          boxShadow: className.includes('frosted-glass') ? undefined : (isHovering 
             ? `0 20px 60px rgba(2, 191, 122, 0.3), 0 0 0 1px ${glowColor}30, inset 0 1px 0 rgba(255, 255, 255, 0.4)`
-            : '0 8px 32px rgba(2, 191, 122, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+            : '0 8px 32px rgba(2, 191, 122, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3)'),
           transform: 'translateZ(0)',
         }}
       >
