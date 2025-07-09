@@ -208,7 +208,7 @@ const ContactSection = () => {
           {/* Contact information */}
           <div className="space-y-6 md:space-y-8">
             <div className="space-y-4 md:space-y-6">
-              <div className="glass-card p-4 md:p-6 group hover:scale-105 transition-transform">
+              <div className="glass-card-ultra p-4 md:p-6 group hover:scale-105 transition-transform">
                 <div className="flex items-center gap-4">
                   <div className="w-10 md:w-12 h-10 md:h-12 rounded-2xl bg-stellar-primary/20 flex items-center justify-center group-hover:bg-stellar-primary/30 transition-colors">
                     <Mail className="w-5 md:w-6 h-5 md:h-6 text-stellar-primary" />
@@ -220,7 +220,7 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="glass-card p-4 md:p-6 group hover:scale-105 transition-transform">
+              <div className="glass-card-ultra p-4 md:p-6 group hover:scale-105 transition-transform">
                 <div className="flex items-center gap-4">
                   <div className="w-10 md:w-12 h-10 md:h-12 rounded-2xl bg-stellar-accent/20 flex items-center justify-center group-hover:bg-stellar-accent/30 transition-colors">
                     <Phone className="w-5 md:w-6 h-5 md:h-6 text-stellar-accent" />
@@ -232,7 +232,7 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="glass-card p-4 md:p-6 group hover:scale-105 transition-transform">
+              <div className="glass-card-ultra p-4 md:p-6 group hover:scale-105 transition-transform">
                 <div className="flex items-center gap-4">
                   <div className="w-10 md:w-12 h-10 md:h-12 rounded-2xl bg-stellar-glow/20 flex items-center justify-center group-hover:bg-stellar-glow/30 transition-colors">
                     <MapPin className="w-5 md:w-6 h-5 md:h-6 text-stellar-glow" />
@@ -245,7 +245,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="glass-card p-4 md:p-6 bg-stellar-primary/5 border-stellar-accent/30">
+            <div className="glass-card-enhanced p-4 md:p-6 bg-stellar-primary/5 border-stellar-accent/30">
               <h4 className="text-lg md:text-xl font-semibold text-stellar-accent mb-4">
                 Бесплатная консультация
               </h4>
