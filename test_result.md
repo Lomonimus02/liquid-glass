@@ -264,7 +264,7 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
-  - task: "Fix shape scaling issue in GeometricBackground"
+  - task: "Recreate GeometricBackground with proper 3D shapes"
     implemented: true
     working: true
     file: "/app/frontend/src/components/GeometricBackground.tsx"
@@ -274,7 +274,7 @@
     status_history:
       - working: true
         agent: "main"
-        comment: "Fixed shape scaling chaos by setting all points to consistent fixed sizes (1.5 for regular points, 1.2 for center points), removed random line width variations, and eliminated glow effects that caused visual size changes. Shapes now maintain stable sizes while floating around."
+        comment: "Completely recreated GeometricBackground with only triangles, quads, and pentagons. Each shape has a center point connected to all vertices for 3D effect. Shapes smoothly change size using sine wave animation (0.85x to 1.15x) and always return to original size. Added floating animation with gentle up/down movement. All shapes are unique but maintain proper geometric structure."
 
 ## backend:
   - task: "Backend API connectivity"
