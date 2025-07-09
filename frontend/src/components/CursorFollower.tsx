@@ -12,13 +12,13 @@ const CursorFollower: React.FC<CursorFollowerProps> = ({ children }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  const springConfig = { damping: 20, stiffness: 300 };
+  const springConfig = { damping: 15, stiffness: 400 };
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
   
-  // Trail cursor с задержкой
-  const trailX = useSpring(mouseX, { damping: 30, stiffness: 200 });
-  const trailY = useSpring(mouseY, { damping: 30, stiffness: 200 });
+  // Trail cursor с уменьшенной задержкой
+  const trailX = useSpring(mouseX, { damping: 20, stiffness: 300 });
+  const trailY = useSpring(mouseY, { damping: 20, stiffness: 300 });
 
   // Optimized mouse move handler without throttling
   const handleMouseMove = useCallback((e: MouseEvent) => {
