@@ -128,7 +128,7 @@ const Navigation = () => {
 
           {/* Mobile menu button */}
           <motion.button
-            className="md:hidden p-2 rounded-lg glass-card-enhanced text-text-primary"
+            className="md:hidden p-2 rounded-lg glass-card-ultra text-text-primary"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -145,7 +145,7 @@ const Navigation = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
-              className="md:hidden glass-card-enhanced mt-2 p-4 space-y-4"
+              className="md:hidden glass-card-supreme mt-2 p-4 space-y-4"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
