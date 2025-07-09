@@ -7,8 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 
 import Lottie from 'lottie-react';
 // --- 1. Импортируем ОБЕ анимации ---
-import paperPlaneAnimationData from "./animations/paper plane.json";
-import successAnimationData from "./animations/successs.json";
+import paperPlaneAnimationData from "./animations/Paper Plane.json";
+import successAnimationData from "./animations/Success.json";
 
 // --- 2. Немного улучшаем наш "компонент-помощник" ---
 // Добавляем поддержку 'loop' и однократного проигрывания
