@@ -284,19 +284,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         const organicDeformation = Math.sin(vertex.deformationPhase) * shape.deformationStrength;
         const breathingMultiplier = 1.0 + Math.sin(vertex.radiusPhase) * shape.liquidness;
         
-        // Mouse influence on individual vertices (reduced for smoother interaction)
-        let mouseInfluence = 0;
-        if (cursorInteraction && distanceToMouse < 150) {
-          const vertexDistanceToMouse = Math.sqrt(
-            Math.pow(mouse.x - vertex.x, 2) + 
-            Math.pow(mouse.y - vertex.y, 2)
-          );
-          if (vertexDistanceToMouse < 100) {
-            const rawInfluence = (100 - vertexDistanceToMouse) / 100 * vertex.mouseInfluence;
-            // Smooth the influence to prevent jerky movements
-            mouseInfluence = Math.sin(rawInfluence * Math.PI * 0.5) * 0.15; // Reduced from 0.3 to 0.15
-          }
-        }
+        // NO mouse influence on individual vertices - shapes remain unchanged
+        // Only connection lines appear, no shape deformation
+        const mouseInfluence = 0; // Always 0 - no shape changes from cursor
         
         // Calculate current radius with all influences (smoother transitions)
         const currentRadius = vertex.originalRadius * breathingMultiplier * shape.currentSizeMultiplier * (1 + organicDeformation + mouseInfluence);
