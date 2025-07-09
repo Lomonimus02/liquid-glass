@@ -132,6 +132,15 @@ const KineticTypography: React.FC<KineticTypographyProps> = ({
                   color: '#02bf7a',
                   transition: { duration: 0.2 }
                 }}
+                onHoverEnd={{
+                  scale: 1,
+                  color: 'inherit',
+                  transition: { duration: 0.2 }
+                }}
+                animate={{
+                  scale: 1,
+                  transition: { duration: 0.2 }
+                }}
               >
                 {letter}
               </motion.span>
