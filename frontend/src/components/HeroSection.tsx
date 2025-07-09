@@ -21,19 +21,32 @@ const HeroSection = () => {
   const buttonY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden">
-      {/* Particle system background */}
-      <ParticleSystem
-        particleCount={60}
-        colors={['rgba(2, 191, 122, 0.3)', 'rgba(2, 191, 122, 0.2)', 'rgba(255, 255, 255, 0.1)']}
-        speed={0.5}
-        size={1.5}
-        className="opacity-70"
-      />
+    <section ref={ref} className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
+      {/* Particle system background - уменьшенный на мобильных */}
+      <div className="hidden md:block">
+        <ParticleSystem
+          particleCount={60}
+          colors={['rgba(2, 191, 122, 0.3)', 'rgba(2, 191, 122, 0.2)', 'rgba(255, 255, 255, 0.1)']}
+          speed={0.5}
+          size={1.5}
+          className="opacity-70"
+        />
+      </div>
+      
+      {/* Мобильная версия с меньшим количеством частиц */}
+      <div className="block md:hidden">
+        <ParticleSystem
+          particleCount={20}
+          colors={['rgba(2, 191, 122, 0.2)', 'rgba(2, 191, 122, 0.1)', 'rgba(255, 255, 255, 0.05)']}
+          speed={0.3}
+          size={1}
+          className="opacity-50"
+        />
+      </div>
 
-      {/* Floating elements with parallax */}
+      {/* Floating elements with parallax - скрытые на мобильных */}
       <motion.div 
-        className="absolute inset-0 overflow-hidden pointer-events-none"
+        className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block"
         style={{ y: backgroundY }}
       >
         <motion.div 
@@ -83,13 +96,13 @@ const HeroSection = () => {
         {/* Badge */}
         <MagneticElement>
           <motion.div 
-            className="inline-flex items-center gap-2 glass-card-enhanced px-6 py-3 mb-8 glass-shimmer-effect"
+            className="inline-flex items-center gap-2 glass-card-enhanced px-4 md:px-6 py-2 md:py-3 mb-6 md:mb-8 glass-shimmer-effect"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Stars className="w-5 h-5 text-stellar-accent" />
-            <span className="text-sm font-medium text-text-secondary">
+            <Stars className="w-4 md:w-5 h-4 md:h-5 text-stellar-accent" />
+            <span className="text-xs md:text-sm font-medium text-text-secondary">
               Инновационный электронный дневник
             </span>
             <motion.div
@@ -103,14 +116,14 @@ const HeroSection = () => {
                 ease: "easeInOut"
               }}
             >
-              <Zap className="w-4 h-4 text-stellar-glow" />
+              <Zap className="w-3 md:w-4 h-3 md:h-4 text-stellar-glow" />
             </motion.div>
           </motion.div>
         </MagneticElement>
 
         {/* Main heading with morphing text */}
         <motion.div 
-          className="text-6xl md:text-8xl font-bold mb-6"
+          className="text-5xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6"
           style={{ y: textY }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -135,7 +148,7 @@ const HeroSection = () => {
 
         {/* Subtitle */}
         <motion.p 
-          className="text-xl md:text-2xl text-text-secondary mb-8 max-w-3xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl lg:text-2xl text-text-secondary mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-4"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -163,19 +176,19 @@ const HeroSection = () => {
 
         {/* Подводка к карточкам */}
         <motion.div 
-          className="text-center mb-8"
+          className="text-center mb-6 md:mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <p className="text-lg text-text-secondary">
+          <p className="text-base md:text-lg text-text-secondary">
             Начните сотрудничать с нами и получите
           </p>
         </motion.div>
 
         {/* CTA Button with magnetic effect */}
         <motion.div 
-          className="flex justify-center items-center mb-16"
+          className="flex justify-center items-center mb-12 md:mb-16"
           style={{ y: buttonY }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -184,7 +197,7 @@ const HeroSection = () => {
           <MagneticElement strength={0.2}>
             <Button 
               size="lg" 
-              className="glass-button px-8 py-4 text-lg font-semibold text-primary-foreground bg-primary hover:bg-primary/90 group glass-shimmer-effect"
+              className="glass-button px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-primary-foreground bg-primary hover:bg-primary/90 group glass-shimmer-effect"
             >
               Начать использовать
               <motion.div
@@ -198,7 +211,7 @@ const HeroSection = () => {
                   ease: "easeInOut"
                 }}
               >
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 md:w-5 h-4 md:h-5" />
               </motion.div>
             </Button>
           </MagneticElement>
@@ -206,29 +219,29 @@ const HeroSection = () => {
 
         {/* Stats with 3D Interactive Cards */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <Interactive3DCard className="h-full" glowColor="#02bf7a" intensity={0.8}>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gradient mb-2">🎨</div>
-              <div className="text-text-secondary">Персонализированный интерфейс для Вашей школы</div>
+            <div className="text-center p-4 md:p-6">
+              <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎨</div>
+              <div className="text-text-secondary text-sm md:text-base">Персонализированный интерфейс для Вашей школы</div>
             </div>
           </Interactive3DCard>
 
           <Interactive3DCard className="h-full" glowColor="#1a8c5c" intensity={0.9}>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gradient mb-2">🎯</div>
-              <div className="text-text-secondary">Бесплатная демонстрация</div>
+            <div className="text-center p-4 md:p-6">
+              <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎯</div>
+              <div className="text-text-secondary text-sm md:text-base">Бесплатная демонстрация</div>
             </div>
           </Interactive3DCard>
 
           <Interactive3DCard className="h-full" glowColor="#0ea5e9" intensity={0.8}>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gradient mb-2">24/7</div>
-              <div className="text-text-secondary">Техническая поддержка</div>
+            <div className="text-center p-4 md:p-6">
+              <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">24/7</div>
+              <div className="text-text-secondary text-sm md:text-base">Техническая поддержка</div>
             </div>
           </Interactive3DCard>
         </motion.div>
@@ -236,7 +249,7 @@ const HeroSection = () => {
 
       {/* Scroll indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
         animate={{
           y: [0, -10, 0],
           opacity: [0.5, 1, 0.5]
