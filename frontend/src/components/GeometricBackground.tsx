@@ -440,16 +440,17 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
   return (
     <div className="fixed inset-0 z-0">
-      {/* Enhanced gradient background with neutral tones */}
+      {/* Brand green gradient background */}
       <div 
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(circle at 20% 80%, rgba(200, 200, 200, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(180, 180, 180, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, rgba(160, 160, 160, 0.02) 0%, transparent 50%),
-            radial-gradient(circle at 60% 70%, rgba(240, 240, 240, 0.1) 0%, transparent 50%),
-            linear-gradient(135deg, #ffffff 0%, #f8f9fa 25%, #ffffff 50%, #f5f5f5 75%, #ffffff 100%)
+            radial-gradient(circle at 20% 80%, rgba(2, 191, 122, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(2, 191, 122, 0.06) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(2, 191, 122, 0.04) 0%, transparent 50%),
+            radial-gradient(circle at 60% 70%, rgba(2, 191, 122, 0.02) 0%, transparent 50%),
+            linear-gradient(135deg, rgba(2, 191, 122, 0.03) 0%, rgba(2, 191, 122, 0.01) 25%, rgba(2, 191, 122, 0.02) 50%, rgba(2, 191, 122, 0.01) 75%, rgba(2, 191, 122, 0.03) 100%),
+            linear-gradient(135deg, #f0fdf4 0%, #f7fee7 25%, #f0fdf4 50%, #ecfdf5 75%, #f0fdf4 100%)
           `
         }}
       />
