@@ -13,68 +13,72 @@ import SmoothReveal from "@/components/SmoothReveal";
 
 const Index = () => {
   return (
-    // Main container with transparent background since the fixed background is now handled at App level
-    <div className="relative min-h-screen bg-transparent">
-      {/*
-        All content with z-10 to ensure it appears above the fixed background
-      */}
+    // Main container with seamless background integration
+    <div className="relative min-h-screen">
+      {/* Seamless content wrapper */}
       <div className="relative z-10 flex flex-col">
         <Navigation />
 
-        <main>
-          <SmoothReveal>
-            <section id="hero">
+        <main className="relative">
+          {/* Hero section без дополнительных отступов */}
+          <section id="hero" className="relative">
+            <SmoothReveal>
               <HeroSection />
-            </section>
-          </SmoothReveal>
+            </SmoothReveal>
+          </section>
 
-          <LiquidTransition>
-            <SmoothReveal direction="left" delay={0.2}>
-              <section id="features">
+          {/* Features section с плавным переходом */}
+          <section id="features" className="relative -mt-8">
+            <LiquidTransition>
+              <SmoothReveal direction="left" delay={0.2}>
                 <FeaturesSection />
-              </section>
-            </SmoothReveal>
-          </LiquidTransition>
+              </SmoothReveal>
+            </LiquidTransition>
+          </section>
 
-          {/* Sticky анимация с демонстрацией этапов создания расписания */}
-          <LiquidTransition color="#02bf7a">
-            <SmoothReveal direction="right" delay={0.1}>
-              <section id="schedule">
+          {/* Schedule section с перекрытием */}
+          <section id="schedule" className="relative -mt-12">
+            <LiquidTransition color="#02bf7a">
+              <SmoothReveal direction="right" delay={0.1}>
                 <StickyScheduleAnimation />
-              </section>
-            </SmoothReveal>
-          </LiquidTransition>
+              </SmoothReveal>
+            </LiquidTransition>
+          </section>
 
-          {/* Новая sticky анимация для аналитики */}
-          <LiquidTransition color="#1a8c5c">
-            <SmoothReveal direction="up" delay={0.3}>
-              <section id="analytics">
+          {/* Analytics section с перекрытием */}
+          <section id="analytics" className="relative -mt-16">
+            <LiquidTransition color="#1a8c5c">
+              <SmoothReveal direction="up" delay={0.3}>
                 <StickyAnalyticsAnimation />
-              </section>
-            </SmoothReveal>
-          </LiquidTransition>
+              </SmoothReveal>
+            </LiquidTransition>
+          </section>
 
-          {/* Новая sticky анимация для ИИ-помощника */}
-          <LiquidTransition color="#0ea5e9">
-            <SmoothReveal direction="down" delay={0.2}>
-              <section id="ai-assistant">
+          {/* AI section с перекрытием */}
+          <section id="ai-assistant" className="relative -mt-16">
+            <LiquidTransition color="#0ea5e9">
+              <SmoothReveal direction="down" delay={0.2}>
                 <StickyAIAnimation />
-              </section>
-            </SmoothReveal>
-          </LiquidTransition>
+              </SmoothReveal>
+            </LiquidTransition>
+          </section>
 
-          <LiquidTransition>
-            <SmoothReveal direction="up" delay={0.4}>
-              <section id="contact">
+          {/* Contact section с плавным переходом */}
+          <section id="contact" className="relative -mt-8">
+            <LiquidTransition>
+              <SmoothReveal direction="up" delay={0.4}>
                 <ContactSection />
-              </section>
-            </SmoothReveal>
-          </LiquidTransition>
+              </SmoothReveal>
+            </LiquidTransition>
+          </section>
         </main>
 
-        <SmoothReveal>
-          <Footer />
-        </SmoothReveal>
+        {/* Footer без разделения */}
+        <div className="relative z-10">
+          <SmoothReveal>
+            <Footer />
+          </SmoothReveal>
+        </div>
       </div>
     </div>
   );
