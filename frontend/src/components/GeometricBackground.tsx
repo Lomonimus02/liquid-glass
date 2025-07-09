@@ -140,31 +140,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       shape.floatPhase += shape.floatSpeed;
       const floatOffset = Math.sin(shape.floatPhase) * 8; // Gentle floating
 
-      // Update vertices with more active movement
-      shape.vertices.forEach(vertex => {
-        // Add slight acceleration for more natural movement
-        vertex.vx += (Math.random() - 0.5) * 0.01;
-        vertex.vy += (Math.random() - 0.5) * 0.01;
-        
-        vertex.x += vertex.vx;
-        vertex.y += vertex.vy + floatOffset * 0.02;
-
-        // Boundary bouncing
-        if (vertex.x <= 0 || vertex.x >= canvas.width) {
-          vertex.vx *= -0.7; // Softer bounce
-          vertex.x = Math.max(0, Math.min(canvas.width, vertex.x));
-        }
-        if (vertex.y <= 0 || vertex.y >= canvas.height) {
-          vertex.vy *= -0.7; // Softer bounce
-          vertex.y = Math.max(0, Math.min(canvas.height, vertex.y));
-        }
-
-        // Gentler velocity damping for more sustained movement
-        vertex.vx *= 0.9995;
-        vertex.vy *= 0.9995;
-      });
-
-      // Update center point with more active movement
+      // Update center point with movement
       shape.center.vx += (Math.random() - 0.5) * 0.008;
       shape.center.vy += (Math.random() - 0.5) * 0.008;
       
@@ -173,17 +149,26 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
       // Boundary bouncing for center
       if (shape.center.x <= 0 || shape.center.x >= canvas.width) {
-        shape.center.vx *= -0.7; // Softer bounce
+        shape.center.vx *= -0.7;
         shape.center.x = Math.max(0, Math.min(canvas.width, shape.center.x));
       }
       if (shape.center.y <= 0 || shape.center.y >= canvas.height) {
-        shape.center.vy *= -0.7; // Softer bounce
+        shape.center.vy *= -0.7;
         shape.center.y = Math.max(0, Math.min(canvas.height, shape.center.y));
       }
 
-      // Gentler velocity damping for center for more sustained movement
+      // Velocity damping for center
       shape.center.vx *= 0.9995;
       shape.center.vy *= 0.9995;
+
+      // Move all vertices relative to center movement (shape moves as whole)
+      const deltaX = shape.center.x - (shape.vertices.reduce((sum, v) => sum + v.x, 0) / shape.vertices.length);
+      const deltaY = shape.center.y - (shape.vertices.reduce((sum, v) => sum + v.y, 0) / shape.vertices.length);
+      
+      shape.vertices.forEach(vertex => {
+        vertex.x += deltaX;
+        vertex.y += deltaY;
+      });
 
       // Use direct vertex positions without any size calculations
       const actualVertices = shape.vertices.map(vertex => ({
