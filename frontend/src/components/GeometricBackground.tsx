@@ -61,8 +61,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       vertices.push({
         x: centerX + Math.cos(angle) * radius,
         y: centerY + Math.sin(angle) * radius,
-        vx: (Math.random() - 0.5) * animationSpeed * 0.8,
-        vy: (Math.random() - 0.5) * animationSpeed * 0.8,
+        vx: (Math.random() - 0.5) * animationSpeed * 1.5, // Increased movement speed
+        vy: (Math.random() - 0.5) * animationSpeed * 1.5, // Increased movement speed
         opacity: 0.6 + Math.random() * 0.4
       });
     }
