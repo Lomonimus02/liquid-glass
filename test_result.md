@@ -264,6 +264,18 @@
         agent: "main"
         comment: "Fixed size stability issue: Removed pulsation/breathing effects from point sizes and opacity. Shapes now maintain consistent size while flying around. Eliminated Math.sin effects that were causing points to grow and shrink."
 
+  - task: "Fix excessive size changes in geometric shapes"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Reduced size change amplitude from 0.15 to 0.05, meaning shapes now only change size by 5% instead of 15%. Size multiplier now oscillates between 0.95 and 1.05 for subtle breathing effect without excessive growth."
+
   - task: "Improve movement and size animation smoothness"
     implemented: true
     working: true
