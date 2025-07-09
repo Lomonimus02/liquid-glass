@@ -86,10 +86,11 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
       
       {/* Main card */}
       <motion.div
-        className="relative backdrop-blur-xl border rounded-3xl overflow-hidden"
+        className="relative backdrop-blur-3xl border rounded-3xl overflow-hidden glass-card-enhanced"
         style={{
-          background: 'rgba(230, 255, 245, 0.3)',
-          borderColor: 'rgba(255, 255, 255, 0.3)',
+          background: 'rgba(255, 255, 255, 0.04)',
+          borderColor: 'rgba(255, 255, 255, 0.12)',
+          backdropFilter: 'blur(50px) saturate(1.5) brightness(1.1)',
           boxShadow: isHovering 
             ? `0 20px 60px rgba(2, 191, 122, 0.3), 0 0 0 1px ${glowColor}30`
             : '0 8px 32px rgba(2, 191, 122, 0.15)',
