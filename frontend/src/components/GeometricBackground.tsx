@@ -362,10 +362,10 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         ctx.stroke();
       });
 
-      // Draw vertices with pulsing effect
+      // Draw vertices with pulsing effect - slower animation
       actualVertices.forEach((vertex, index) => {
-        const pulse = 1 + Math.sin(Date.now() * 0.003 + index) * 0.2;
-        ctx.fillStyle = `rgba(120, 120, 120, ${vertex.opacity})`; // Changed to neutral gray
+        const pulse = 1 + Math.sin(Date.now() * 0.0015 + index) * 0.2; // Reduced speed from 0.003 to 0.0015
+        ctx.fillStyle = `rgba(2, 191, 122, ${vertex.opacity})`; // Brand green color
         ctx.beginPath();
         ctx.arc(vertex.x, vertex.y, 2 * pulse, 0, Math.PI * 2);
         ctx.fill();
