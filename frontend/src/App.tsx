@@ -9,7 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 // Импортируем наши новые компоненты с wow эффектами
-import NetworkBackground from "./components/NetworkBackground";
+import GeometricBackground from "./components/GeometricBackground";
 
 const queryClient = new QueryClient();
 
