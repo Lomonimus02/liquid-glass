@@ -305,8 +305,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
           }
         }
         
-        // Calculate current radius with all influences
-        const currentRadius = vertex.originalRadius * breathingMultiplier * shape.currentSizeMultiplier * (1 + organicDeformation + mouseInfluence * 0.3);
+        // Calculate current radius with all influences (smoother transitions)
+        const currentRadius = vertex.originalRadius * breathingMultiplier * shape.currentSizeMultiplier * (1 + organicDeformation + mouseInfluence);
         
         // Calculate deformed angle for organic shape
         const angleDeformation = Math.sin(vertex.deformationPhase + index) * 0.2;
