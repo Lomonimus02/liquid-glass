@@ -427,6 +427,8 @@
 
   /* REAL Frosted Glass Effect - Настоящее матовое стекло */
   .frosted-glass {
+    position: relative;
+    z-index: 10;
     background: rgba(255, 255, 255, 0.02) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     backdrop-filter: blur(80px) saturate(2.0) brightness(1.2) !important;
@@ -440,6 +442,7 @@
   }
 
   .frosted-glass:hover {
+    z-index: 20;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     backdrop-filter: blur(100px) saturate(2.2) brightness(1.3) !important;
