@@ -6,6 +6,8 @@ interface Point {
   vx: number;
   vy: number;
   opacity: number;
+  originalRadius: number; // Store original distance from center
+  radiusPhase: number; // Phase for radius animation
 }
 
 interface GeometricShape {
