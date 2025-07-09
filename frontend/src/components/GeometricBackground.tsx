@@ -7,6 +7,7 @@ interface Point {
   vy: number;
   opacity: number;
   originalRadius: number; // Store original distance from center
+  originalAngle: number; // Store original angle from center - FIXED
   radiusPhase: number; // Phase for radius animation
 }
 
