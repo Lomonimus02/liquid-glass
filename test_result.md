@@ -254,6 +254,9 @@
       - working: true
         agent: "main"
         comment: "Simplified to pseudo-3D effect per user request to reduce system load. Removed complex 3D calculations, shadows, and gradients. Now creates 3D illusion by adding center points and connecting them to shape vertices (like triangles becoming pyramids). Fixed JavaScript error and optimized performance."
+      - working: true
+        agent: "main"
+        comment: "Added chaotic lines and smooth transitions. Implemented fade-in/fade-out animations for shape transitions, random chaotic lines around shapes, and small movement variations for organic feel. Eliminated jarring transitions between shape dissolution and creation."
 
 ## backend:
   - task: "Backend API connectivity"
