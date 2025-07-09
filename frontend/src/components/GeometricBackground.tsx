@@ -45,83 +45,59 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Create a single geometric shape with 3D properties
+  // Create a simple geometric shape with pseudo-3D effect
   const createGeometricShape = useCallback((id: number): GeometricShape => {
     const pointCount = Math.floor(Math.random() * (maxPoints - minPoints + 1)) + minPoints;
     const centerX = Math.random() * dimensions.width;
     const centerY = Math.random() * dimensions.height;
-    const centerZ = Math.random() * 200 - 100; // Z depth between -100 and 100
     const radius = Math.random() * 80 + 40; // Size between 40-120px
     
     const points: Point[] = [];
     
-    // Create points in a 3D geometric pattern
+    // Determine shape type based on point count
+    const shapeType: 'triangle' | 'quad' | 'pentagon' = 
+      pointCount === 3 ? 'triangle' : 
+      pointCount === 4 ? 'quad' : 'pentagon';
+    
+    // Create points in a geometric pattern (main shape)
     for (let i = 0; i < pointCount; i++) {
       const angle = (i / pointCount) * Math.PI * 2;
-      const variance = (Math.random() - 0.5) * 0.3; // Add some randomness
+      const variance = (Math.random() - 0.5) * 0.2; // Less randomness
       const actualRadius = radius + variance * radius;
       
-      // Create 3D coordinates
-      const x = centerX + Math.cos(angle) * actualRadius;
-      const y = centerY + Math.sin(angle) * actualRadius;
-      const z = centerZ + (Math.random() - 0.5) * 60; // Z variation
-      
       points.push({
-        x,
-        y,
-        z,
+        x: centerX + Math.cos(angle) * actualRadius,
+        y: centerY + Math.sin(angle) * actualRadius,
         vx: (Math.random() - 0.5) * animationSpeed,
         vy: (Math.random() - 0.5) * animationSpeed,
-        vz: (Math.random() - 0.5) * animationSpeed * 0.5,
         opacity: Math.random() * 0.3 + 0.7,
-        size: Math.random() * 2 + 1,
-        depth: z // Store original depth
+        size: Math.random() * 2 + 1
       });
     }
+
+    // Add center point for 3D effect (this creates the "depth" illusion)
+    points.push({
+      x: centerX,
+      y: centerY,
+      vx: (Math.random() - 0.5) * animationSpeed * 0.5,
+      vy: (Math.random() - 0.5) * animationSpeed * 0.5,
+      opacity: Math.random() * 0.4 + 0.6,
+      size: Math.random() * 1.5 + 1
+    });
 
     return {
       id,
       points,
-      center: { x: centerX, y: centerY, z: centerZ },
+      center: { x: centerX, y: centerY },
       lifetime: 0,
       maxLifetime: shapeLifetime + Math.random() * 3000,
       isDissolving: false,
       dissolveProgress: 0,
       rotationSpeed: (Math.random() - 0.5) * 0.002,
       rotation: 0,
-      rotationX: (Math.random() - 0.5) * 0.001,
-      rotationY: (Math.random() - 0.5) * 0.001,
-      rotationZ: (Math.random() - 0.5) * 0.001
+      shapeType
     };
   }, [dimensions, minPoints, maxPoints, animationSpeed, shapeLifetime]);
-
-  // Convert 3D coordinates to 2D with perspective
-  const project3D = useCallback((x: number, y: number, z: number) => {
-    const perspective = 400; // Distance from camera
-    const scale = perspective / (perspective + z);
-    
-    return {
-      x: x * scale,
-      y: y * scale,
-      scale: scale
-    };
-  }, []);
-
-  // Create gradient for 3D lighting effect
-  const createLightingGradient = useCallback((ctx: CanvasRenderingContext2D, x: number, y: number, size: number, depth: number) => {
-    const gradient = ctx.createRadialGradient(x - size * 0.3, y - size * 0.3, 0, x, y, size);
-    
-    // Adjust lighting based on depth
-    const lightIntensity = Math.max(0.3, 1 - Math.abs(depth) / 200);
-    const baseColor = `rgba(2, 191, 122, ${lightIntensity})`;
-    const shadowColor = `rgba(1, 95, 61, ${lightIntensity * 0.3})`;
-    
-    gradient.addColorStop(0, baseColor);
-    gradient.addColorStop(0.7, `rgba(2, 191, 122, ${lightIntensity * 0.6})`);
-    gradient.addColorStop(1, shadowColor);
-    
-    return gradient;
-  }, []);
 
   // Initialize shapes
   const initializeShapes = useCallback(() => {
