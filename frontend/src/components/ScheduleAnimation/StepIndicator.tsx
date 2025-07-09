@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Lottie from 'lottie-react';
 
 // Импортируем анимацию галочки
-import successAnimationData from '../animations/successs.json';
+import successAnimationData from '../animations/Success.json';
 
 
 // "Компонент-помощник" для управления анимациями (остается без изменений)
