@@ -325,7 +325,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       // Draw connections between cursor and nearby shapes
       if (cursorInteraction && distanceToMouse < 180) {
         const connectionOpacity = (180 - distanceToMouse) / 180 * 0.4;
-        ctx.strokeStyle = `rgba(2, 191, 122, ${connectionOpacity})`;
+        ctx.strokeStyle = `rgba(120, 120, 120, ${connectionOpacity})`; // Changed to neutral gray
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(mouse.x, mouse.y);
@@ -341,7 +341,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       }));
 
       // Draw perimeter connections with organic curve
-      ctx.strokeStyle = `rgba(2, 191, 122, 0.7)`;
+      ctx.strokeStyle = `rgba(120, 120, 120, 0.6)`; // Changed to neutral gray
       ctx.lineWidth = 1.5;
       
       for (let i = 0; i < actualVertices.length; i++) {
