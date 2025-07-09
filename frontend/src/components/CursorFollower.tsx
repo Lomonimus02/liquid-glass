@@ -31,7 +31,7 @@ const CursorFollower: React.FC<CursorFollowerProps> = ({ children }) => {
   const handleMouseLeave = useCallback(() => setIsHovering(false), []);
 
   useEffect(() => {
-    // Use event delegation instead of adding listeners to all elements
+    // Use event delegation with optimized handlers
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.matches('button, a, h1, h2, h3, [data-magnetic], .interactive-element')) {
@@ -46,20 +46,16 @@ const CursorFollower: React.FC<CursorFollowerProps> = ({ children }) => {
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMoveThrottled);
+    document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseover', handleMouseOver);
     document.addEventListener('mouseout', handleMouseOut);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMoveThrottled);
+      document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
-      
-      if (throttleRef.current) {
-        clearTimeout(throttleRef.current);
-      }
     };
-  }, [handleMouseMoveThrottled]);
+  }, [handleMouseMove]);
 
   return (
     <>
