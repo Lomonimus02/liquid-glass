@@ -9,16 +9,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "glass-button bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 glow-effect",
+        default: "glass-button bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 glow-effect glass-card-enhanced",
         destructive:
-          "glass-button bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:scale-105",
+          "glass-button bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:scale-105 glass-card-ultra",
         outline:
-          "glass-button border border-glass-border bg-glass-secondary text-text-primary hover:bg-glass-accent hover:text-stellar-accent hover:scale-105",
+          "glass-button border border-glass-border bg-glass-secondary text-text-primary hover:bg-glass-accent hover:text-stellar-accent hover:scale-105 glass-card-subtle",
         secondary:
-          "glass-button bg-glass-secondary text-text-primary hover:bg-glass-accent hover:scale-105",
-        ghost: "hover:bg-glass-secondary hover:text-stellar-accent rounded-2xl transition-all duration-300",
+          "glass-button bg-glass-secondary text-text-primary hover:bg-glass-accent hover:scale-105 glass-card-ultra",
+        ghost: "hover:bg-glass-secondary hover:text-stellar-accent rounded-2xl transition-all duration-300 glass-card-subtle",
         link: "text-stellar-accent underline-offset-4 hover:underline",
-        glass: "glass-button bg-glass-primary border border-glass-border text-text-primary hover:bg-glass-accent hover:scale-105 glow-effect",
+        glass: "glass-button bg-glass-primary border border-glass-border text-text-primary hover:bg-glass-accent hover:scale-105 glow-effect glass-card-supreme",
       },
       size: {
         default: "h-10 px-4 py-2",
