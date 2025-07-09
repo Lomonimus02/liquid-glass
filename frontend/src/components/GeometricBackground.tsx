@@ -276,9 +276,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
       // Update vertices with organic deformation and cursor interaction
       shape.vertices.forEach((vertex, index) => {
-        // Update deformation phases
-        vertex.radiusPhase += 0.008 + (index * 0.003);
-        vertex.deformationPhase += 0.006 + (index * 0.002);
+        // Update phases for organic deformation - slower animation
+        vertex.radiusPhase += 0.004 + (index * 0.0015); // Reduced from 0.008 + 0.003
+        vertex.deformationPhase += 0.003 + (index * 0.001); // Reduced from 0.006 + 0.002
         
         // Calculate organic deformation
         const organicDeformation = Math.sin(vertex.deformationPhase) * shape.deformationStrength;
