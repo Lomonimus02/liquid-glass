@@ -192,18 +192,12 @@ const FeaturesSection = () => {
         {/* Заголовок секции */}
         <SmoothReveal direction="up" delay={0.1}>
           <div className="text-center mb-16">
-            <KineticTypography
-              text="Возможности системы"
-              className="text-4xl md:text-5xl font-bold text-gradient mb-6"
-              animation="elastic"
-              stagger={0.1}
-            />
-            <KineticTypography
-              text="Stellar School предлагает полный спектр инструментов для современного образования"
-              className="text-xl text-text-secondary max-w-3xl mx-auto"
-              animation="wave"
-              stagger={0.05}
-            />
+            <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
+              Преимущества системы
+            </h2>
+            <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+              Stellar School предлагает полный спектр инструментов для современного образования
+            </p>
           </div>
         </SmoothReveal>
 
