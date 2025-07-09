@@ -189,7 +189,7 @@ const Navigation = () => {
               >
                 <Button 
                   onClick={() => scrollToSection('contact')}
-                  className="w-full glass-button bg-primary hover:bg-primary/90 text-primary-foreground mt-4"
+                  className="w-full frosted-glass bg-primary hover:bg-primary/90 text-primary-foreground mt-4"
                 >
                   Попробовать
                 </Button>
