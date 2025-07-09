@@ -291,7 +291,7 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         const organicDeformation = Math.sin(vertex.deformationPhase) * shape.deformationStrength;
         const breathingMultiplier = 1.0 + Math.sin(vertex.radiusPhase) * shape.liquidness;
         
-        // Mouse influence on individual vertices
+        // Mouse influence on individual vertices (reduced for smoother interaction)
         let mouseInfluence = 0;
         if (cursorInteraction && distanceToMouse < 150) {
           const vertexDistanceToMouse = Math.sqrt(
@@ -299,7 +299,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
             Math.pow(mouse.y - vertex.y, 2)
           );
           if (vertexDistanceToMouse < 100) {
-            mouseInfluence = (100 - vertexDistanceToMouse) / 100 * vertex.mouseInfluence;
+            const rawInfluence = (100 - vertexDistanceToMouse) / 100 * vertex.mouseInfluence;
+            // Smooth the influence to prevent jerky movements
+            mouseInfluence = Math.sin(rawInfluence * Math.PI * 0.5) * 0.15; // Reduced from 0.3 to 0.15
           }
         }
         
