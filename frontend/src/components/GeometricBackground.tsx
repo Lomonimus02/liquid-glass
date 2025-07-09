@@ -292,21 +292,21 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
         }
       }
 
-      // Draw points with more variety
+      // Draw points with consistent size
       shape.points.forEach((point, index) => {
         const pointOpacity = baseOpacity * point.opacity;
-        const pointSize = point.size + Math.sin(Date.now() * 0.003 + index) * 0.3;
+        const pointSize = point.size; // Fixed size without pulsation
         
         ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity})`;
         ctx.beginPath();
         ctx.arc(point.x, point.y, Math.max(0.2, pointSize), 0, Math.PI * 2);
         ctx.fill();
         
-        // Add slight glow for some points
-        if (Math.random() > 0.8) {
-          ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity * 0.3})`;
+        // Add slight glow for some points occasionally
+        if (Math.random() > 0.9) { // Reduced frequency
+          ctx.fillStyle = `rgba(2, 191, 122, ${pointOpacity * 0.2})`;
           ctx.beginPath();
-          ctx.arc(point.x, point.y, pointSize * 1.5, 0, Math.PI * 2);
+          ctx.arc(point.x, point.y, pointSize * 1.3, 0, Math.PI * 2);
           ctx.fill();
         }
       });
