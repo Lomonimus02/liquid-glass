@@ -58,7 +58,36 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Create a simple geometric shape with pseudo-3D effect
+  // Generate chaotic lines around a shape
+  const generateChaoticLines = useCallback((center: { x: number; y: number }, radius: number): ChaoticLine[] => {
+    const lines: ChaoticLine[] = [];
+    const lineCount = Math.floor(Math.random() * 3) + 1; // 1-3 lines
+    
+    for (let i = 0; i < lineCount; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = radius * (0.7 + Math.random() * 0.6); // 70-130% of radius
+      const length = 20 + Math.random() * 30; // 20-50px long
+      
+      const startX = center.x + Math.cos(angle) * distance;
+      const startY = center.y + Math.sin(angle) * distance;
+      const endX = startX + Math.cos(angle + (Math.random() - 0.5) * 0.5) * length;
+      const endY = startY + Math.sin(angle + (Math.random() - 0.5) * 0.5) * length;
+      
+      lines.push({
+        startX,
+        startY,
+        endX,
+        endY,
+        opacity: 0.2 + Math.random() * 0.3,
+        lifetime: 0,
+        maxLifetime: 2000 + Math.random() * 3000 // 2-5 seconds
+      });
+    }
+    
+    return lines;
+  }, []);
+
+  // Create a simple geometric shape with pseudo-3D effect and smooth transitions
   const createGeometricShape = useCallback((id: number): GeometricShape => {
     const pointCount = Math.floor(Math.random() * (maxPoints - minPoints + 1)) + minPoints;
     const centerX = Math.random() * dimensions.width;
@@ -106,11 +135,14 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       maxLifetime: shapeLifetime + Math.random() * 3000,
       isDissolving: false,
       dissolveProgress: 0,
+      isFadingIn: true,
+      fadeInProgress: 0,
       rotationSpeed: (Math.random() - 0.5) * 0.002,
       rotation: 0,
-      shapeType
+      shapeType,
+      chaoticLines: generateChaoticLines({ x: centerX, y: centerY }, radius)
     };
-  }, [dimensions, minPoints, maxPoints, animationSpeed, shapeLifetime]);
+  }, [dimensions, minPoints, maxPoints, animationSpeed, shapeLifetime, generateChaoticLines]);
 
   // Initialize shapes
   const initializeShapes = useCallback(() => {
