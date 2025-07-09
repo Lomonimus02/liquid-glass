@@ -423,11 +423,12 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
   return (
     <div className="fixed inset-0 z-0">
-      {/* Exact brand green background color */}
+      {/* Exact brand green background color - FORCED */}
       <div 
         className="absolute inset-0"
         style={{
-          background: `rgb(230, 255, 245)`
+          backgroundColor: 'rgb(230, 255, 245)',
+          background: 'rgb(230, 255, 245) !important'
         }}
       />
       
