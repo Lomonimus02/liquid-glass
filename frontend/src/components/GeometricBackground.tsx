@@ -461,17 +461,17 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       {/* Custom cursor when interaction is enabled */}
       {cursorInteraction && (
         <div 
-          className="fixed pointer-events-none z-50"
+          className="fixed pointer-events-none z-50 transition-all duration-100"
           style={{
-            left: `${mouseRef.current.x - 8}px`,
-            top: `${mouseRef.current.y - 8}px`,
+            left: `${mousePosition.x}px`,
+            top: `${mousePosition.y}px`,
             width: '16px',
             height: '16px',
             borderRadius: '50%',
             background: 'rgba(2, 191, 122, 0.3)',
             boxShadow: '0 0 10px rgba(2, 191, 122, 0.5)',
             transform: 'translate(-50%, -50%)',
-            transition: 'transform 0.1s ease'
+            backdropFilter: 'blur(2px)'
           }}
         />
       )}
