@@ -248,6 +248,9 @@
       - working: true
         agent: "main"
         comment: "Created new GeometricBackground component that forms geometric shapes with 3-5 connected points instead of random particles. Shapes are non-interactive and periodically dissolve and reform. Updated App.tsx to use GeometricBackground instead of NetworkBackground."
+      - working: true
+        agent: "main"
+        comment: "Enhanced GeometricBackground with 3D effects: Added Z-coordinates for depth, perspective projection, lighting gradients, shadows, and depth-based opacity. Shapes now have realistic 3D appearance with proper lighting and shadow effects."
 
 ## backend:
   - task: "Backend API connectivity"
