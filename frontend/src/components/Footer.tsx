@@ -21,9 +21,9 @@ const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company info */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 lg:col-span-2">
             <motion.div 
               className="flex items-center gap-2 mb-4"
               initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,7 @@ const Footer = () => {
               <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
             </motion.div>
             <motion.p 
-              className="text-text-secondary mb-6 max-w-md"
+              className="text-text-secondary mb-6 max-w-md text-sm md:text-base"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -65,7 +65,7 @@ const Footer = () => {
               viewport={{ once: true }}
             >
               <motion.div 
-                className="flex items-center gap-3 text-text-secondary"
+                className="flex items-center gap-3 text-text-secondary text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -73,7 +73,7 @@ const Footer = () => {
                 <span>info@stellarschool.ru</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-3 text-text-secondary"
+                className="flex items-center gap-3 text-text-secondary text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -81,7 +81,7 @@ const Footer = () => {
                 <span>+7 (495) 123-45-67</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-3 text-text-secondary"
+                className="flex items-center gap-3 text-text-secondary text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -102,25 +102,25 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><motion.a 
                 href="#features" 
-                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >Возможности</motion.a></li>
               <li><motion.a 
                 href="#schedule" 
-                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >Расписание</motion.a></li>
               <li><motion.a 
                 href="#analytics" 
-                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >Аналитика</motion.a></li>
               <li><motion.a 
                 href="#ai-assistant" 
-                className="text-text-secondary hover:text-stellar-accent transition-colors"
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >ИИ-помощник</motion.a></li>
@@ -128,15 +128,40 @@ const Footer = () => {
           </motion.div>
 
           {/* Support */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             <h4 className="text-lg font-semibold text-text-primary mb-4">Поддержка</h4>
             <ul className="space-y-2">
-              <li><a href="#contact" className="text-text-secondary hover:text-stellar-accent transition-colors">Связаться с нами</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-stellar-accent transition-colors">Документация</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-stellar-accent transition-colors">Обучение</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-stellar-accent transition-colors">Статус системы</a></li>
+              <li><motion.a 
+                href="#contact" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Связаться с нами</motion.a></li>
+              <li><motion.a 
+                href="#" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Документация</motion.a></li>
+              <li><motion.a 
+                href="#" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Обучение</motion.a></li>
+              <li><motion.a 
+                href="#" 
+                className="text-text-secondary hover:text-stellar-accent transition-colors text-sm md:text-base"
+                whileHover={{ x: 5 }}
+                transition={{ duration: 0.2 }}
+              >Статус системы</motion.a></li>
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom section */}
@@ -144,7 +169,7 @@ const Footer = () => {
           <div className="text-text-secondary text-sm">
             © 2024 Stellar School. Все права защищены.
           </div>
-          <div className="flex items-center gap-6 mt-4 md:mt-0">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-4 md:mt-0">
             <a href="#" className="text-text-secondary hover:text-stellar-accent transition-colors text-sm">
               Политика конфиденциальности
             </a>
