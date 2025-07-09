@@ -105,6 +105,18 @@
 ## user_problem_statement: "Убери след за курсором, также сделай другой интерактивный фон, как на фото, чтобы он также реагировал на курсор."
 
 ## frontend:
+  - task: "Increase cursor interaction distance and brighten connection lines"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Successfully increased cursor interaction distance from 180px to 280px and brightened connection lines by increasing opacity from 0.4 to 0.5. Users can now see connection lines to geometric shapes from a greater distance, and the lines are more visible with enhanced brightness."
+
   - task: "Update geometric shapes to use brand colors and slower animation"
     implemented: true
     working: true
