@@ -5,8 +5,22 @@
 /* Stellar School Design System - Glassmorphism with Green Theme */
 
 @layer base {
-  /* Force brand background color on body */
+  /* Force brand background color on all elements */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  html {
+    background-color: rgb(230, 255, 245) !important;
+    background: rgb(230, 255, 245) !important;
+  }
+  
   body {
+    background-color: rgb(230, 255, 245) !important;
+    background: rgb(230, 255, 245) !important;
+  }
+  
+  #root {
     background-color: rgb(230, 255, 245) !important;
     background: rgb(230, 255, 245) !important;
   }
