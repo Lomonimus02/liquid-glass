@@ -236,9 +236,9 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
       // Update rotation
       shape.rotation += shape.rotationSpeed;
       
-      // Update size phase for breathing effect (reduced speed)
-      shape.sizePhase += 0.001; // Reduced from 0.003 to 0.001
-      shape.currentSizeMultiplier = 1.0 + Math.sin(shape.sizePhase) * 0.08; // Reduced from 0.1 to 0.08
+      // Update size phase for breathing effect (even slower for smoother transitions)
+      shape.sizePhase += 0.0005; // Reduced from 0.001 to 0.0005 for smoother transitions
+      shape.currentSizeMultiplier = 1.0 + Math.sin(shape.sizePhase) * 0.06; // Reduced from 0.08 to 0.06
       
       // Update float phase for floating effect
       shape.floatPhase += shape.floatSpeed;
