@@ -46,67 +46,71 @@ const Stage1Analysis = () => {
 
   return (
     <div className="relative w-full h-full min-h-[400px] p-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <motion.div
-          className="inline-flex items-center gap-2 glass-card-enhanced px-4 py-2 mb-4"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Search className="w-5 h-5 text-stellar-accent" />
-          <span className="text-sm font-medium text-text-secondary">
-            Этап анализа
-          </span>
-        </motion.div>
-        
-        <motion.h3
-          className="text-xl font-bold text-gradient mb-2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Анализ данных и выявление ограничений
-        </motion.h3>
-        
-        <motion.p
-          className="text-text-secondary text-sm"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          ИИ изучает все элементы и их взаимосвязи
-        </motion.p>
-      </div>
+      {/* Header - скрыть надписи на мобильных */}
+      {!isMobile && (
+        <div className="text-center mb-8">
+          <motion.div
+            className="inline-flex items-center gap-2 glass-card-enhanced px-4 py-2 mb-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Search className="w-5 h-5 text-stellar-accent" />
+            <span className="text-sm font-medium text-text-secondary">
+              Этап анализа
+            </span>
+          </motion.div>
+          
+          <motion.h3
+            className="text-xl font-bold text-gradient mb-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Анализ данных и выявление ограничений
+          </motion.h3>
+          
+          <motion.p
+            className="text-text-secondary text-sm"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            ИИ изучает все элементы и их взаимосвязи
+          </motion.p>
+        </div>
+      )}
 
-      {/* Current analysis step */}
-      <div className="flex justify-center mb-8">
-        <motion.div
-          className="glass-card-ultra p-3 inline-block"
-          animate={{
-            scale: [1, 1.05, 1],
-            boxShadow: [
-              '0 4px 16px rgba(2, 191, 122, 0.2)',
-              '0 8px 32px rgba(2, 191, 122, 0.4)',
-              '0 4px 16px rgba(2, 191, 122, 0.2)',
-            ],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <span className={analysisSteps[analysisStep].color}>
-              {analysisSteps[analysisStep].icon}
-            </span>
-            <span className="text-text-primary font-medium">
-              {analysisSteps[analysisStep].title}
-            </span>
-          </div>
-        </motion.div>
-      </div>
+      {/* Current analysis step - скрыть на мобильных */}
+      {!isMobile && (
+        <div className="flex justify-center mb-8">
+          <motion.div
+            className="glass-card-ultra p-3 inline-block"
+            animate={{
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                '0 4px 16px rgba(2, 191, 122, 0.2)',
+                '0 8px 32px rgba(2, 191, 122, 0.4)',
+                '0 4px 16px rgba(2, 191, 122, 0.2)',
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <span className={analysisSteps[analysisStep].color}>
+                {analysisSteps[analysisStep].icon}
+              </span>
+              <span className="text-text-primary font-medium">
+                {analysisSteps[analysisStep].title}
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Data processing grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
