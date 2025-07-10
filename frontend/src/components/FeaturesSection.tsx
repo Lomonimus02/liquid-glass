@@ -231,6 +231,7 @@ const FeaturesSection = () => {
                       className="h-full min-h-[320px]"
                       glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
                       intensity={0.8}
+                      disableGlowOnMobile={true}
                     >
                       <div className="flex flex-col h-full text-center relative z-10 interactive-element p-6">
                         {/* Иконка */}
