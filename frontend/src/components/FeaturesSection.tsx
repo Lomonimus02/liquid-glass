@@ -175,6 +175,23 @@ const FeaturesSection = () => {
   const highlightedFeature = features.find(feature => feature.highlight);
   const nonHighlightedFeatures = features.filter(feature => !feature.highlight);
 
+  // Мобильная карусель - переключение слайдов
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % features.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + features.length) % features.length);
+  };
+
+  // Автопереключение для мобильной карусели
+  useEffect(() => {
+    if (isMobile && isInView) {
+      const interval = setInterval(nextSlide, 4000); // Переключение каждые 4 секунды
+      return () => clearInterval(interval);
+    }
+  }, [isMobile, isInView]);
+
   return (
     <section
       ref={sectionRef}
