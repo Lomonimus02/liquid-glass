@@ -43,8 +43,9 @@ const Navigation = () => {
     // Attached state - full width, no glass effect
     attached: {
       y: 0,
-      left: 0,
-      right: 0,
+      width: '100%',
+      left: '50%',
+      x: '-50%',
       marginLeft: 0,
       marginRight: 0,
       borderRadius: 0,
@@ -59,10 +60,11 @@ const Navigation = () => {
     // Floating state - detached from edges with glass effect
     floating: {
       y: 8, // Increased for better visual separation
-      left: 16, // 16px = 1rem
-      right: 16,
-      marginLeft: 16,
-      marginRight: 16,
+      width: 'calc(100% - 32px)', // Full width minus 16px margin on each side
+      left: '50%',
+      x: '-50%',
+      marginLeft: 0,
+      marginRight: 0,
       borderRadius: 24, // 1.5rem
       scale: 0.98, // Slight scale reduction for floating effect
       transition: {
