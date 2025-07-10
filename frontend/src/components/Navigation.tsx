@@ -110,10 +110,11 @@ const Navigation = () => {
     const progress = (currentScrollY - 10) / 40; // 0 to 1
     return {
       y: progress * 8,
-      left: progress * 16,
-      right: progress * 16,
-      marginLeft: progress * 16,
-      marginRight: progress * 16,
+      width: progress < 1 ? '100%' : 'calc(100% - 32px)',
+      left: '50%',
+      x: '-50%',
+      marginLeft: 0,
+      marginRight: 0,
       borderRadius: progress * 24,
       scale: 1 - (progress * 0.02),
       transition: {
