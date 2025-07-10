@@ -19,6 +19,7 @@ const Stage3FinalSchedule = () => {
     teachersScheduled: 0,
     efficiency: 0
   });
+  const isMobile = useIsMobile();
 
   const scheduleData = [
     // Monday
