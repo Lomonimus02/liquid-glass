@@ -12,6 +12,7 @@ const Stage2ConflictResolution = () => {
   ]);
 
   const [currentlyResolving, setCurrentlyResolving] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const interval = setInterval(() => {
