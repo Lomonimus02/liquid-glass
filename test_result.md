@@ -528,9 +528,12 @@
     priority: "high"
     needs_retesting: false
     status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported that text in header disappears when scrolling down - text appears to be hidden behind blur effect"
       - working: true
         agent: "main"
-        comment: "HEADER CENTERING AND TEXT VISIBILITY FIXES COMPLETED: Successfully resolved both reported issues. 1) FIXED HEADER CENTERING: Replaced problematic left/right animation properties with proper centered positioning using width, left: 50%, and x: -50% transform. Updated animation configurations to use 'calc(100% - 32px)' for floating state width while maintaining center alignment. Added maxWidth: '1280px' for proper responsive behavior. 2) FIXED TEXT DISAPPEARING: Ensured all header text elements (logo, navigation links, CTA button) remain visible throughout all scroll positions by maintaining proper z-index hierarchy and content structure. 3) IMPROVED ANIMATION LOGIC: Updated floatingIslandAnimation to use width-based centering instead of left/right positioning, ensuring header stays centered regardless of screen size. All header elements now remain visible and properly centered during scroll transitions from 0px to 300px+ and back to top."
+        comment: "HEADER CENTERING AND TEXT VISIBILITY FIXES COMPLETED: Successfully resolved both reported issues. 1) FIXED HEADER CENTERING: Replaced problematic left/right animation properties with proper centered positioning using width, left: 50%, and x: -50% transform. Updated animation configurations to use 'calc(100% - 32px)' for floating state width while maintaining center alignment. Added maxWidth: '1280px' for proper responsive behavior. 2) FIXED TEXT DISAPPEARING BEHIND BLUR: Root cause was backdrop-filter blur being applied to overlay covering the entire navigation container, which blurred the text content itself. Solution: Moved backdrop-filter styles from frosted-glass class to inline styles on background div with -z-10 positioning. Now backdrop-filter only blurs elements BEHIND the navigation (geometric background) but does NOT blur the navigation text itself. 3) IMPROVED POSITIONING: Used -z-10 for background layer to position it behind content, eliminating need for z-index on content container. All header elements now remain perfectly visible and readable during scroll transitions from 0px to 200px+ while maintaining proper frosted glass effect on background."
 
   - task: "Replace mobile app card with cloud storage in Features section"
     implemented: true
