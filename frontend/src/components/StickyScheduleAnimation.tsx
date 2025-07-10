@@ -136,7 +136,12 @@ const StickyScheduleAnimation = () => {
             <div className="glass-card-enhanced p-6 relative overflow-hidden">
               <div className="flex items-center justify-center gap-4 mb-4">
                 <motion.div
-                  className="w-12 h-12 bg-stellar-accent/20 rounded-full flex items-center justify-center"
+                  className="w-12 h-12 bg-stellar-accent/20 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{
+                    aspectRatio: '1 / 1',
+                    minWidth: '3rem',
+                    minHeight: '3rem'
+                  }}
                   animate={{
                     scale: [1, 1.2, 1],
                     rotate: [0, 360]
