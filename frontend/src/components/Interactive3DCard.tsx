@@ -92,24 +92,26 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
       onMouseLeave={handleMouseLeave}
       whileTap={{ scale: 0.95 }}
     >
-      {/* Glow effect */}
-      <motion.div
-        className="absolute inset-0 rounded-3xl opacity-0"
-        style={{
-          background: `radial-gradient(circle at center, ${glowColor}30 0%, transparent 70%)`, // Уменьшенная интенсивность
-          filter: 'blur(20px)', // Уменьшенный blur
-          transform: 'translateZ(-1px)',
-          opacity: glowIntensity,
-          borderRadius: '1.5rem',
-          WebkitBorderRadius: '1.5rem',
-          MozBorderRadius: '1.5rem',
-        }}
-        animate={{
-          opacity: effectiveHoverState ? 0.4 : 0, // Уменьшенная прозрачность свечения
-          scale: effectiveHoverState ? 1.05 : 1, // Уменьшенное масштабирование
-        }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      />
+      {/* Glow effect - disabled on mobile when requested */}
+      {!shouldDisableGlow && (
+        <motion.div
+          className="absolute inset-0 rounded-3xl opacity-0"
+          style={{
+            background: `radial-gradient(circle at center, ${glowColor}30 0%, transparent 70%)`, // Уменьшенная интенсивность
+            filter: 'blur(20px)', // Уменьшенный blur
+            transform: 'translateZ(-1px)',
+            opacity: glowIntensity,
+            borderRadius: '1.5rem',
+            WebkitBorderRadius: '1.5rem',
+            MozBorderRadius: '1.5rem',
+          }}
+          animate={{
+            opacity: effectiveHoverState ? 0.4 : 0, // Уменьшенная прозрачность свечения
+            scale: effectiveHoverState ? 1.05 : 1, // Уменьшенное масштабирование
+          }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        />
+      )}
       
       {/* Main card */}
       <motion.div
