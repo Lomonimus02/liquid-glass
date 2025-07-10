@@ -28,24 +28,27 @@ import clockAnimationData from "./animations/time.json"
 import ideaAnimationData from "./animations/Learn More.json"
 import multiAnimationData from "./animations/Staff.json"
 
-// --- 2. Создаем "компонент-помощник" прямо здесь ---
-// Этот маленький компонент будет нашим "умным" плеером для КАЖДОЙ иконки.
-// Он содержит свою собственную, независимую логику управления.
-const LottiePlayer = React.memo(({ animationData, isHovered, className }) => {
+// Обновленный LottiePlayer с автопроигрыванием для мобильных
+const LottiePlayer = React.memo(({ animationData, isHovered, className, autoplay = false, isMobile = false }) => {
   const lottieRef = useRef(null);
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
 
   useEffect(() => {
     const lottieInstance = lottieRef.current;
     if (!lottieInstance) return;
 
-    if (isHovered) {
-      // Проигрываем всю анимацию от начала до конца, один раз
+    if (isMobile && autoplay && !hasPlayedOnce) {
+      // На мобильном проигрываем один раз автоматически при показе
       lottieInstance.playSegments([0, lottieInstance.getDuration(true)], true);
-    } else {
-      // Сбрасываем на первый кадр и останавливаем
+      setHasPlayedOnce(true);
+    } else if (!isMobile && isHovered) {
+      // На десктопе проигрываем при hover
+      lottieInstance.playSegments([0, lottieInstance.getDuration(true)], true);
+    } else if (!isMobile && !isHovered) {
+      // На десктопе сбрасываем на первый кадр
       lottieInstance.goToAndStop(0, true);
     }
-  }, [isHovered]); // Убираем animationData из зависимостей
+  }, [isHovered, autoplay, isMobile, hasPlayedOnce]);
 
   return (
     <Lottie
