@@ -469,6 +469,7 @@ const Navigation = () => {
       </div>
     </motion.nav>
   );
+};
 
 AnimatedBurger.displayName = 'AnimatedBurger';
 
