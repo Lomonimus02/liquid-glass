@@ -90,7 +90,7 @@ const Navigation = () => {
     <motion.nav 
       className={`fixed top-0 z-[9999] transition-all duration-300 ${
         isScrolled 
-          ? 'left-2 right-2 md:left-4 md:right-4 frosted-glass shadow-lg' 
+          ? 'left-1 right-1 md:left-2 md:right-2 frosted-glass shadow-lg' 
           : 'left-0 right-0 bg-transparent'
       }`}
       animate={getCurrentAnimation()}
@@ -99,28 +99,17 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.div 
+          <div 
             className="flex items-center gap-2 cursor-pointer" 
             onClick={() => scrollToSection('hero')}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
-            <motion.div 
+            <div 
               className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
-              animate={{ 
-                rotate: [0, 360],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
             >
               <Sparkles className="w-5 h-5 text-white" />
-            </motion.div>
+            </div>
             <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
-          </motion.div>
+          </div>
 
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-8">
