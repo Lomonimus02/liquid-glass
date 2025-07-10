@@ -125,7 +125,7 @@ const StickyScheduleAnimation = () => {
     >
       {/* Мобильная версия - обычная секция */}
       {isMobile ? (
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           {/* Заголовок секции */}
           <motion.div
             className="text-center mb-8"
