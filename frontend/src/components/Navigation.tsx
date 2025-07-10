@@ -468,6 +468,7 @@ const Navigation = () => {
       </div>
     </motion.nav>
   );
-};
+
+AnimatedBurger.displayName = 'AnimatedBurger';
 
 export default Navigation;
