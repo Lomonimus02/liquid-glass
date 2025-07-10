@@ -74,6 +74,22 @@ const Navigation = () => {
     }
   };
 
+  // Background opacity animation
+  const getBackgroundOpacity = () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY <= 10) {
+      return 0; // Completely transparent
+    }
+    
+    if (currentScrollY > 50) {
+      return 1; // Fully opaque frosted glass
+    }
+    
+    // Gradual opacity increase between 10px and 50px
+    return (currentScrollY - 10) / 40; // 0 to 1
+  };
+
   // Get current animation based on scroll state
   const getCurrentAnimation = () => {
     const currentScrollY = window.scrollY;
@@ -109,11 +125,7 @@ const Navigation = () => {
 
   return (
     <motion.nav 
-      className={`fixed top-0 z-[9999] max-w-7xl mx-auto ${
-        isScrolled 
-          ? 'frosted-glass shadow-lg' 
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 z-[9999] max-w-7xl mx-auto"
       animate={getCurrentAnimation()}
       initial={{ y: 0, left: 0, right: 0, marginLeft: 0, marginRight: 0, borderRadius: 0, scale: 1 }}
       style={{
@@ -121,6 +133,26 @@ const Navigation = () => {
         transition: 'none'
       }}
     >
+      {/* Animated background overlay */}
+      <motion.div 
+        className="absolute inset-0 frosted-glass"
+        animate={{ 
+          opacity: getBackgroundOpacity(),
+          transition: {
+            type: "spring",
+            stiffness: 100,
+            damping: 25,
+            duration: 0.8,
+          }
+        }}
+        initial={{ opacity: 0 }}
+        style={{
+          borderRadius: 'inherit'
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10">
       <div className={`${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
