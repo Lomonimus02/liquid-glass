@@ -4,6 +4,48 @@ import { Menu, X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import MagneticElement from './MagneticElement';
 
+// Animated Burger Menu Component
+const AnimatedBurger = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => {
+  return (
+    <button
+      className="md:hidden p-2 rounded-lg text-text-primary relative w-10 h-10 flex items-center justify-center"
+      onClick={onClick}
+      style={{
+        background: 'rgba(230, 255, 245, 0.08)',
+        border: '1px solid rgba(2, 191, 122, 0.15)',
+        backdropFilter: 'blur(20px) saturate(1.2) brightness(1.1)',
+      }}
+    >
+      <div className="w-6 h-6 flex flex-col justify-center items-center">
+        <motion.span
+          className="block h-0.5 w-6 bg-current origin-center"
+          animate={{
+            rotate: isOpen ? 45 : 0,
+            y: isOpen ? 0 : -4,
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        />
+        <motion.span
+          className="block h-0.5 w-6 bg-current my-1"
+          animate={{
+            opacity: isOpen ? 0 : 1,
+            x: isOpen ? -10 : 0,
+          }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        />
+        <motion.span
+          className="block h-0.5 w-6 bg-current origin-center"
+          animate={{
+            rotate: isOpen ? -45 : 0,
+            y: isOpen ? 0 : 4,
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        />
+      </div>
+    </button>
+  );
+};
+
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
