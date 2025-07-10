@@ -211,6 +211,14 @@ const FeaturesSection = () => {
                     className="h-full min-h-[280px] sm:min-h-[320px]"
                     glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
                     intensity={0.8}
+                    onHoverChange={(isHovered) => {
+                      if (isHovered) {
+                        setHoveredIndex(index);
+                      } else {
+                        setHoveredIndex(null);
+                      }
+                    }}
+                    externalHover={hoveredIndex === index}
                   >
                     <div 
                       className="flex flex-col h-full text-center relative z-10 interactive-element p-4 md:p-6"
