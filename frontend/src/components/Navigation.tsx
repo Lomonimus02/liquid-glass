@@ -45,9 +45,9 @@ const Navigation = () => {
       y: 4, // Reduced from 8px to 4px for smaller gap
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 25,
-        duration: 0.8,
+        stiffness: 60,
+        damping: 20,
+        duration: 1.2,
       }
     },
     // Sticky attachment effect (scrolling up to top)  
@@ -55,9 +55,9 @@ const Navigation = () => {
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 200,
-        damping: 15,
-        duration: 0.4,
+        stiffness: 80,
+        damping: 18,
+        duration: 1.0,
       }
     },
     // Transparent state
@@ -65,9 +65,9 @@ const Navigation = () => {
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 150,
+        stiffness: 70,
         damping: 20,
-        duration: 0.6,
+        duration: 1.0,
       }
     }
   };
