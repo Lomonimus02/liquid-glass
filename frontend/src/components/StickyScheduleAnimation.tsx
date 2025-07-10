@@ -22,12 +22,12 @@ const StickyScheduleAnimation = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: isMobile ? ["start end", "end start"] : ["start center", "end center"]
   });
 
   const isInView = useInView(containerRef, {
     once: false,
-    margin: "-20% 0px -20% 0px"
+    margin: isMobile ? "-10% 0px -10% 0px" : "-20% 0px -20% 0px"
   });
 
   // Исправленная логика определения этапа анимации
