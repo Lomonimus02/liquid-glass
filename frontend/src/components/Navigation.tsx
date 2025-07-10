@@ -83,16 +83,28 @@ const Navigation = () => {
 
   // Get current animation based on scroll state and direction
   const getCurrentAnimation = () => {
+    const currentScrollY = window.scrollY;
+    
+    console.log('Animation Debug:', {
+      isScrolled,
+      currentScrollY,
+      scrollDirection,
+      atTop: currentScrollY <= 10
+    });
+    
     if (!isScrolled) {
+      console.log('Animation State: transparent');
       return floatingIslandAnimation.transparent;
     }
     
     // Only snap to top when actually at the top of the page (within 10px)
-    if (scrollDirection === 'up' && window.scrollY <= 10) {
-      return floatingIslandAnimation.transparent; // Changed from 'up' to 'transparent'
+    if (scrollDirection === 'up' && currentScrollY <= 10) {
+      console.log('Animation State: back to transparent (at top)');
+      return floatingIslandAnimation.transparent;
     }
     
     // When scrolling down or scrolling up but not at the top, maintain floating position
+    console.log('Animation State: floating (down)');
     return floatingIslandAnimation.down;
   };
 
