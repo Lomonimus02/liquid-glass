@@ -235,39 +235,68 @@ const HeroSection = () => {
           )}
         </motion.div>
 
-        {/* Stats with 3D Interactive Cards */}
+        {/* Stats with 3D Interactive Cards - мобильная адаптация */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8"
+          className={`gap-4 md:gap-8 ${isMobile ? 'space-y-4' : 'grid grid-cols-1 md:grid-cols-3'}`}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <MagneticElement strength={0.1} className="h-full">
-            <Interactive3DCard className="h-full min-h-[160px] md:min-h-[180px]" glowColor="#02bf7a" intensity={0.8}>
-              <div className="text-center p-4 md:p-6 flex flex-col justify-center h-full">
-                <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎨</div>
-                <div className="text-text-secondary text-sm md:text-base">Персонализированный интерфейс для Вашей школы</div>
-              </div>
-            </Interactive3DCard>
-          </MagneticElement>
+          {isMobile ? (
+            // Мобильная версия - вертикальный стек
+            <>
+              <Interactive3DCard className="h-full min-h-[120px]" glowColor="#02bf7a" intensity={0.8}>
+                <div className="text-center p-4 flex flex-col justify-center h-full">
+                  <div className="text-2xl font-bold text-gradient mb-2">🎨</div>
+                  <div className="text-text-secondary text-base">Персонализированный интерфейс для Вашей школы</div>
+                </div>
+              </Interactive3DCard>
 
-          <MagneticElement strength={0.1} className="h-full">
-            <Interactive3DCard className="h-full min-h-[160px] md:min-h-[180px]" glowColor="#1a8c5c" intensity={0.9}>
-              <div className="text-center p-4 md:p-6 flex flex-col justify-center h-full">
-                <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎯</div>
-                <div className="text-text-secondary text-sm md:text-base">Бесплатная демонстрация</div>
-              </div>
-            </Interactive3DCard>
-          </MagneticElement>
+              <Interactive3DCard className="h-full min-h-[120px]" glowColor="#1a8c5c" intensity={0.9}>
+                <div className="text-center p-4 flex flex-col justify-center h-full">
+                  <div className="text-2xl font-bold text-gradient mb-2">🎯</div>
+                  <div className="text-text-secondary text-base">Бесплатная демонстрация</div>
+                </div>
+              </Interactive3DCard>
 
-          <MagneticElement strength={0.1} className="h-full">
-            <Interactive3DCard className="h-full min-h-[160px] md:min-h-[180px]" glowColor="#0ea5e9" intensity={0.8}>
-              <div className="text-center p-4 md:p-6 flex flex-col justify-center h-full">
-                <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">24/7</div>
-                <div className="text-text-secondary text-sm md:text-base">Техническая поддержка</div>
-              </div>
-            </Interactive3DCard>
-          </MagneticElement>
+              <Interactive3DCard className="h-full min-h-[120px]" glowColor="#0ea5e9" intensity={0.8}>
+                <div className="text-center p-4 flex flex-col justify-center h-full">
+                  <div className="text-2xl font-bold text-gradient mb-2">24/7</div>
+                  <div className="text-text-secondary text-base">Техническая поддержка</div>
+                </div>
+              </Interactive3DCard>
+            </>
+          ) : (
+            // Десктопная версия - сетка с MagneticElement
+            <>
+              <MagneticElement strength={0.1} className="h-full">
+                <Interactive3DCard className="h-full min-h-[160px] md:min-h-[180px]" glowColor="#02bf7a" intensity={0.8}>
+                  <div className="text-center p-4 md:p-6 flex flex-col justify-center h-full">
+                    <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎨</div>
+                    <div className="text-text-secondary text-sm md:text-base">Персонализированный интерфейс для Вашей школы</div>
+                  </div>
+                </Interactive3DCard>
+              </MagneticElement>
+
+              <MagneticElement strength={0.1} className="h-full">
+                <Interactive3DCard className="h-full min-h-[160px] md:min-h-[180px]" glowColor="#1a8c5c" intensity={0.9}>
+                  <div className="text-center p-4 md:p-6 flex flex-col justify-center h-full">
+                    <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">🎯</div>
+                    <div className="text-text-secondary text-sm md:text-base">Бесплатная демонстрация</div>
+                  </div>
+                </Interactive3DCard>
+              </MagneticElement>
+
+              <MagneticElement strength={0.1} className="h-full">
+                <Interactive3DCard className="h-full min-h-[160px] md:min-h-[180px]" glowColor="#0ea5e9" intensity={0.8}>
+                  <div className="text-center p-4 md:p-6 flex flex-col justify-center h-full">
+                    <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">24/7</div>
+                    <div className="text-text-secondary text-sm md:text-base">Техническая поддержка</div>
+                  </div>
+                </Interactive3DCard>
+              </MagneticElement>
+            </>
+          )}
         </motion.div>
       </div>
 
