@@ -223,27 +223,45 @@ const Navigation = () => {
               <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
             </div>
 
-            {/* Desktop navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            {/* Desktop navigation - adaptive for floating state */}
+            <div className={`hidden md:flex items-center transition-all duration-300 ${
+              isScrolled 
+                ? 'space-x-4 lg:space-x-6' // Reduced spacing when floating
+                : 'space-x-6 lg:space-x-8' // Normal spacing when attached
+            }`}>
               <button 
                 onClick={() => scrollToSection('features')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                  isScrolled 
+                    ? 'text-sm lg:text-base py-1' // Smaller text when floating
+                    : 'text-base py-2' // Normal size when attached
+                }`}
               >
-                Возможности
+                <span className="hidden lg:inline">Возможности</span>
+                <span className="lg:hidden">Функции</span>
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
               
               <button 
                 onClick={() => scrollToSection('schedule')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                  isScrolled 
+                    ? 'text-sm lg:text-base py-1'
+                    : 'text-base py-2'
+                }`}
               >
-                Расписание
+                <span className="hidden lg:inline">Расписание</span>
+                <span className="lg:hidden">График</span>
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
               
               <button 
                 onClick={() => scrollToSection('analytics')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                  isScrolled 
+                    ? 'text-sm lg:text-base py-1'
+                    : 'text-base py-2'
+                }`}
               >
                 Аналитика
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
@@ -251,15 +269,24 @@ const Navigation = () => {
               
               <button 
                 onClick={() => scrollToSection('ai-assistant')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                  isScrolled 
+                    ? 'text-sm lg:text-base py-1'
+                    : 'text-base py-2'
+                }`}
               >
-                ИИ-помощник
+                <span className="hidden lg:inline">ИИ-помощник</span>
+                <span className="lg:hidden">ИИ</span>
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
               
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
+                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                  isScrolled 
+                    ? 'text-sm lg:text-base py-1'
+                    : 'text-base py-2'
+                }`}
               >
                 Контакты
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
