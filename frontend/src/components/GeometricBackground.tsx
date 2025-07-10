@@ -197,13 +197,20 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     console.log('Geometric shapes initialized:', shapes.length, 'for screen size:', dimensions.width, 'x', dimensions.height, 'isMobile:', isMobile);
   }, [createGeometricShape, dimensions, getShapeCount, isMobile]);
 
-  // Update canvas dimensions
+  // Update canvas dimensions with debouncing to prevent excessive reinitialization
   const updateDimensions = useCallback(() => {
-    setDimensions({
+    const newDimensions = {
       width: window.innerWidth,
       height: window.innerHeight
-    });
-  }, []);
+    };
+    
+    // Only update if dimensions actually changed significantly (avoid minor changes)
+    if (Math.abs(newDimensions.width - dimensions.width) > 10 || 
+        Math.abs(newDimensions.height - dimensions.height) > 10) {
+      console.log('Dimensions changed from', dimensions, 'to', newDimensions);
+      setDimensions(newDimensions);
+    }
+  }, [dimensions]);
 
   // Animation loop with enhanced cursor interaction and organic deformation
   const animate = useCallback(() => {
