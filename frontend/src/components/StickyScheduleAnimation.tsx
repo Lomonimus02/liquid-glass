@@ -7,6 +7,7 @@ import Stage1Analysis from './ScheduleAnimation/Stage1Analysis';
 import Stage2ConflictResolution from './ScheduleAnimation/Stage2ConflictResolution';
 import Stage3FinalSchedule from './ScheduleAnimation/Stage3FinalSchedule';
 import StepIndicator from './ScheduleAnimation/StepIndicator';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const StickyScheduleAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
