@@ -64,12 +64,12 @@ const LottiePlayer = React.memo(({ animationData, isHovered, className, autoplay
 LottiePlayer.displayName = 'LottiePlayer';
 
 
-// --- 3. Наш основной компонент FeaturesSection ---
-// Обратите внимание, насколько он стал чище! Вся сложная логика ушла в LottiePlayer.
 const FeaturesSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const sectionRef = useRef(null);
   const scheduleCardRef = useRef(null);
+  const isMobile = useIsMobile();
 
   // Отслеживаем, когда секция в поле зрения
   const isInView = useInView(sectionRef, {
