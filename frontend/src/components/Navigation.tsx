@@ -93,7 +93,7 @@ const Navigation = () => {
     <motion.nav 
       className={`fixed top-0 z-[9999] transition-all duration-300 ${
         isScrolled 
-          ? 'left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] md:w-[calc(100%-4rem)] max-w-4xl frosted-glass shadow-lg' 
+          ? 'left-4 right-4 md:left-8 md:right-8 max-w-4xl mx-auto frosted-glass shadow-lg' 
           : 'left-0 right-0 bg-transparent'
       }`}
       animate={getCurrentAnimation()}
