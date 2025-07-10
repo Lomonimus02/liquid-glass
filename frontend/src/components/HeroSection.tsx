@@ -140,9 +140,11 @@ const HeroSection = () => {
           <span className="text-text-primary">School</span>
         </motion.div>
 
-        {/* Subtitle */}
+        {/* Subtitle - мобильная оптимизация */}
         <motion.p 
-          className="text-lg md:text-xl lg:text-2xl text-text-secondary mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-4"
+          className={`text-text-secondary mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed px-4 ${
+            isMobile ? 'text-lg' : 'text-lg md:text-xl lg:text-2xl'
+          }`}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
