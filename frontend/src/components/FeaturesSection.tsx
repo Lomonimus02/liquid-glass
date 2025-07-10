@@ -214,8 +214,6 @@ const FeaturesSection = () => {
                   >
                     <div 
                       className="flex flex-col h-full text-center relative z-10 interactive-element p-4 md:p-6"
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
                     >
                       {/* Иконка */}
                       <div className="mb-4 flex justify-center">
