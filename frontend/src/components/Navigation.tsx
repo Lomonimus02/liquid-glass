@@ -11,7 +11,7 @@ const AnimatedBurger = React.forwardRef<HTMLButtonElement, { isOpen: boolean; on
     return (
       <motion.button
         ref={ref}
-        className="md:hidden p-3 rounded-2xl text-white relative w-12 h-12 flex items-center justify-center"
+        className="md:hidden p-3 rounded-2xl text-white relative w-12 h-12 flex items-center justify-center overflow-hidden"
         onClick={onClick}
         style={{
           background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.3), rgba(2, 191, 122, 0.15))',
@@ -44,7 +44,7 @@ const AnimatedBurger = React.forwardRef<HTMLButtonElement, { isOpen: boolean; on
           duration: 0.2 
         }}
       >
-        {/* Enhanced shimmer effect */}
+        {/* Enhanced shimmer effect - constrained within button */}
         <motion.div
           className="absolute inset-0 rounded-2xl opacity-0"
           style={{
@@ -111,22 +111,24 @@ const AnimatedBurger = React.forwardRef<HTMLButtonElement, { isOpen: boolean; on
           />
         </div>
         
-        {/* Pulsing background indicator when menu is open */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl"
-          style={{
-            background: 'radial-gradient(circle, rgba(2, 191, 122, 0.3), transparent 70%)',
-          }}
-          animate={{
-            scale: isOpen ? [1, 1.1, 1] : 1,
-            opacity: isOpen ? [0.5, 0.8, 0.5] : 0,
-          }}
-          transition={{
-            duration: 2,
-            repeat: isOpen ? Infinity : 0,
-            ease: "easeInOut"
-          }}
-        />
+        {/* Pulsing background indicator when menu is open - FIXED: constrained within button */}
+        {isOpen && (
+          <motion.div
+            className="absolute inset-1 rounded-xl" 
+            style={{
+              background: 'radial-gradient(circle, rgba(2, 191, 122, 0.15), transparent 60%)',
+            }}
+            animate={{
+              scale: [1, 1.05, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        )}
       </motion.button>
     );
   }
