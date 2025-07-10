@@ -153,136 +153,137 @@ const Navigation = () => {
       
       {/* Content */}
       <div className="relative z-10">
-      <div className={`${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div 
-            className="flex items-center gap-2 cursor-pointer" 
-            onClick={() => scrollToSection('hero')}
-          >
+        <div className={`${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
             <div 
-              className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
+              className="flex items-center gap-2 cursor-pointer" 
+              onClick={() => scrollToSection('hero')}
             >
-              <Sparkles className="w-5 h-5 text-white" />
+              <div 
+                className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
+              >
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
             </div>
-            <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
-          </div>
 
-          {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={() => scrollToSection('features')}
-              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-            >
-              Возможности
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </button>
-            
-            <button 
-              onClick={() => scrollToSection('schedule')}
-              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-            >
-              Расписание
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </button>
-            
-            <button 
-              onClick={() => scrollToSection('analytics')}
-              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-            >
-              Аналитика
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </button>
-            
-            <button 
-              onClick={() => scrollToSection('ai-assistant')}
-              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-            >
-              ИИ-помощник
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </button>
-            
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-            >
-              Контакты
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </button>
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button 
-              onClick={() => scrollToSection('contact')}
-              className="glass-button text-white glass-shimmer-effect"
-            >
-              Попробовать
-            </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded-lg frosted-glass text-text-primary"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div 
-              className="md:hidden frosted-glass mt-2 p-4 space-y-4"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-            >
+            {/* Desktop navigation */}
+            <div className="hidden md:flex items-center space-x-8">
               <button 
                 onClick={() => scrollToSection('features')}
-                className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
               >
                 Возможности
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
+              
               <button 
                 onClick={() => scrollToSection('schedule')}
-                className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
               >
                 Расписание
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
+              
               <button 
                 onClick={() => scrollToSection('analytics')}
-                className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
               >
                 Аналитика
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
+              
               <button 
                 onClick={() => scrollToSection('ai-assistant')}
-                className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
               >
                 ИИ-помощник
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
+              
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
               >
                 Контакты
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
               </button>
+            </div>
+
+            {/* CTA Button */}
+            <div className="hidden md:block">
               <Button 
                 onClick={() => scrollToSection('contact')}
-                className="w-full glass-button text-white mt-4"
+                className="glass-button text-white glass-shimmer-effect"
               >
                 Попробовать
               </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden p-2 rounded-lg frosted-glass text-text-primary"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile menu */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div 
+                className="md:hidden frosted-glass mt-2 p-4 space-y-4"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.2 }}
+              >
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                >
+                  Возможности
+                </button>
+                <button 
+                  onClick={() => scrollToSection('schedule')}
+                  className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                >
+                  Расписание
+                </button>
+                <button 
+                  onClick={() => scrollToSection('analytics')}
+                  className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                >
+                  Аналитика
+                </button>
+                <button 
+                  onClick={() => scrollToSection('ai-assistant')}
+                  className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                >
+                  ИИ-помощник
+                </button>
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
+                >
+                  Контакты
+                </button>
+                <Button 
+                  onClick={() => scrollToSection('contact')}
+                  className="w-full glass-button text-white mt-4"
+                >
+                  Попробовать
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </motion.nav>
   );
