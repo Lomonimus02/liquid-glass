@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { Brain, Cpu, Network, Lightbulb, Zap, Sparkles } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const StickyAIAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
