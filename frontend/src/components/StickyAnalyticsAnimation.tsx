@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { BarChart3, TrendingUp, PieChart, Activity, Target, Zap } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const StickyAnalyticsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
