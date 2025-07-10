@@ -515,7 +515,10 @@
   run_ui: false
 
 ## test_plan:
-  current_focus: []
+  current_focus:
+    - "Fix geometric background shapes disappearing bug"
+    - "Redesign mobile navigation burger menu for better UX"
+    - "Remove mobile card glow effects while preserving desktop experience"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
