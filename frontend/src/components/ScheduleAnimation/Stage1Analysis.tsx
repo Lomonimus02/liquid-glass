@@ -6,6 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const Stage1Analysis = () => {
   const [analysisStep, setAnalysisStep] = useState(0);
   const [processedItems, setProcessedItems] = useState<Set<number>>(new Set());
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const interval = setInterval(() => {
