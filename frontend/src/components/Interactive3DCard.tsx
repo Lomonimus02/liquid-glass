@@ -14,10 +14,15 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
   children,
   className = '',
   glowColor = '#02bf7a',
-  intensity = 1
+  intensity = 1,
+  onHoverChange,
+  externalHover = false
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
+  
+  // Use external hover state if provided, otherwise use internal state
+  const effectiveHoverState = externalHover !== undefined ? externalHover : isHovering;
   
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -27,6 +32,17 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig);
   const scale = useSpring(1, springConfig);
   const glowIntensity = useSpring(0, springConfig);
+
+  // Update scale and glow based on effective hover state
+  useEffect(() => {
+    if (effectiveHoverState) {
+      scale.set(1.08);
+      glowIntensity.set(1);
+    } else {
+      scale.set(1);
+      glowIntensity.set(0);
+    }
+  }, [effectiveHoverState, scale, glowIntensity]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -44,16 +60,14 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
 
   const handleMouseEnter = () => {
     setIsHovering(true);
-    scale.set(1.08); // Увеличенный масштаб
-    glowIntensity.set(1);
+    onHoverChange?.(true);
   };
 
   const handleMouseLeave = () => {
     setIsHovering(false);
     mouseX.set(0);
     mouseY.set(0);
-    scale.set(1);
-    glowIntensity.set(0);
+    onHoverChange?.(false);
   };
 
   return (
