@@ -98,8 +98,8 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
           MozBorderRadius: '1.5rem',
         }}
         animate={{
-          opacity: isHovering ? 0.4 : 0, // Уменьшенная прозрачность свечения
-          scale: isHovering ? 1.05 : 1, // Уменьшенное масштабирование
+          opacity: effectiveHoverState ? 0.4 : 0, // Уменьшенная прозрачность свечения
+          scale: effectiveHoverState ? 1.05 : 1, // Уменьшенное масштабирование
         }}
         transition={{ duration: 0.4, ease: "easeOut" }}
       />
