@@ -638,11 +638,7 @@ const StickyAIAnimation = () => {
             </AnimatePresence>
           </div>
         </div>
-        <div className="relative w-full max-w-7xl mx-auto px-4">
-          {/* Заголовок секции */}
-          <motion.div
-            className="text-center relative mb-8"
-            style={{
+      ): (
               opacity: titleOpacity,
               scale: titleScale,
               y: titleY,
