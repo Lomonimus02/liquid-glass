@@ -21,8 +21,18 @@ const Navigation = () => {
         setScrollDirection('up');
       }
       
+      const newIsScrolled = currentScrollY > 50;
       setLastScrollY(currentScrollY);
-      setIsScrolled(currentScrollY > 50);
+      setIsScrolled(newIsScrolled);
+      
+      // Debug logging
+      console.log('Scroll Debug:', {
+        currentScrollY,
+        lastScrollY,
+        direction: currentScrollY > lastScrollY ? 'down' : 'up',
+        isScrolled: newIsScrolled,
+        threshold: 50
+      });
     };
 
     window.addEventListener('scroll', handleScroll);
