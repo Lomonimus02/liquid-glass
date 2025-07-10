@@ -106,15 +106,15 @@ const Stage3FinalSchedule = () => {
         </div>
       </div>
 
-      {/* Weekly schedule grid */}
-      <div className="grid grid-cols-6 gap-2 text-xs">
+      {/* Weekly schedule grid - адаптированная для мобильных */}
+      <div className={`grid gap-2 text-xs ${isMobile ? 'grid-cols-3' : 'grid-cols-6'}`}>
         {/* Header row */}
         <div className="text-center font-medium text-stellar-accent p-2">
           Время
         </div>
-        {daysOfWeek.map((day, dayIndex) => (
+        {(isMobile ? daysOfWeek.slice(0, 2) : daysOfWeek).map((day, dayIndex) => (
           <div key={dayIndex} className="text-center font-medium text-stellar-accent p-2 glass-card">
-            {day.slice(0, 3)}
+            {isMobile ? day.slice(0, 2) : day.slice(0, 3)}
           </div>
         ))}
 
@@ -128,14 +128,16 @@ const Stage3FinalSchedule = () => {
             </div>
 
             {/* Schedule cells for each day */}
-            {daysOfWeek.map((day, dayIndex) => {
+            {(isMobile ? daysOfWeek.slice(0, 2) : daysOfWeek).map((day, dayIndex) => {
               const key = `${day}-${time}`;
               const cell = schedule[key];
 
               return (
                 <div
                   key={key}
-                  className={`p-2 rounded-3xl text-center transition-all duration-700 min-h-[80px] flex flex-col justify-center ${
+                  className={`p-2 rounded-3xl text-center transition-all duration-700 flex flex-col justify-center ${
+                    isMobile ? 'min-h-[60px]' : 'min-h-[80px]'
+                  } ${
                     cell && cell.built
                       ? 'glass-card text-stellar-accent animate-build-in'
                       : 'glass-card opacity-50'
@@ -147,14 +149,16 @@ const Stage3FinalSchedule = () => {
                   {cell && cell.built && (
                     <>
                       <div className={`font-medium ${cell.color} flex items-center justify-center gap-1`}>
-                        <CheckCircle2 className="w-3 h-3" />
-                        {cell.subject}
+                        <CheckCircle2 className={isMobile ? 'w-2 h-2' : 'w-3 h-3'} />
+                        <span className={isMobile ? 'text-[9px]' : 'text-xs'}>
+                          {isMobile ? cell.subject.slice(0, 6) + (cell.subject.length > 6 ? '...' : '') : cell.subject}
+                        </span>
                       </div>
-                      <div className="text-[10px] text-text-secondary mt-1">
-                        {cell.teacher.split(' ')[0]}
+                      <div className={`text-text-secondary mt-1 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
+                        {isMobile ? cell.teacher.split(' ')[0].slice(0, 5) + '.' : cell.teacher.split(' ')[0]}
                       </div>
-                      <div className="text-[10px] text-stellar-accent/70 flex items-center justify-center gap-1">
-                        <MapPin className="w-2 h-2" />
+                      <div className={`text-stellar-accent/70 flex items-center justify-center gap-1 ${isMobile ? 'text-[8px]' : 'text-[10px]'}`}>
+                        <MapPin className={isMobile ? 'w-1.5 h-1.5' : 'w-2 h-2'} />
                         {cell.classroom}
                       </div>
                     </>
