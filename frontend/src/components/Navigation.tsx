@@ -307,17 +307,11 @@ const Navigation = () => {
               </Button>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 rounded-lg frosted-glass text-text-primary"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            {/* Animated Mobile menu button */}
+            <AnimatedBurger 
+              isOpen={isMobileMenuOpen} 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            />
           </div>
 
           {/* Mobile menu */}
