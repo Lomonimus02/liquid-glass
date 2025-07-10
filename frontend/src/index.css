@@ -643,6 +643,68 @@
   .perspective-card:hover .perspective-card-content {
     transform: rotateY(10deg) rotateX(5deg);
   }
+
+  /* Мобильные утилиты */
+  .touch-card { 
+    min-height: 72px; 
+    padding: 16px; 
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-text { 
+    font-size: 18px; 
+    line-height: 1.4; 
+  }
+
+  .thumb-friendly { 
+    min-width: 44px; 
+    min-height: 44px; 
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Оптимизированные эффекты для мобильных */
+  @media (max-width: 768px) {
+    .glass-card, .glass-card-enhanced, .glass-card-subtle, .glass-card-ultra, .glass-card-supreme {
+      backdrop-filter: blur(20px) saturate(1.3) brightness(1.1) !important;
+    }
+    
+    .frosted-glass {
+      backdrop-filter: blur(30px) saturate(1.5) brightness(1.1) !important;
+    }
+    
+    /* Убираем сложные анимации на мобильных */
+    .glass-shimmer-effect::before {
+      animation: none;
+    }
+    
+    /* Упрощаем box-shadow на мобильных */
+    .glass-card, .glass-card-enhanced, .glass-card-subtle, .glass-card-ultra, .glass-card-supreme, .frosted-glass {
+      box-shadow: 
+        0 4px 16px rgba(2, 191, 122, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+  /* Touch-specific стили */
+  @media (hover: none) and (pointer: coarse) {
+    .hover\:scale-105:hover {
+      transform: none;
+    }
+    
+    .interactive-element {
+      transform: none !important;
+    }
+    
+    /* Убираем hover эффекты на touch устройствах */
+    .glass-card:hover, .glass-card-enhanced:hover, .glass-card-ultra:hover {
+      transform: none;
+      background: inherit;
+      border: inherit;
+      backdrop-filter: inherit;
+    }
+  }
 }
 
 @layer base {
