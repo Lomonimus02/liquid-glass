@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Point {
   x: number;
