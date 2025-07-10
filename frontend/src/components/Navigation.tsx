@@ -5,55 +5,129 @@ import { motion, AnimatePresence } from 'framer-motion';
 import MagneticElement from './MagneticElement';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Animated Burger Menu Component
+// Enhanced Animated Burger Menu Component with modern design
 const AnimatedBurger = React.forwardRef<HTMLButtonElement, { isOpen: boolean; onClick: () => void }>(
   ({ isOpen, onClick }, ref) => {
     return (
-      <button
+      <motion.button
         ref={ref}
-        className="md:hidden p-2 rounded-lg text-text-primary relative w-10 h-10 flex items-center justify-center"
+        className="md:hidden p-3 rounded-2xl text-white relative w-12 h-12 flex items-center justify-center"
         onClick={onClick}
         style={{
-          background: 'rgba(230, 255, 245, 0.08)',
-          border: '1px solid rgba(2, 191, 122, 0.15)',
-          backdropFilter: 'blur(20px) saturate(1.2) brightness(1.1)',
+          background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.3), rgba(2, 191, 122, 0.15))',
+          border: '1px solid rgba(255, 255, 255, 0.25)',
+          backdropFilter: 'blur(30px) saturate(1.4) brightness(1.15)',
+          boxShadow: `
+            0 8px 32px rgba(2, 191, 122, 0.2),
+            0 4px 16px rgba(2, 191, 122, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            inset 0 -1px 0 rgba(2, 191, 122, 0.2)
+          `,
+        }}
+        whileHover={{
+          scale: 1.05,
+          background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.4), rgba(2, 191, 122, 0.2))',
+          boxShadow: `
+            0 12px 40px rgba(2, 191, 122, 0.25),
+            0 6px 20px rgba(2, 191, 122, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            inset 0 -1px 0 rgba(2, 191, 122, 0.25)
+          `,
+        }}
+        whileTap={{ 
+          scale: 0.95,
+        }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 400, 
+          damping: 25,
+          duration: 0.2 
         }}
       >
+        {/* Enhanced shimmer effect */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl opacity-0"
+          style={{
+            background: 'linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%)',
+            transform: 'translateX(-100%)',
+          }}
+          animate={{
+            transform: isOpen ? 'translateX(100%)' : 'translateX(-100%)',
+            opacity: isOpen ? 0.7 : 0,
+          }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        />
+        
         <div className="w-6 h-5 flex flex-col justify-between items-center relative">
-          {/* Top line */}
+          {/* Top line with enhanced animation */}
           <motion.span
-            className="block h-0.5 w-6 bg-current absolute"
+            className="block h-0.5 w-6 rounded-full bg-current absolute shadow-sm"
             style={{ top: isOpen ? '50%' : '0%' }}
             animate={{
               rotate: isOpen ? 45 : 0,
               y: isOpen ? '-50%' : 0,
+              scaleX: isOpen ? 0.8 : 1,
             }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300, 
+              damping: 25,
+              duration: 0.3 
+            }}
           />
           
-          {/* Middle line */}
+          {/* Middle line with smooth scale and opacity */}
           <motion.span
-            className="block h-0.5 w-6 bg-current absolute"
+            className="block h-0.5 w-6 rounded-full bg-current absolute shadow-sm"
             style={{ top: '50%', y: '-50%' }}
             animate={{
               opacity: isOpen ? 0 : 1,
               scaleX: isOpen ? 0 : 1,
+              rotate: isOpen ? 180 : 0,
             }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300, 
+              damping: 25,
+              duration: 0.3 
+            }}
           />
           
-          {/* Bottom line */}
+          {/* Bottom line with enhanced animation */}
           <motion.span
-            className="block h-0.5 w-6 bg-current absolute"
+            className="block h-0.5 w-6 rounded-full bg-current absolute shadow-sm"
             style={{ bottom: isOpen ? '50%' : '0%' }}
             animate={{
               rotate: isOpen ? -45 : 0,
               y: isOpen ? '50%' : 0,
+              scaleX: isOpen ? 0.8 : 1,
             }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300, 
+              damping: 25,
+              duration: 0.3 
+            }}
           />
         </div>
-      </button>
+        
+        {/* Pulsing background indicator when menu is open */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl"
+          style={{
+            background: 'radial-gradient(circle, rgba(2, 191, 122, 0.3), transparent 70%)',
+          }}
+          animate={{
+            scale: isOpen ? [1, 1.1, 1] : 1,
+            opacity: isOpen ? [0.5, 0.8, 0.5] : 0,
+          }}
+          transition={{
+            duration: 2,
+            repeat: isOpen ? Infinity : 0,
+            ease: "easeInOut"
+          }}
+        />
+      </motion.button>
     );
   }
 );
