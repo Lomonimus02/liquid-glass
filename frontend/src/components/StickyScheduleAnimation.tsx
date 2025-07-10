@@ -435,6 +435,7 @@ const StickyScheduleAnimation = () => {
 
         </div>
       </div>
+      )}
     </div>
   );
 };
