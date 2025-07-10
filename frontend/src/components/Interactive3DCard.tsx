@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 interface Interactive3DCardProps {
@@ -6,6 +6,8 @@ interface Interactive3DCardProps {
   className?: string;
   glowColor?: string;
   intensity?: number;
+  onHoverChange?: (isHovered: boolean) => void;
+  externalHover?: boolean;
 }
 
 const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
