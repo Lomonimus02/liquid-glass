@@ -169,12 +169,24 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     };
   }, [dimensions, animationSpeed]);
 
-  // Initialize shapes
+  // Initialize shapes with proper cleanup
   const initializeShapes = useCallback(() => {
     if (dimensions.width === 0 || dimensions.height === 0) return;
     
-    const shapes: GeometricShape[] = [];
     const shapeCount = getShapeCount();
+    
+    // Always clear existing shapes first to prevent stale state
+    shapesRef.current = [];
+    particlesRef.current = [];
+    
+    // If no shapes needed (mobile), just set initialized and return
+    if (shapeCount === 0) {
+      setIsInitialized(true);
+      console.log('Geometric shapes disabled for mobile, clearing existing shapes');
+      return;
+    }
+    
+    const shapes: GeometricShape[] = [];
     
     for (let i = 0; i < shapeCount; i++) {
       shapes.push(createGeometricShape(i));
@@ -182,8 +194,8 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
     shapesRef.current = shapes;
     setIsInitialized(true);
-    console.log('Geometric shapes initialized:', shapes.length, 'for screen size:', dimensions.width, 'x', dimensions.height);
-  }, [createGeometricShape, dimensions, getShapeCount]);
+    console.log('Geometric shapes initialized:', shapes.length, 'for screen size:', dimensions.width, 'x', dimensions.height, 'isMobile:', isMobile);
+  }, [createGeometricShape, dimensions, getShapeCount, isMobile]);
 
   // Update canvas dimensions
   const updateDimensions = useCallback(() => {
