@@ -307,15 +307,24 @@ const FeaturesSection = () => {
               className="absolute left-0 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
-                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-                transform: 'translateX(-1rem) translateY(-50%)',
-                transformOrigin: 'center'
+                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+              }}
+              initial={{
+                x: -16,
+                y: '-50%'
               }}
               whileHover={{ 
                 scale: 1.05,
+                x: -16,
+                y: '-50%',
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.3), rgba(2, 191, 122, 0.2))'
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ 
+                scale: 0.95,
+                x: -16,
+                y: '-50%'
+              }}
+              transition={{ duration: 0.2 }}
             >
               <ChevronLeft className="w-6 h-6 text-white drop-shadow-md" />
             </motion.button>
@@ -324,15 +333,24 @@ const FeaturesSection = () => {
               className="absolute right-0 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
-                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-                transform: 'translateX(1rem) translateY(-50%)',
-                transformOrigin: 'center'
+                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+              }}
+              initial={{
+                x: 16,
+                y: '-50%'
               }}
               whileHover={{ 
                 scale: 1.05,
+                x: 16,
+                y: '-50%',
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.3), rgba(2, 191, 122, 0.2))'
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ 
+                scale: 0.95,
+                x: 16,
+                y: '-50%'
+              }}
+              transition={{ duration: 0.2 }}
             >
               <ChevronRight className="w-6 h-6 text-white drop-shadow-md" />
             </motion.button>
