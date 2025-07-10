@@ -293,13 +293,17 @@ const Navigation = () => {
               </button>
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - adaptive */}
             <div className="hidden md:block">
               <Button 
                 onClick={() => scrollToSection('contact')}
-                className="glass-button text-white glass-shimmer-effect"
+                className={`glass-button text-white glass-shimmer-effect transition-all duration-300 ${
+                  isScrolled 
+                    ? 'px-3 py-1.5 text-sm' // Smaller when floating
+                    : 'px-4 py-2 text-base' // Normal when attached
+                }`}
               >
-                Попробовать
+                {isScrolled ? 'Попробовать' : 'Попробовать'}
               </Button>
             </div>
 
