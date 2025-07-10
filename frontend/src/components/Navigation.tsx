@@ -210,17 +210,30 @@ const Navigation = () => {
       <div className="relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Logo - adaptive */}
             <div 
               className="flex items-center gap-2 cursor-pointer" 
               onClick={() => scrollToSection('hero')}
             >
               <div 
-                className="w-8 h-8 rounded-lg bg-stellar-primary flex items-center justify-center"
+                className={`rounded-lg bg-stellar-primary flex items-center justify-center transition-all duration-300 ${
+                  isScrolled 
+                    ? 'w-7 h-7' // Smaller when floating
+                    : 'w-8 h-8' // Normal when attached
+                }`}
               >
-                <Sparkles className="w-5 h-5 text-white" />
+                <Sparkles className={`text-white transition-all duration-300 ${
+                  isScrolled ? 'w-4 h-4' : 'w-5 h-5'
+                }`} />
               </div>
-              <span className="text-xl font-bold text-gradient-animated">Stellar School</span>
+              <span className={`font-bold text-gradient-animated transition-all duration-300 ${
+                isScrolled 
+                  ? 'text-lg lg:text-xl' // Smaller text when floating
+                  : 'text-xl lg:text-2xl' // Normal/larger when attached
+              }`}>
+                <span className="hidden sm:inline">Stellar School</span>
+                <span className="sm:hidden">Stellar</span>
+              </span>
             </div>
 
             {/* Desktop navigation - adaptive for floating state */}
