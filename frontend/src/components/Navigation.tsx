@@ -113,70 +113,55 @@ const Navigation = () => {
 
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <motion.button 
+            <button 
               onClick={() => scrollToSection('features')}
               className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Возможности
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </motion.button>
+            </button>
             
-            <motion.button 
+            <button 
               onClick={() => scrollToSection('schedule')}
               className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Расписание
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </motion.button>
+            </button>
             
-            <motion.button 
+            <button 
               onClick={() => scrollToSection('analytics')}
               className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Аналитика
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </motion.button>
+            </button>
             
-            <motion.button 
+            <button 
               onClick={() => scrollToSection('ai-assistant')}
               className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               ИИ-помощник
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </motion.button>
+            </button>
             
-            <motion.button 
+            <button 
               onClick={() => scrollToSection('contact')}
               className="text-text-secondary hover:text-stellar-accent transition-colors relative group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Контакты
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-            </motion.button>
+            </button>
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button 
+              onClick={() => scrollToSection('contact')}
+              className="glass-button text-white glass-shimmer-effect"
             >
-              <Button 
-                onClick={() => scrollToSection('contact')}
-                className="glass-button text-white glass-shimmer-effect"
-              >
-                Попробовать
-              </Button>
-            </motion.div>
+              Попробовать
+            </Button>
           </div>
 
           {/* Mobile menu button */}
