@@ -155,8 +155,8 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
           {children}
         </div>
         
-        {/* Floating particles - Only show if NOT using external hover control */}
-        {effectiveHoverState && !onHoverChange && (
+        {/* Floating particles - Only show if NOT using external hover control and NOT disabled on mobile */}
+        {effectiveHoverState && !onHoverChange && !shouldDisableGlow && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(6)].map((_, i) => (
               <motion.div
