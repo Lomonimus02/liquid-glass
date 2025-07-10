@@ -121,7 +121,7 @@ const Navigation = () => {
         transition: 'none'
       }}
     >
-      <div className={`transition-all duration-700 ease-out ${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
+      <div className={`${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div 
