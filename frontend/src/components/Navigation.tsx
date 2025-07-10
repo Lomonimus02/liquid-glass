@@ -90,13 +90,13 @@ const Navigation = () => {
     <motion.nav 
       className={`fixed top-0 z-[9999] transition-all duration-300 ${
         isScrolled 
-          ? 'left-1 right-1 md:left-2 md:right-2 frosted-glass shadow-lg' 
+          ? 'mx-2 md:mx-4 frosted-glass shadow-lg' 
           : 'left-0 right-0 bg-transparent'
       }`}
       animate={getCurrentAnimation()}
       initial={{ y: 0 }}
     >
-      <div className="max-w-7xl mx-auto px-4">
+      <div className={`${isScrolled ? 'max-w-7xl mx-auto px-4' : 'max-w-7xl mx-auto px-4'}`}>
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div 
