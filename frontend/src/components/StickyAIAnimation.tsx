@@ -637,7 +637,7 @@ const StickyAIAnimation = () => {
             )}
           </AnimatePresence>
         </div>
-      </div>
+      )}
     </div>
   );
 };
