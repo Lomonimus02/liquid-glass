@@ -292,7 +292,12 @@ const StickyScheduleAnimation = () => {
               >
                 {/* Иконка Lottie */}
                 <motion.div
-                  className="w-16 h-16"
+                  className="w-16 h-16 flex-shrink-0"
+                  style={{
+                    aspectRatio: '1 / 1',
+                    minWidth: '4rem',
+                    minHeight: '4rem'
+                  }}
                   initial={{ scale: 1 }}
                   animate={{
                     scale: animationPhase === 'demo' ? 1.3 : 1.2,
