@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, CheckCircle, X, Zap, Target, Settings } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Stage2ConflictResolution = () => {
   const [conflicts, setConflicts] = useState([
