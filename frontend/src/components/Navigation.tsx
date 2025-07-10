@@ -400,7 +400,7 @@ const Navigation = () => {
             <AnimatedBurger 
               ref={burgerRef}
               isOpen={isMobileMenuOpen} 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              onClick={() => setIsMobileMenuOpen(prev => !prev)} 
             />
           </div>
 
