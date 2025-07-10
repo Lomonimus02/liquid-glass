@@ -519,6 +519,8 @@
     - "Fix geometric background shapes disappearing bug"
     - "Redesign mobile navigation burger menu for better UX"
     - "Remove mobile card glow effects while preserving desktop experience"
+    - "Fix burger menu visual effects overflow issue"
+    - "Fix features section cards shadow clipping issue"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
