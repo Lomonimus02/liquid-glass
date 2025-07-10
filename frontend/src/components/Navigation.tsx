@@ -243,71 +243,115 @@ const Navigation = () => {
               </span>
             </div>
 
-            {/* Desktop navigation - adaptive for floating state */}
+            {/* Desktop navigation - adaptive for different screen sizes */}
             <div className={`hidden md:flex items-center transition-all duration-300 ${
               isScrolled 
                 ? 'space-x-4 lg:space-x-6' // Reduced spacing when floating
                 : 'space-x-6 lg:space-x-8' // Normal spacing when attached
             }`}>
-              <button 
-                onClick={() => scrollToSection('features')}
-                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
-                  isScrolled 
-                    ? 'text-sm lg:text-base py-1' // Smaller text when floating
-                    : 'text-base py-2' // Normal size when attached
-                }`}
-              >
-                Возможности
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </button>
               
-              <button 
-                onClick={() => scrollToSection('schedule')}
-                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
-                  isScrolled 
-                    ? 'text-sm lg:text-base py-1'
-                    : 'text-base py-2'
-                }`}
-              >
-                Расписание
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </button>
+              {/* Full navigation for large screens */}
+              <div className="hidden lg:flex items-center space-x-6">
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1' // Smaller text when floating
+                      : 'text-base py-2' // Normal size when attached
+                  }`}
+                >
+                  Возможности
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+                
+                <button 
+                  onClick={() => scrollToSection('schedule')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  Расписание
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+                
+                <button 
+                  onClick={() => scrollToSection('analytics')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  Аналитика
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+                
+                <button 
+                  onClick={() => scrollToSection('ai-assistant')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  ИИ-помощник
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+                
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  Контакты
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+              </div>
+
+              {/* Simplified navigation for tablets (md and below lg) */}
+              <div className="flex lg:hidden items-center space-x-6">
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  Возможности
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+                
+                <button 
+                  onClick={() => scrollToSection('schedule')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  Функции
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+                
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
+                    isScrolled 
+                      ? 'text-sm py-1'
+                      : 'text-base py-2'
+                  }`}
+                >
+                  Контакты
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
+                </button>
+              </div>
               
-              <button 
-                onClick={() => scrollToSection('analytics')}
-                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
-                  isScrolled 
-                    ? 'text-sm lg:text-base py-1'
-                    : 'text-base py-2'
-                }`}
-              >
-                Аналитика
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </button>
-              
-              <button 
-                onClick={() => scrollToSection('ai-assistant')}
-                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
-                  isScrolled 
-                    ? 'text-sm lg:text-base py-1'
-                    : 'text-base py-2'
-                }`}
-              >
-                ИИ-помощник
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </button>
-              
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className={`text-text-secondary hover:text-stellar-accent transition-all duration-300 relative group ${
-                  isScrolled 
-                    ? 'text-sm lg:text-base py-1'
-                    : 'text-base py-2'
-                }`}
-              >
-                Контакты
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-stellar-accent group-hover:w-full transition-all duration-300"></span>
-              </button>
             </div>
 
             {/* CTA Button - adaptive */}
