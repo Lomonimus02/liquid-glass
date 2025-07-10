@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Interactive3DCardProps {
   children: React.ReactNode;
@@ -8,6 +9,7 @@ interface Interactive3DCardProps {
   intensity?: number;
   onHoverChange?: (isHovered: boolean) => void;
   externalHover?: boolean;
+  disableGlowOnMobile?: boolean;
 }
 
 const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
