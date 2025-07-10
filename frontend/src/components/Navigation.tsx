@@ -91,7 +91,7 @@ const Navigation = () => {
 
   return (
     <motion.nav 
-      className={`fixed top-0 z-[9999] transition-all duration-300 ${
+      className={`fixed top-0 z-[9999] transition-all duration-700 ease-out ${
         isScrolled 
           ? 'left-4 right-4 md:left-8 md:right-8 max-w-4xl mx-auto frosted-glass shadow-lg' 
           : 'left-0 right-0 bg-transparent'
@@ -99,7 +99,7 @@ const Navigation = () => {
       animate={getCurrentAnimation()}
       initial={{ y: 0 }}
     >
-      <div className={`${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
+      <div className={`transition-all duration-700 ease-out ${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div 
