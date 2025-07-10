@@ -480,6 +480,7 @@ const FeaturesSection = () => {
               className="max-w-4xl mx-auto"
               glowColor="#02bf7a"
               intensity={0.6}
+              disableGlowOnMobile={true}
             >
               <div className="p-6 md:p-8">
                 <h3 className="text-xl md:text-2xl font-bold text-gradient mb-4">
