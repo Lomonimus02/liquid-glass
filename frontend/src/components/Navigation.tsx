@@ -259,7 +259,7 @@ const Navigation = () => {
           )}
         </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
