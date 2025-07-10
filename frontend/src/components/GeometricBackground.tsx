@@ -66,10 +66,13 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
   // Calculate responsive shape count based on screen size
   const getShapeCount = useCallback(() => {
+    // Отключаем геометрический фон на мобильных для производительности
+    if (isMobile) return 0;
+    
     const area = dimensions.width * dimensions.height;
     const baseCount = Math.max(6, Math.floor(area / 200000)); // 1 shape per ~200k pixels
     return Math.min(baseCount, 15); // Cap at 15 shapes for performance
-  }, [dimensions]);
+  }, [dimensions, isMobile]);
 
   // Mouse movement handler
   const handleMouseMove = useCallback((e: MouseEvent) => {
