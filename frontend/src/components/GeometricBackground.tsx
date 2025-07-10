@@ -399,7 +399,15 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
 
   useEffect(() => {
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
+    
+    // Debounce resize events to prevent excessive reinitialization
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateDimensions, 300); // 300ms debounce
+    };
+    
+    window.addEventListener('resize', debouncedResize);
     
     // Add mouse event listeners for cursor interaction
     if (cursorInteraction) {
@@ -407,12 +415,13 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
     }
     
     return () => {
-      window.removeEventListener('resize', updateDimensions);
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', debouncedResize);
       if (cursorInteraction) {
         window.removeEventListener('mousemove', handleMouseMove);
       }
     };
-  }, [updateDimensions, handleMouseMove, cursorInteraction]);
+  }, [handleMouseMove, cursorInteraction]); // Removed updateDimensions from deps to prevent recreation
 
   useEffect(() => {
     if (dimensions.width > 0 && dimensions.height > 0) {
