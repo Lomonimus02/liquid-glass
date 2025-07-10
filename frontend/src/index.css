@@ -477,7 +477,7 @@
       0 24px 96px rgba(2, 191, 122, 0.05),
       inset 0 1px 0 rgba(255, 255, 255, 0.5),
       inset 0 -1px 0 rgba(2, 191, 122, 0.1) !important; /* Зеленый внутренний свет */
-    transition: all 0.3s ease !important;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
   .frosted-glass:hover {
