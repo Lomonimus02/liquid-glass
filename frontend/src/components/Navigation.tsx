@@ -399,7 +399,19 @@ const Navigation = () => {
           <AnimatePresence>
             {isMobileMenuOpen && (
               <motion.div 
-                className="md:hidden frosted-glass mt-2 p-4 space-y-4"
+                ref={menuRef}
+                className="md:hidden mt-2 p-4 space-y-4"
+                style={{
+                  background: 'rgba(230, 255, 245, 0.08)',
+                  border: '1px solid rgba(2, 191, 122, 0.15)',
+                  borderRadius: '24px',
+                  // Оптимизированный blur для мобильного меню
+                  backdropFilter: 'blur(30px) saturate(1.3) brightness(1.1)',
+                  boxShadow: `
+                    0 8px 32px rgba(2, 191, 122, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
+                }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
