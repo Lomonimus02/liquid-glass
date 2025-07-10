@@ -60,6 +60,20 @@ const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
   const [lastScrollY, setLastScrollY] = useState(0);
+  const isMobile = useIsMobile();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Закрытие меню при клике вне области
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileMenuOpen && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
