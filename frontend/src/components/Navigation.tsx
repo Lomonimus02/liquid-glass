@@ -6,54 +6,57 @@ import MagneticElement from './MagneticElement';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Animated Burger Menu Component
-const AnimatedBurger = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => {
-  return (
-    <button
-      className="md:hidden p-2 rounded-lg text-text-primary relative w-10 h-10 flex items-center justify-center"
-      onClick={onClick}
-      style={{
-        background: 'rgba(230, 255, 245, 0.08)',
-        border: '1px solid rgba(2, 191, 122, 0.15)',
-        backdropFilter: 'blur(20px) saturate(1.2) brightness(1.1)',
-      }}
-    >
-      <div className="w-6 h-5 flex flex-col justify-between items-center relative">
-        {/* Top line */}
-        <motion.span
-          className="block h-0.5 w-6 bg-current absolute"
-          style={{ top: isOpen ? '50%' : '0%' }}
-          animate={{
-            rotate: isOpen ? 45 : 0,
-            y: isOpen ? '-50%' : 0,
-          }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        />
-        
-        {/* Middle line */}
-        <motion.span
-          className="block h-0.5 w-6 bg-current absolute"
-          style={{ top: '50%', y: '-50%' }}
-          animate={{
-            opacity: isOpen ? 0 : 1,
-            scaleX: isOpen ? 0 : 1,
-          }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        />
-        
-        {/* Bottom line */}
-        <motion.span
-          className="block h-0.5 w-6 bg-current absolute"
-          style={{ bottom: isOpen ? '50%' : '0%' }}
-          animate={{
-            rotate: isOpen ? -45 : 0,
-            y: isOpen ? '50%' : 0,
-          }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        />
-      </div>
-    </button>
-  );
-};
+const AnimatedBurger = React.forwardRef<HTMLButtonElement, { isOpen: boolean; onClick: () => void }>(
+  ({ isOpen, onClick }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className="md:hidden p-2 rounded-lg text-text-primary relative w-10 h-10 flex items-center justify-center"
+        onClick={onClick}
+        style={{
+          background: 'rgba(230, 255, 245, 0.08)',
+          border: '1px solid rgba(2, 191, 122, 0.15)',
+          backdropFilter: 'blur(20px) saturate(1.2) brightness(1.1)',
+        }}
+      >
+        <div className="w-6 h-5 flex flex-col justify-between items-center relative">
+          {/* Top line */}
+          <motion.span
+            className="block h-0.5 w-6 bg-current absolute"
+            style={{ top: isOpen ? '50%' : '0%' }}
+            animate={{
+              rotate: isOpen ? 45 : 0,
+              y: isOpen ? '-50%' : 0,
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          />
+          
+          {/* Middle line */}
+          <motion.span
+            className="block h-0.5 w-6 bg-current absolute"
+            style={{ top: '50%', y: '-50%' }}
+            animate={{
+              opacity: isOpen ? 0 : 1,
+              scaleX: isOpen ? 0 : 1,
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          />
+          
+          {/* Bottom line */}
+          <motion.span
+            className="block h-0.5 w-6 bg-current absolute"
+            style={{ bottom: isOpen ? '50%' : '0%' }}
+            animate={{
+              rotate: isOpen ? -45 : 0,
+              y: isOpen ? '50%' : 0,
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          />
+        </div>
+      </button>
+    );
+  }
+);
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
