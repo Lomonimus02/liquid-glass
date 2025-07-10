@@ -639,9 +639,6 @@ const StickyAIAnimation = () => {
           </div>
         </div>
       ): (
-              opacity: titleOpacity,
-              scale: titleScale,
-              y: titleY,
             }}
           >
             <motion.div
