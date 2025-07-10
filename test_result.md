@@ -423,17 +423,29 @@
         agent: "main"
         comment: "FIXED Z-INDEX LAYERING ISSUE: The geometric background shapes were appearing over glassmorphism cards instead of behind them. Fixed by: 1) Changed GeometricBackground container from z-0 to z-[1] and canvas to z-[2] 2) Added explicit z-index: 10 to all glassmorphism classes (.frosted-glass, .glass-card, .glass-card-enhanced, .glass-card-subtle, .glass-card-ultra, .glass-card-supreme) 3) Added z-index: 20 for hover states 4) Added z-10 to all page sections to ensure proper stacking context. Now the layering is: Background color (z-[1]) → Geometric shapes (z-[2]) → Glass cards (z-10) → Hover states (z-20) → Navigation (z-50). The glassmorphism effect now properly blurs the geometric background while maintaining visual hierarchy."
 
-  - task: "Enhance GeometricBackground with organic shapes and cursor interaction"
+  - task: "Fix header z-index layering issue"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/GeometricBackground.tsx"
+    file: "/app/frontend/src/index.css"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Successfully enhanced GeometricBackground with organic deformation, cursor interaction, and particle trails. Key improvements: 1) Fixed rigid shapes with organic radius variations (80%-120%), dynamic angle changes, and curved connections using quadraticCurveTo. 2) Added cursor interaction with shape attraction (200px radius), vertex deformation, and dynamic connections. 3) Implemented particle trails following cursor movement. 4) Added pulsing effects for vertices and centers. 5) Enhanced visual depth with variable opacity and breathing animations. 6) Improved performance with optimized rendering and smooth 60fps animations. Canvas shows 14,763 active pixels with dynamic content."
+        comment: "Fixed header z-index layering issue where the header was appearing behind other elements when scrolling. The problem was that the navigation had z-[9999] but the frosted-glass class applied when scrolling had z-index: 10, creating a conflict. Updated frosted-glass class to use z-index: 10000 for normal state and z-index: 10001 for hover state to maintain proper hierarchy with the navigation's z-[9999]. Header now stays on the topmost layer correctly when scrolling."
+
+  - task: "Fix feature cards hover event multiple triggers"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/FeaturesSection.tsx, /app/frontend/src/components/Interactive3DCard.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Fixed feature cards hover event issue where multiple hover zones were causing duplicate particle triggers. The problem was that both Interactive3DCard and the inner div in FeaturesSection had their own hover handlers, creating overlapping hover zones. Consolidated hover handling by: 1) Removing duplicate onMouseEnter/onMouseLeave handlers from inner div in FeaturesSection 2) Enhanced Interactive3DCard with onHoverChange prop and externalHover state for parent control 3) Added logic to prevent particle duplication when using external hover control 4) Implemented single hover event flow to prevent multiple triggers. Now hover events are triggered only once per card entry and particles appear correctly without duplication."
 
 ## backend:
   - task: "Backend API connectivity"
