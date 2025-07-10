@@ -478,7 +478,6 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.5),
       inset 0 -1px 0 rgba(2, 191, 122, 0.1) !important; /* Зеленый внутренний свет */
     transition: all 0.3s ease !important;
-    margin-top: 0.5rem !important; /* Add top margin for floating effect */
   }
 
   .frosted-glass:hover {
