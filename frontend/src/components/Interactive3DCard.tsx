@@ -18,13 +18,18 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
   glowColor = '#02bf7a',
   intensity = 1,
   onHoverChange,
-  externalHover = false
+  externalHover = false,
+  disableGlowOnMobile = false
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
+  const isMobile = useIsMobile();
   
   // Use external hover state if provided, otherwise use internal state
   const effectiveHoverState = externalHover !== undefined ? externalHover : isHovering;
+  
+  // Determine if glow effects should be disabled
+  const shouldDisableGlow = disableGlowOnMobile && isMobile;
   
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
