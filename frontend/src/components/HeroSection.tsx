@@ -11,6 +11,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"]
