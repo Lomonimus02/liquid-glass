@@ -7,6 +7,7 @@ import MorphingText from './MorphingText';
 import KineticTypography from './KineticTypography';
 import Interactive3DCard from './Interactive3DCard';
 import MagneticElement from './MagneticElement';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const HeroSection = () => {
   const ref = useRef<HTMLDivElement>(null);
