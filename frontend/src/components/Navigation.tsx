@@ -62,11 +62,16 @@ const Navigation = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const isMobile = useIsMobile();
   const menuRef = useRef<HTMLDivElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   // Закрытие меню при клике вне области
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isMobileMenuOpen && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (isMobileMenuOpen && 
+          menuRef.current && 
+          !menuRef.current.contains(event.target as Node) &&
+          burgerRef.current &&
+          !burgerRef.current.contains(event.target as Node)) {
         setIsMobileMenuOpen(false);
       }
     };
