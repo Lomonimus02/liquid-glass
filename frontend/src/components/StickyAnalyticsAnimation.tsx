@@ -9,15 +9,16 @@ const StickyAnalyticsAnimation = () => {
   const [activeStage, setActiveStage] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [showDemo, setShowDemo] = useState(false);
+  const isMobile = useIsMobile();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: isMobile ? ["start end", "end start"] : ["start center", "end center"]
   });
 
   const isInView = useInView(containerRef, {
     once: false,
-    margin: "-20% 0px -20% 0px"
+    margin: isMobile ? "-10% 0px -10% 0px" : "-20% 0px -20% 0px"
   });
 
   // Анимации для заголовка
