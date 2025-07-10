@@ -115,9 +115,9 @@ const HeroSection = () => {
           </motion.div>
         </MagneticElement>
 
-        {/* Main heading with morphing text */}
+        {/* Main heading with morphing text - мобильная оптимизация */}
         <motion.div 
-          className="text-5xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6"
+          className={`font-bold mb-4 md:mb-6 ${isMobile ? 'text-4xl' : 'text-5xl md:text-6xl lg:text-8xl'}`}
           style={{ y: textY }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
