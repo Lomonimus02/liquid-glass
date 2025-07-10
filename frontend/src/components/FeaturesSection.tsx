@@ -141,8 +141,8 @@ const FeaturesSection = () => {
     {
       isLottie: true,
       animationData: mobileAnimationData,
-      title: "Мобильное приложение",
-      description: "Полнофункциональное мобильное приложение для всех участников образовательного процесса",
+      title: "Облачное хранилище",
+      description: "Храните Ваши личные документы и файлы в под защитой в бесплатном хранилище объемом 3 гигабайта",
       iconClassName: "w-10 h-10",
     },
     {
