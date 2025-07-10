@@ -111,7 +111,7 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
           background: 'rgba(230, 255, 245, 0.06)', // Consistent green tint like other glass cards
           borderColor: 'rgba(2, 191, 122, 0.12)', // Green border consistent with glass-card-enhanced
           backdropFilter: 'blur(50px) saturate(1.6) brightness(1.1)', // Consistent with glass-card-enhanced
-          boxShadow: isHovering
+          boxShadow: effectiveHoverState
             ? `0 20px 60px rgba(2, 191, 122, 0.25), 0 0 0 1px ${glowColor}25, inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(2, 191, 122, 0.08)`
             : '0 8px 32px rgba(2, 191, 122, 0.15), 0 16px 64px rgba(2, 191, 122, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(2, 191, 122, 0.08)',
           transform: 'translateZ(0)',
