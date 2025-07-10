@@ -79,7 +79,7 @@ const Navigation = () => {
     
     // Only snap to top when actually at the top of the page (within 10px)
     if (scrollDirection === 'up' && window.scrollY <= 10) {
-      return floatingIslandAnimation.up;
+      return floatingIslandAnimation.transparent; // Changed from 'up' to 'transparent'
     }
     
     // When scrolling down or scrolling up but not at the top, maintain floating position
