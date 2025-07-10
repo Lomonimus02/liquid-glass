@@ -639,8 +639,6 @@ const StickyAIAnimation = () => {
           </div>
         </div>
       ): (
-            }}
-          >
             <motion.div
               className="glass-card-enhanced p-8 relative overflow-hidden"
               animate={{
