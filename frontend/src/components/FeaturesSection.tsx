@@ -376,6 +376,7 @@ const FeaturesSection = () => {
                       className="h-full min-h-[280px] sm:min-h-[320px]"
                       glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
                       intensity={0.8}
+                      disableGlowOnMobile={true}
                       onHoverChange={(isHovered) => {
                         if (isHovered) {
                           setHoveredIndex(index);
