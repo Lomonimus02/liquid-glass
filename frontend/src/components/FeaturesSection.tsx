@@ -217,8 +217,8 @@ const FeaturesSection = () => {
 
         {/* Основная сетка карточек - мобильная карусель */}
         {isMobile ? (
-          // Мобильная карусель
-          <div className="relative">
+          // Мобильная карусель с увеличенными отступами для теней
+          <div className="relative px-6"> {/* Увеличены отступы для теней */}
             <div className="overflow-hidden">
               <motion.div 
                 className="flex"
@@ -226,7 +226,7 @@ const FeaturesSection = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {features.map((feature, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-2">
+                  <div key={index} className="w-full flex-shrink-0 px-4"> {/* Увеличены внутренние отступы */}
                     <Interactive3DCard
                       className="h-full min-h-[320px]"
                       glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
