@@ -41,7 +41,7 @@ const Navigation = () => {
   const floatingIslandAnimation = {
     // Water droplet detachment effect (scrolling down)
     down: {
-      y: 8, // Increased offset for better floating effect
+      y: 4, // Reduced from 8px to 4px for smaller gap
       transition: {
         type: "spring",
         stiffness: 100,
