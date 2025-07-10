@@ -15,6 +15,7 @@ const StickyScheduleAnimation = () => {
   const [activeStep, setActiveStep] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [showDemo, setShowDemo] = useState(false);
+  const isMobile = useIsMobile();
 
   // Состояния для этапов анимации (упрощенные)
   const [animationPhase, setAnimationPhase] = useState<'idle' | 'fadeOut' | 'demo'>('idle');
