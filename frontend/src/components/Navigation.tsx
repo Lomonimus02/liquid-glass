@@ -231,8 +231,7 @@ const Navigation = () => {
                   ? 'text-lg lg:text-xl' // Smaller text when floating
                   : 'text-xl lg:text-2xl' // Normal/larger when attached
               }`}>
-                <span className="hidden sm:inline">Stellar School</span>
-                <span className="sm:hidden">Stellar</span>
+                Stellar School
               </span>
             </div>
 
