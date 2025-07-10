@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 # Get the backend URL from the frontend .env file
-BACKEND_URL = "https://498df96e-d9b3-4d00-87ea-486dac7e5d46.preview.emergentagent.com"
+BACKEND_URL = "https://a0cdd4b0-fd98-437a-bdba-7e0273a58c9e.preview.emergentagent.com"
 API_BASE_URL = f"{BACKEND_URL}/api"
 
 class BackendAPITest(unittest.TestCase):
