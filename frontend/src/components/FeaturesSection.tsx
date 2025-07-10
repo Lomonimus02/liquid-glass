@@ -213,117 +213,207 @@ const FeaturesSection = () => {
           </div>
         </SmoothReveal>
 
-        {/* Основная сетка карточек - улучшенная мобильная адаптация */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-          {features.map((feature, index) => (
-            <SmoothReveal 
-              key={index}
-              direction={index % 2 === 0 ? "left" : "right"}
-              delay={index * 0.1}
-              className="h-full"
-            >
-              <GestureElement
-                className="h-full"
-                onSwipeLeft={() => console.log(`Swiped left on ${feature.title}`)}
-                onSwipeRight={() => console.log(`Swiped right on ${feature.title}`)}
+        {/* Основная сетка карточек - мобильная карусель */}
+        {isMobile ? (
+          // Мобильная карусель
+          <div className="relative">
+            <div className="overflow-hidden">
+              <motion.div 
+                className="flex"
+                animate={{ x: `${-currentSlide * 100}%` }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                <MagneticElement strength={0.1} className="h-full">
-                  <Interactive3DCard
-                    className="h-full min-h-[280px] sm:min-h-[320px]"
-                    glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
-                    intensity={0.8}
-                    onHoverChange={(isHovered) => {
-                      if (isHovered) {
-                        setHoveredIndex(index);
-                      } else {
-                        setHoveredIndex(null);
-                      }
-                    }}
-                    externalHover={hoveredIndex === index}
-                  >
-                    <div 
-                      className="flex flex-col h-full text-center relative z-10 interactive-element p-4 md:p-6"
+                {features.map((feature, index) => (
+                  <div key={index} className="w-full flex-shrink-0 px-2">
+                    <Interactive3DCard
+                      className="h-full min-h-[320px]"
+                      glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
+                      intensity={0.8}
                     >
-                      {/* Иконка */}
-                      <div className="mb-4 flex justify-center">
-                        {feature.isLottie ? (
-                          <LottiePlayer 
-                            animationData={feature.animationData} 
-                            isHovered={hoveredIndex === index}
-                            className={`${feature.iconClassName || "w-12 h-12"} md:w-14 md:h-14`}
-                          />
-                        ) : (
-                          <motion.div
-                            animate={hoveredIndex === index ? {
-                              scale: [1, 1.1, 1],
-                              rotate: [0, 5, 0]
-                            } : {}}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <feature.icon className={`w-12 h-12 md:w-14 md:h-14 ${feature.color || 'text-stellar-primary'}`} />
-                          </motion.div>
-                        )}
+                      <div className="flex flex-col h-full text-center relative z-10 interactive-element p-6">
+                        {/* Иконка */}
+                        <div className="mb-4 flex justify-center">
+                          {feature.isLottie ? (
+                            <LottiePlayer 
+                              animationData={feature.animationData} 
+                              isHovered={false}
+                              autoplay={true}
+                              isMobile={true}
+                              className={`${feature.iconClassName || "w-16 h-16"}`}
+                            />
+                          ) : (
+                            <motion.div
+                              animate={{
+                                scale: [1, 1.1, 1],
+                                rotate: [0, 5, 0]
+                              }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                            >
+                              <feature.icon className={`w-16 h-16 ${feature.color || 'text-stellar-primary'}`} />
+                            </motion.div>
+                          )}
+                        </div>
+
+                        {/* Заголовок */}
+                        <h3 className="text-xl font-semibold mb-3 text-text-primary leading-tight">
+                          {feature.title}
+                        </h3>
+
+                        {/* Описание */}
+                        <p className="text-text-secondary text-base leading-relaxed flex-grow">
+                          {feature.description}
+                        </p>
                       </div>
+                    </Interactive3DCard>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
 
-                      {/* Заголовок */}
-                      <h3 className="text-lg md:text-xl font-semibold mb-3 text-text-primary leading-tight">
-                        {feature.title}
-                      </h3>
+            {/* Индикаторы карусели */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {features.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'bg-stellar-accent scale-110' 
+                      : 'bg-white/30 hover:bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
 
-                      {/* Описание */}
-                      <motion.p 
-                        className="text-text-secondary text-sm md:text-base leading-relaxed flex-grow"
-                        initial={{ opacity: 0.7 }}
-                        animate={{ opacity: hoveredIndex === index ? 1 : 0.7 }}
-                        transition={{ duration: 0.2 }}
+            {/* Кнопки навигации */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full bg-stellar-accent/20 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-stellar-accent/30 transition-all"
+            >
+              ←
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-stellar-accent/20 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-stellar-accent/30 transition-all"
+            >
+              →
+            </button>
+          </div>
+        ) : (
+          // Десктопная сетка
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            {features.map((feature, index) => (
+              <SmoothReveal 
+                key={index}
+                direction={index % 2 === 0 ? "left" : "right"}
+                delay={index * 0.1}
+                className="h-full"
+              >
+                <GestureElement
+                  className="h-full"
+                  onSwipeLeft={() => console.log(`Swiped left on ${feature.title}`)}
+                  onSwipeRight={() => console.log(`Swiped right on ${feature.title}`)}
+                >
+                  <MagneticElement strength={0.1} className="h-full">
+                    <Interactive3DCard
+                      className="h-full min-h-[280px] sm:min-h-[320px]"
+                      glowColor={feature.color === "text-stellar-primary" ? "#02bf7a" : feature.color === "text-stellar-accent" ? "#1a8c5c" : "#0ea5e9"}
+                      intensity={0.8}
+                      onHoverChange={(isHovered) => {
+                        if (isHovered) {
+                          setHoveredIndex(index);
+                        } else {
+                          setHoveredIndex(null);
+                        }
+                      }}
+                      externalHover={hoveredIndex === index}
+                    >
+                      <div 
+                        className="flex flex-col h-full text-center relative z-10 interactive-element p-4 md:p-6"
                       >
-                        {feature.description}
-                      </motion.p>
+                        {/* Иконка */}
+                        <div className="mb-4 flex justify-center">
+                          {feature.isLottie ? (
+                            <LottiePlayer 
+                              animationData={feature.animationData} 
+                              isHovered={hoveredIndex === index}
+                              autoplay={false}
+                              isMobile={false}
+                              className={`${feature.iconClassName || "w-12 h-12"} md:w-14 md:h-14`}
+                            />
+                          ) : (
+                            <motion.div
+                              animate={hoveredIndex === index ? {
+                                scale: [1, 1.1, 1],
+                                rotate: [0, 5, 0]
+                              } : {}}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <feature.icon className={`w-12 h-12 md:w-14 md:h-14 ${feature.color || 'text-stellar-primary'}`} />
+                            </motion.div>
+                          )}
+                        </div>
 
-                      {/* Simplified Hover эффект */}
-                      <AnimatePresence>
-                        {hoveredIndex === index && (
-                          <motion.div
-                            className="absolute inset-0 pointer-events-none"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <div className="absolute inset-0 bg-gradient-to-br from-stellar-primary/5 to-stellar-accent/5 rounded-3xl" />
-                            
-                            {/* Reduced floating particles on hover */}
-                            {[...Array(3)].map((_, i) => (
-                              <motion.div
-                                key={i}
-                                className="absolute w-1 h-1 bg-stellar-accent rounded-full hidden md:block"
-                                style={{
-                                  left: `${20 + i * 30}%`,
-                                  top: `${20 + i * 25}%`,
-                                }}
-                                animate={{
-                                  y: [0, -15, 0],
-                                  opacity: [0, 0.8, 0],
-                                  scale: [0, 1, 0],
-                                }}
-                                transition={{
-                                  duration: 1.5,
-                                  repeat: Infinity,
-                                  delay: i * 0.3,
-                                  ease: "easeInOut"
-                                }}
-                              />
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </Interactive3DCard>
-                </MagneticElement>
-              </GestureElement>
-            </SmoothReveal>
-          ))}
-        </div>
+                        {/* Заголовок */}
+                        <h3 className="text-lg md:text-xl font-semibold mb-3 text-text-primary leading-tight">
+                          {feature.title}
+                        </h3>
+
+                        {/* Описание */}
+                        <motion.p 
+                          className="text-text-secondary text-sm md:text-base leading-relaxed flex-grow"
+                          initial={{ opacity: 0.7 }}
+                          animate={{ opacity: hoveredIndex === index ? 1 : 0.7 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {feature.description}
+                        </motion.p>
+
+                        {/* Simplified Hover эффект */}
+                        <AnimatePresence>
+                          {hoveredIndex === index && (
+                            <motion.div
+                              className="absolute inset-0 pointer-events-none"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <div className="absolute inset-0 bg-gradient-to-br from-stellar-primary/5 to-stellar-accent/5 rounded-3xl" />
+                              
+                              {/* Reduced floating particles on hover */}
+                              {[...Array(3)].map((_, i) => (
+                                <motion.div
+                                  key={i}
+                                  className="absolute w-1 h-1 bg-stellar-accent rounded-full hidden md:block"
+                                  style={{
+                                    left: `${20 + i * 30}%`,
+                                    top: `${20 + i * 25}%`,
+                                  }}
+                                  animate={{
+                                    y: [0, -15, 0],
+                                    opacity: [0, 0.8, 0],
+                                    scale: [0, 1, 0],
+                                  }}
+                                  transition={{
+                                    duration: 1.5,
+                                    repeat: Infinity,
+                                    delay: i * 0.3,
+                                    ease: "easeInOut"
+                                  }}
+                                />
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </Interactive3DCard>
+                  </MagneticElement>
+                </GestureElement>
+              </SmoothReveal>
+            ))}
+          </div>
+        )}
 
         {/* Дополнительная информация */}
         <SmoothReveal direction="up" delay={0.5}>
