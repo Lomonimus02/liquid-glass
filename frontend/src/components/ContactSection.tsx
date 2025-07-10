@@ -56,6 +56,7 @@ const ContactSection = () => {
   // --- 3. Добавляем два новых состояния ---
   const [isSuccess, setIsSuccess] = useState(false); // Для показа галочки
   const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const isMobile = useIsMobile();
   
   const { toast } = useToast();
 
