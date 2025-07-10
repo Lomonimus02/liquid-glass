@@ -182,7 +182,7 @@ const HeroSection = () => {
           </p>
         </motion.div>
 
-        {/* CTA Button with magnetic effect */}
+        {/* CTA Button with magnetic effect - мобильная оптимизация */}
         <motion.div 
           className="flex justify-center items-center mb-12 md:mb-16"
           style={{ y: buttonY }}
@@ -190,10 +190,10 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
         >
-          <MagneticElement strength={0.2}>
+          {isMobile ? (
             <Button 
               size="lg" 
-              className="glass-button px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white group glass-shimmer-effect"
+              className="glass-button w-full max-w-sm h-14 text-lg font-semibold text-white group glass-shimmer-effect"
             >
               Начать использовать
               <motion.div
@@ -207,10 +207,32 @@ const HeroSection = () => {
                   ease: "easeInOut"
                 }}
               >
-                <ArrowRight className="w-4 md:w-5 h-4 md:h-5" />
+                <ArrowRight className="w-5 h-5" />
               </motion.div>
             </Button>
-          </MagneticElement>
+          ) : (
+            <MagneticElement strength={0.2}>
+              <Button 
+                size="lg" 
+                className="glass-button px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white group glass-shimmer-effect"
+              >
+                Начать использовать
+                <motion.div
+                  className="ml-2"
+                  animate={{
+                    x: [0, 5, 0]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <ArrowRight className="w-4 md:w-5 h-4 md:h-5" />
+                </motion.div>
+              </Button>
+            </MagneticElement>
+          )}
         </motion.div>
 
         {/* Stats with 3D Interactive Cards */}
