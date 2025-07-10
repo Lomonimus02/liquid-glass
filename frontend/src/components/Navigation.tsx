@@ -165,18 +165,16 @@ const Navigation = () => {
           </div>
 
           {/* Mobile menu button */}
-          <motion.button
+          <button
             className="md:hidden p-2 rounded-lg frosted-glass text-text-primary"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
             ) : (
               <Menu className="w-6 h-6" />
             )}
-          </motion.button>
+          </button>
         </div>
 
         {/* Mobile menu */}
@@ -189,52 +187,42 @@ const Navigation = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
             >
-              <motion.button 
+              <button 
                 onClick={() => scrollToSection('features')}
                 className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
-                whileHover={{ x: 5 }}
               >
                 Возможности
-              </motion.button>
-              <motion.button 
+              </button>
+              <button 
                 onClick={() => scrollToSection('schedule')}
                 className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
-                whileHover={{ x: 5 }}
               >
                 Расписание
-              </motion.button>
-              <motion.button 
+              </button>
+              <button 
                 onClick={() => scrollToSection('analytics')}
                 className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
-                whileHover={{ x: 5 }}
               >
                 Аналитика
-              </motion.button>
-              <motion.button 
+              </button>
+              <button 
                 onClick={() => scrollToSection('ai-assistant')}
                 className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
-                whileHover={{ x: 5 }}
               >
                 ИИ-помощник
-              </motion.button>
-              <motion.button 
+              </button>
+              <button 
                 onClick={() => scrollToSection('contact')}
                 className="block w-full text-left text-text-secondary hover:text-stellar-accent transition-colors py-2"
-                whileHover={{ x: 5 }}
               >
                 Контакты
-              </motion.button>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              </button>
+              <Button 
+                onClick={() => scrollToSection('contact')}
+                className="w-full glass-button text-white mt-4"
               >
-                <Button 
-                  onClick={() => scrollToSection('contact')}
-                  className="w-full glass-button text-white mt-4"
-                >
-                  Попробовать
-                </Button>
-              </motion.div>
+                Попробовать
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>
