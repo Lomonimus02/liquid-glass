@@ -62,38 +62,40 @@ const Stage2ConflictResolution = () => {
 
   return (
     <div className="relative w-full h-full min-h-[400px] p-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <motion.div
-          className="inline-flex items-center gap-2 glass-card-enhanced px-4 py-2 mb-4"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Settings className="w-5 h-5 text-stellar-accent" />
-          <span className="text-sm font-medium text-text-secondary">
-            Разрешение конфликтов
-          </span>
-        </motion.div>
-        
-        <motion.h3
-          className="text-xl font-bold text-gradient mb-2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Автоматическое устранение конфликтов
-        </motion.h3>
-        
-        <motion.p
-          className="text-text-secondary text-sm"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          ИИ находит и устраняет пересечения в расписании
-        </motion.p>
-      </div>
+      {/* Header - скрыть надписи на мобильных */}
+      {!isMobile && (
+        <div className="text-center mb-8">
+          <motion.div
+            className="inline-flex items-center gap-2 glass-card-enhanced px-4 py-2 mb-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Settings className="w-5 h-5 text-stellar-accent" />
+            <span className="text-sm font-medium text-text-secondary">
+              Разрешение конфликтов
+            </span>
+          </motion.div>
+          
+          <motion.h3
+            className="text-xl font-bold text-gradient mb-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Автоматическое устранение конфликтов
+          </motion.h3>
+          
+          <motion.p
+            className="text-text-secondary text-sm"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            ИИ находит и устраняет пересечения в расписании
+          </motion.p>
+        </div>
+      )}
 
       {/* Resolution progress */}
       <div className="flex justify-center mb-6">
