@@ -302,10 +302,10 @@ const FeaturesSection = () => {
               ))}
             </div>
 
-            {/* Кнопки навигации - красивые стрелки */}
+            {/* Кнопки навигации - красивые стрелки с правильным позиционированием */}
             <motion.button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
+              className="absolute left-2 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
                 boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
@@ -331,7 +331,7 @@ const FeaturesSection = () => {
             </motion.button>
             <motion.button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
+              className="absolute right-2 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
                 boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
