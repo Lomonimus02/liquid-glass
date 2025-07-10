@@ -219,7 +219,10 @@ const Navigation = () => {
           borderRadius: 'inherit',
           background: 'rgba(230, 255, 245, 0.08)',
           border: '1px solid rgba(2, 191, 122, 0.15)',
-          backdropFilter: 'blur(100px) saturate(2) brightness(1.2)',
+          // Оптимизированный blur для мобильных - меньше нагрузка, но сохраняем эффект
+          backdropFilter: isMobile 
+            ? 'blur(40px) saturate(1.5) brightness(1.1)' 
+            : 'blur(100px) saturate(2) brightness(1.2)',
           boxShadow: `
             0 8px 32px rgba(2, 191, 122, 0.1),
             0 1px 2px rgba(0, 0, 0, 0.05),
