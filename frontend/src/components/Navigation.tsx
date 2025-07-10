@@ -37,10 +37,59 @@ const Navigation = () => {
     }
   };
 
+  // Animation configurations for different scroll behaviors
+  const floatingIslandAnimation = {
+    // Water droplet detachment effect (scrolling down)
+    down: {
+      y: 3,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 25,
+        duration: 0.8,
+      }
+    },
+    // Sticky attachment effect (scrolling up)  
+    up: {
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 15,
+        duration: 0.4,
+      }
+    },
+    // Transparent state
+    transparent: {
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 150,
+        damping: 20,
+        duration: 0.6,
+      }
+    }
+  };
+
+  // Get current animation based on scroll state and direction
+  const getCurrentAnimation = () => {
+    if (!isScrolled) {
+      return floatingIslandAnimation.transparent;
+    }
+    
+    return scrollDirection === 'down' 
+      ? floatingIslandAnimation.down 
+      : floatingIslandAnimation.up;
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
-      isScrolled ? 'frosted-glass shadow-lg' : 'bg-transparent'
-    }`}>
+    <motion.nav 
+      className={`fixed top-0 left-0 right-0 z-[9999] ${
+        isScrolled ? 'frosted-glass shadow-lg' : 'bg-transparent'
+      }`}
+      animate={getCurrentAnimation()}
+      initial={{ y: 0 }}
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
