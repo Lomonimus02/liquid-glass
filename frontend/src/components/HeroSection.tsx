@@ -85,6 +85,7 @@ const HeroSection = () => {
           }}
         />
       </motion.div>
+      </motion.div>
       )}
 
       <div className="max-w-6xl mx-auto text-center relative z-30">
