@@ -424,10 +424,17 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   }, [handleMouseMove, cursorInteraction]); // Removed updateDimensions from deps to prevent recreation
 
   useEffect(() => {
+    // Always reinitialize when dimensions or mobile state changes
     if (dimensions.width > 0 && dimensions.height > 0) {
+      console.log('Reinitializing shapes due to dimension/mobile state change:', { 
+        dimensions, 
+        isMobile, 
+        currentShapeCount: shapesRef.current.length,
+        expectedShapeCount: getShapeCount()
+      });
       initializeShapes();
     }
-  }, [dimensions, initializeShapes]);
+  }, [dimensions, initializeShapes, isMobile]); // Added isMobile to dependencies
 
   useEffect(() => {
     if (isInitialized && shapesRef.current.length > 0) {
