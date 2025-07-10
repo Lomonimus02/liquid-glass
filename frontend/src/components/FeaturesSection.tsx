@@ -17,6 +17,7 @@ import SmoothReveal from './SmoothReveal';
 import KineticTypography from './KineticTypography';
 import MagneticElement from './MagneticElement';
 import GestureElement from './GestureElement';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // --- 1. Импортируем ОБЕ анимации ---
 import analyticsAnimationData from "./animations/Research (1).json"; 
