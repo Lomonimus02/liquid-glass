@@ -28,7 +28,7 @@ const Index = () => {
           </section>
 
           {/* Features section с плавным переходом */}
-          <section id="features" className="relative z-10 -mt-8">
+          <section id="features" className="relative z-10 -mt-4 md:-mt-8">
             <LiquidTransition>
               <SmoothReveal direction="left" delay={0.2}>
                 <FeaturesSection />
@@ -37,7 +37,7 @@ const Index = () => {
           </section>
 
           {/* Schedule section с перекрытием */}
-          <section id="schedule" className="relative z-10 -mt-12">
+          <section id="schedule" className="relative z-10 -mt-6 md:-mt-12">
             <LiquidTransition color="#02bf7a">
               <SmoothReveal direction="right" delay={0.1}>
                 <StickyScheduleAnimation />
@@ -46,7 +46,7 @@ const Index = () => {
           </section>
 
           {/* Analytics section с перекрытием */}
-          <section id="analytics" className="relative z-10 -mt-16">
+          <section id="analytics" className="relative z-10 -mt-8 md:-mt-16">
             <LiquidTransition color="#1a8c5c">
               <SmoothReveal direction="up" delay={0.3}>
                 <StickyAnalyticsAnimation />
@@ -55,7 +55,7 @@ const Index = () => {
           </section>
 
           {/* AI section с перекрытием */}
-          <section id="ai-assistant" className="relative z-10 -mt-16">
+          <section id="ai-assistant" className="relative z-10 -mt-8 md:-mt-16">
             <LiquidTransition color="#0ea5e9">
               <SmoothReveal direction="down" delay={0.2}>
                 <StickyAIAnimation />
@@ -64,7 +64,7 @@ const Index = () => {
           </section>
 
           {/* Contact section с плавным переходом */}
-          <section id="contact" className="relative z-10 -mt-8">
+          <section id="contact" className="relative z-10 -mt-4 md:-mt-8">
             <LiquidTransition>
               <SmoothReveal direction="up" delay={0.4}>
                 <ContactSection />
