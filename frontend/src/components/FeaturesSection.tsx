@@ -272,34 +272,66 @@ const FeaturesSection = () => {
               </motion.div>
             </div>
 
-            {/* Индикаторы карусели */}
-            <div className="flex justify-center mt-6 space-x-2">
+            {/* Индикаторы карусели - улучшенная видимость */}
+            <div className="flex justify-center mt-6 space-x-3">
               {features.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`relative transition-all duration-300 ${
                     currentSlide === index 
-                      ? 'bg-stellar-accent scale-110' 
-                      : 'bg-white/30 hover:bg-white/50'
+                      ? 'w-8 h-3' 
+                      : 'w-3 h-3'
                   }`}
-                />
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'bg-stellar-accent shadow-lg shadow-stellar-accent/50' 
+                      : 'bg-stellar-primary/40 border-2 border-stellar-accent/60 hover:bg-stellar-accent/50'
+                  }`} />
+                  {/* Дополнительная обводка для лучшей видимости */}
+                  <div className={`absolute inset-0 rounded-full border-2 transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'border-white/20' 
+                      : 'border-white/40'
+                  }`} />
+                </motion.button>
               ))}
             </div>
 
-            {/* Кнопки навигации */}
-            <button
+            {/* Кнопки навигации - красивые стрелки */}
+            <motion.button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full bg-stellar-accent/20 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-stellar-accent/30 transition-all"
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
+              style={{
+                background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
+                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.3), rgba(2, 191, 122, 0.2))'
+              }}
+              whileTap={{ scale: 0.95 }}
             >
-              ←
-            </button>
-            <button
+              <ChevronLeft className="w-6 h-6 text-white drop-shadow-md" />
+            </motion.button>
+            <motion.button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-stellar-accent/20 backdrop-blur-lg border border-white/20 flex items-center justify-center text-white hover:bg-stellar-accent/30 transition-all"
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
+              style={{
+                background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
+                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.3), rgba(2, 191, 122, 0.2))'
+              }}
+              whileTap={{ scale: 0.95 }}
             >
-              →
-            </button>
+              <ChevronRight className="w-6 h-6 text-white drop-shadow-md" />
+            </motion.button>
           </div>
         ) : (
           // Десктопная сетка
