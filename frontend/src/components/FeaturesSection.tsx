@@ -304,10 +304,12 @@ const FeaturesSection = () => {
             {/* Кнопки навигации - красивые стрелки */}
             <motion.button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
+              className="absolute left-0 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
-                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                transform: 'translateX(-1rem) translateY(-50%)',
+                transformOrigin: 'center'
               }}
               whileHover={{ 
                 scale: 1.05,
@@ -319,10 +321,12 @@ const FeaturesSection = () => {
             </motion.button>
             <motion.button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
+              className="absolute right-0 top-1/2 w-14 h-14 rounded-full backdrop-blur-xl border border-white/30 flex items-center justify-center text-white transition-all duration-300 shadow-lg"
               style={{
                 background: 'linear-gradient(135deg, rgba(2, 191, 122, 0.2), rgba(2, 191, 122, 0.1))',
-                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                boxShadow: '0 8px 32px rgba(2, 191, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                transform: 'translateX(1rem) translateY(-50%)',
+                transformOrigin: 'center'
               }}
               whileHover={{ 
                 scale: 1.05,
