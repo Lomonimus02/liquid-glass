@@ -38,66 +38,88 @@ const Navigation = () => {
     }
   };
 
-  // Animation configurations for different scroll behaviors
+  // Animation configurations for complete floating island transformation
   const floatingIslandAnimation = {
-    // Water droplet detachment effect (scrolling down)
-    down: {
-      y: 4, // Reduced from 8px to 4px for smaller gap
+    // Attached state - full width, no glass effect
+    attached: {
+      y: 0,
+      left: 0,
+      right: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      borderRadius: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 25,
+        duration: 1.0,
+      }
+    },
+    // Floating state - detached from edges with glass effect
+    floating: {
+      y: 8, // Increased for better visual separation
+      left: 16, // 16px = 1rem
+      right: 16,
+      marginLeft: 16,
+      marginRight: 16,
+      borderRadius: 24, // 1.5rem
+      scale: 0.98, // Slight scale reduction for floating effect
       transition: {
         type: "spring",
         stiffness: 60,
         damping: 20,
         duration: 1.2,
       }
-    },
-    // Sticky attachment effect (scrolling up to top)  
-    up: {
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 80,
-        damping: 18,
-        duration: 1.0,
-      }
-    },
-    // Transparent state
-    transparent: {
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 70,
-        damping: 20,
-        duration: 1.0,
-      }
     }
   };
 
-  // Get current animation based on scroll state and direction
+  // Get current animation based on scroll state
   const getCurrentAnimation = () => {
     const currentScrollY = window.scrollY;
     
-    if (!isScrolled) {
-      return floatingIslandAnimation.transparent;
+    // Only return to attached state when at the very top (within 10px)
+    if (currentScrollY <= 10) {
+      return floatingIslandAnimation.attached;
     }
     
-    // Only snap to top when actually at the top of the page (within 10px)
-    if (scrollDirection === 'up' && currentScrollY <= 10) {
-      return floatingIslandAnimation.transparent;
+    // Float when scrolled past 50px
+    if (currentScrollY > 50) {
+      return floatingIslandAnimation.floating;
     }
     
-    // When scrolling down or scrolling up but not at the top, maintain floating position
-    return floatingIslandAnimation.down;
+    // Intermediate state between 10px and 50px - gradually transition
+    const progress = (currentScrollY - 10) / 40; // 0 to 1
+    return {
+      y: progress * 8,
+      left: progress * 16,
+      right: progress * 16,
+      marginLeft: progress * 16,
+      marginRight: progress * 16,
+      borderRadius: progress * 24,
+      scale: 1 - (progress * 0.02),
+      transition: {
+        type: "spring",
+        stiffness: 80,
+        damping: 20,
+        duration: 0.8,
+      }
+    };
   };
 
   return (
     <motion.nav 
-      className={`fixed top-0 z-[9999] transition-all duration-700 ease-out ${
+      className={`fixed top-0 z-[9999] max-w-7xl mx-auto ${
         isScrolled 
-          ? 'left-4 right-4 md:left-8 md:right-8 max-w-4xl mx-auto frosted-glass shadow-lg' 
-          : 'left-0 right-0 bg-transparent'
+          ? 'frosted-glass shadow-lg' 
+          : 'bg-transparent'
       }`}
       animate={getCurrentAnimation()}
-      initial={{ y: 0 }}
+      initial={{ y: 0, left: 0, right: 0, marginLeft: 0, marginRight: 0, borderRadius: 0, scale: 1 }}
+      style={{
+        // Remove CSS transitions since we're using framer-motion
+        transition: 'none'
+      }}
     >
       <div className={`transition-all duration-700 ease-out ${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
         <div className="flex items-center justify-between h-16">
