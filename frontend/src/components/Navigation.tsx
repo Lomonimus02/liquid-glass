@@ -128,12 +128,13 @@ const Navigation = () => {
 
   return (
     <motion.nav 
-      className="fixed top-0 z-[9999] max-w-7xl mx-auto"
+      className="fixed top-0 z-[9999] w-full"
       animate={getCurrentAnimation()}
-      initial={{ y: 0, left: 0, right: 0, marginLeft: 0, marginRight: 0, borderRadius: 0, scale: 1 }}
+      initial={{ y: 0, width: '100%', left: '50%', x: '-50%', marginLeft: 0, marginRight: 0, borderRadius: 0, scale: 1 }}
       style={{
         // Remove CSS transitions since we're using framer-motion
-        transition: 'none'
+        transition: 'none',
+        maxWidth: '1280px', // max-w-7xl equivalent
       }}
     >
       {/* Animated background overlay */}
