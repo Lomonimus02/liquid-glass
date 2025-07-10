@@ -128,10 +128,10 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
             transform: 'translateX(-100%) skewX(-15deg)',
           }}
           animate={{
-            transform: isHovering
+            transform: effectiveHoverState
               ? 'translateX(200%) skewX(-15deg)'
               : 'translateX(-100%) skewX(-15deg)',
-            opacity: isHovering ? 0.8 : 0, // Увеличенная прозрачность
+            opacity: effectiveHoverState ? 0.8 : 0, // Увеличенная прозрачность
           }}
           transition={{ duration: 0.6, ease: "easeOut" }} // Быстрее анимация
         />
