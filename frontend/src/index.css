@@ -466,7 +466,7 @@
   /* REAL Frosted Glass Effect - Настоящее матовое стекло */
   .frosted-glass {
     position: relative;
-    z-index: 10 !important;
+    z-index: 10000 !important; /* Fixed: Use higher z-index to work with navigation */
     background: rgba(230, 255, 245, 0.08) !important; /* Добавлен зеленый оттенок */
     border: 1px solid rgba(2, 191, 122, 0.15) !important; /* Зеленая граница */
     border-radius: 1.5rem !important;
@@ -481,7 +481,7 @@
   }
 
   .frosted-glass:hover {
-    z-index: 20 !important;
+    z-index: 10001 !important; /* Fixed: Maintain proper hierarchy */
     background: rgba(230, 255, 245, 0.12) !important; /* Зеленый оттенок при hover */
     border: 1px solid rgba(2, 191, 122, 0.25) !important; /* Зеленая граница при hover */
     backdrop-filter: blur(100px) saturate(2.2) brightness(1.3) !important;
