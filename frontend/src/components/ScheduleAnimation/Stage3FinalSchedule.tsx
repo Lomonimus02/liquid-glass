@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Calendar, Clock, MapPin, CheckCircle2 } from "lucide-react";
 import { daysOfWeek, timeSlotLabels, subjects } from "./data";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ScheduleCell {
   subject: string;
