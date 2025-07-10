@@ -137,9 +137,9 @@ const Navigation = () => {
         maxWidth: '1280px', // max-w-7xl equivalent
       }}
     >
-      {/* Animated background overlay */}
+      {/* Animated background overlay - positioned behind content */}
       <motion.div 
-        className="absolute inset-0 frosted-glass"
+        className="absolute inset-0 -z-10"
         animate={{ 
           opacity: getBackgroundOpacity(),
           transition: {
@@ -151,12 +151,21 @@ const Navigation = () => {
         }}
         initial={{ opacity: 0 }}
         style={{
-          borderRadius: 'inherit'
+          borderRadius: 'inherit',
+          background: 'rgba(230, 255, 245, 0.08)',
+          border: '1px solid rgba(2, 191, 122, 0.15)',
+          backdropFilter: 'blur(100px) saturate(2) brightness(1.2)',
+          boxShadow: `
+            0 8px 32px rgba(2, 191, 122, 0.1),
+            0 1px 2px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            inset 0 -1px 0 rgba(2, 191, 122, 0.1)
+          `
         }}
       />
       
-      {/* Content */}
-      <div className="relative z-10">
+      {/* Content - no longer needs z-index since background is behind */}
+      <div className="relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
