@@ -638,8 +638,10 @@ const StickyAIAnimation = () => {
             </AnimatePresence>
           </div>
         </div>
-      ): (
-            <motion.div
+      )}
+    </div>
+  );
+};
               className="glass-card-enhanced p-8 relative overflow-hidden"
               animate={{
                 background: "rgba(255, 255, 255, 0.08)",
