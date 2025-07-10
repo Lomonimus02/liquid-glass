@@ -105,7 +105,7 @@ const ContactSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+        <div className={`gap-8 md:gap-12 ${isMobile ? 'space-y-8' : 'grid grid-cols-1 lg:grid-cols-2'}`}>
           <div className="glass-card-supreme p-6 md:p-8">
             <h3 className="text-xl md:text-2xl font-semibold text-text-primary mb-6">Запросить демонстрацию</h3>
             <form className="space-y-4 md:space-y-6">
@@ -121,7 +121,7 @@ const ContactSection = () => {
                   value={formData.name} 
                   onChange={handleInputChange} 
                   placeholder="Введите ваше имя"
-                  className="w-full"
+                  className={`w-full ${isMobile ? 'min-h-[48px] text-base' : ''}`}
                 />
               </div>
               
@@ -137,7 +137,7 @@ const ContactSection = () => {
                   value={formData.email} 
                   onChange={handleInputChange} 
                   placeholder="example@school.ru"
-                  className="w-full"
+                  className={`w-full ${isMobile ? 'min-h-[48px] text-base' : ''}`}
                 />
               </div>
               
@@ -153,7 +153,7 @@ const ContactSection = () => {
                   value={formData.school} 
                   onChange={handleInputChange} 
                   placeholder="Название школы или учреждения"
-                  className="w-full"
+                  className={`w-full ${isMobile ? 'min-h-[48px] text-base' : ''}`}
                 />
               </div>
               
@@ -168,14 +168,16 @@ const ContactSection = () => {
                   value={formData.message} 
                   onChange={handleInputChange} 
                   placeholder="Расскажите о ваших потребностях и вопросах..."
-                  className="w-full"
+                  className={`w-full ${isMobile ? 'min-h-[120px] text-base' : ''}`}
                 />
               </div>
 
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full glass-button bg-primary hover:bg-primary/90 text-primary-foreground group flex items-center justify-center transition-all duration-300"
+                className={`glass-button bg-primary hover:bg-primary/90 text-primary-foreground group flex items-center justify-center transition-all duration-300 ${
+                  isMobile ? 'w-full min-h-[56px] text-lg' : 'w-full'
+                }`}
                 disabled={isSubmitting} 
                 onClick={handleSubmit}
                 onMouseEnter={() => setIsButtonHovered(true)}
