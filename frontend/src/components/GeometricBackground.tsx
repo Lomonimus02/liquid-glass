@@ -437,17 +437,21 @@ const GeometricBackground: React.FC<GeometricBackgroundProps> = ({
   }, [dimensions, initializeShapes, isMobile]); // Added isMobile to dependencies
 
   useEffect(() => {
-    if (isInitialized && shapesRef.current.length > 0) {
-      console.log('Starting geometric animation with', shapesRef.current.length, 'shapes');
-      animate();
+    // Start animation only when properly initialized and has shapes (or is mobile)
+    if (isInitialized && (shapesRef.current.length > 0 || isMobile)) {
+      console.log('Starting geometric animation with', shapesRef.current.length, 'shapes, isMobile:', isMobile);
+      if (!isMobile) {
+        animate();
+      }
     }
     
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+        animationRef.current = undefined;
       }
     };
-  }, [isInitialized, animate]);
+  }, [isInitialized, animate, isMobile]); // Added isMobile dependency
 
   return (
     <div className="fixed inset-0 z-[1]">
