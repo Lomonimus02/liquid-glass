@@ -41,7 +41,7 @@ const Navigation = () => {
   const floatingIslandAnimation = {
     // Water droplet detachment effect (scrolling down)
     down: {
-      y: 3,
+      y: 8, // Increased offset for better floating effect
       transition: {
         type: "spring",
         stiffness: 100,
@@ -49,7 +49,7 @@ const Navigation = () => {
         duration: 0.8,
       }
     },
-    // Sticky attachment effect (scrolling up)  
+    // Sticky attachment effect (scrolling up to top)  
     up: {
       y: 0,
       transition: {
