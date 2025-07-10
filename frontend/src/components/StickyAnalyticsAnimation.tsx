@@ -542,6 +542,7 @@ const StickyAnalyticsAnimation = () => {
             )}
           </AnimatePresence>
         </div>
+        </div>
       )}
     </div>
   );
