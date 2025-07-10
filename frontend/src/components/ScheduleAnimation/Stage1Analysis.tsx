@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Zap, BarChart3, TrendingUp, CheckCircle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Stage1Analysis = () => {
   const [analysisStep, setAnalysisStep] = useState(0);
