@@ -547,6 +547,18 @@
         agent: "main"
         comment: "FEATURES SECTION CARD REPLACEMENT COMPLETED: Successfully replaced the 'Мобильное приложение' (Mobile App) card with 'Облачное хранилище' (Cloud Storage) card as requested. Updated title from 'Мобильное приложение' to 'Облачное хранилище' and description from 'Полнофункциональное мобильное приложение для всех участников образовательного процесса' to 'Храните Ваши личные документы и файлы в под защитой в бесплатном хранилище объемом 3 гигабайта'. The card maintains the same Lottie animation and styling while displaying the new cloud storage content."
 
+  - task: "Implement adaptive navigation for floating state and animated burger menu"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Navigation.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "ADAPTIVE NAVIGATION AND ANIMATED BURGER MENU COMPLETED: Successfully implemented comprehensive navigation adaptations for floating state and screen sizes. 1) ADAPTIVE NAVIGATION ELEMENTS: Navigation items now adapt when header transitions to floating state - reduced spacing (space-x-4 lg:space-x-6 vs space-x-6 lg:space-x-8), smaller text sizes (text-sm lg:text-base vs text-base), compressed padding (py-1 vs py-2). Added responsive text variations: 'Возможности'→'Функции', 'Расписание'→'График', 'ИИ-помощник'→'ИИ' for tablet/smaller screens. 2) ADAPTIVE LOGO: Logo scales down when floating (w-7 h-7 vs w-8 h-8), icon size adapts (w-4 h-4 vs w-5 h-5), text size reduces (text-lg lg:text-xl vs text-xl lg:text-2xl), mobile shows 'Stellar' only vs full 'Stellar School'. 3) ADAPTIVE CTA BUTTON: Button becomes more compact in floating state (px-3 py-1.5 text-sm vs px-4 py-2 text-base). 4) ANIMATED BURGER MENU: Created custom AnimatedBurger component with smooth line-to-cross transformation using framer-motion. Three burger lines animate: top/bottom lines rotate 45°/-45° to form X, middle line fades out with opacity and x-translation, all transitions use 0.3s easeInOut timing. Includes frosted glass styling matching header design. All adaptations work seamlessly across desktop (1920px), tablet (768px), and mobile (375px) screen sizes."
+
   - task: "Fix smooth header animation for complete floating island transformation"
     implemented: true
     working: true
