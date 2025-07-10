@@ -473,5 +473,3 @@ const Navigation = () => {
 AnimatedBurger.displayName = 'AnimatedBurger';
 
 export default Navigation;
-
-export default Navigation;
