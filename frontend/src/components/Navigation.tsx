@@ -16,28 +16,36 @@ const AnimatedBurger = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => v
         backdropFilter: 'blur(20px) saturate(1.2) brightness(1.1)',
       }}
     >
-      <div className="w-6 h-6 flex flex-col justify-center items-center">
+      <div className="w-6 h-5 flex flex-col justify-between items-center relative">
+        {/* Top line */}
         <motion.span
-          className="block h-0.5 w-6 bg-current origin-center"
+          className="block h-0.5 w-6 bg-current absolute"
+          style={{ top: isOpen ? '50%' : '0%' }}
           animate={{
             rotate: isOpen ? 45 : 0,
-            y: isOpen ? 0 : -4,
+            y: isOpen ? '-50%' : 0,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         />
+        
+        {/* Middle line */}
         <motion.span
-          className="block h-0.5 w-6 bg-current my-1"
+          className="block h-0.5 w-6 bg-current absolute"
+          style={{ top: '50%', y: '-50%' }}
           animate={{
             opacity: isOpen ? 0 : 1,
-            x: isOpen ? -10 : 0,
+            scaleX: isOpen ? 0 : 1,
           }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
         />
+        
+        {/* Bottom line */}
         <motion.span
-          className="block h-0.5 w-6 bg-current origin-center"
+          className="block h-0.5 w-6 bg-current absolute"
+          style={{ bottom: isOpen ? '50%' : '0%' }}
           animate={{
             rotate: isOpen ? -45 : 0,
-            y: isOpen ? 0 : 4,
+            y: isOpen ? '50%' : 0,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         />
