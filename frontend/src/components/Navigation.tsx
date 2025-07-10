@@ -398,6 +398,7 @@ const Navigation = () => {
 
             {/* Animated Mobile menu button */}
             <AnimatedBurger 
+              ref={burgerRef}
               isOpen={isMobileMenuOpen} 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
             />
