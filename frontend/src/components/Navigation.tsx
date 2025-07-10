@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import MagneticElement from './MagneticElement';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Animated Burger Menu Component
 const AnimatedBurger = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => {
