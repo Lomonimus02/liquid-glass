@@ -86,7 +86,6 @@ const HeroSection = () => {
         />
       </motion.div>
       )}
-      )}
 
       <div className="max-w-6xl mx-auto text-center relative z-30">
         {/* Badge */}
