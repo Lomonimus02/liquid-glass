@@ -157,7 +157,7 @@ const Navigation = () => {
       
       {/* Content */}
       <div className="relative z-10">
-        <div className={`${isScrolled ? 'px-6 md:px-8' : 'max-w-7xl mx-auto px-4'}`}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div 
