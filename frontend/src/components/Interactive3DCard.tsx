@@ -129,21 +129,23 @@ const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
           MozBorderRadius: '1.5rem',
         }}
       >
-        {/* Shimmer effect */}
-        <motion.div
-          className="absolute inset-0 opacity-0"
-          style={{
-            background: `linear-gradient(135deg, transparent 0%, ${glowColor}30 50%, transparent 100%)`,
-            transform: 'translateX(-100%) skewX(-15deg)',
-          }}
-          animate={{
-            transform: effectiveHoverState
-              ? 'translateX(200%) skewX(-15deg)'
-              : 'translateX(-100%) skewX(-15deg)',
-            opacity: effectiveHoverState ? 0.8 : 0, // Увеличенная прозрачность
-          }}
-          transition={{ duration: 0.6, ease: "easeOut" }} // Быстрее анимация
-        />
+        {/* Shimmer effect - disabled on mobile when requested */}
+        {!shouldDisableGlow && (
+          <motion.div
+            className="absolute inset-0 opacity-0"
+            style={{
+              background: `linear-gradient(135deg, transparent 0%, ${glowColor}30 50%, transparent 100%)`,
+              transform: 'translateX(-100%) skewX(-15deg)',
+            }}
+            animate={{
+              transform: effectiveHoverState
+                ? 'translateX(200%) skewX(-15deg)'
+                : 'translateX(-100%) skewX(-15deg)',
+              opacity: effectiveHoverState ? 0.8 : 0, // Увеличенная прозрачность
+            }}
+            transition={{ duration: 0.6, ease: "easeOut" }} // Быстрее анимация
+          />
+        )}
         
         {/* Content */}
         <div 
