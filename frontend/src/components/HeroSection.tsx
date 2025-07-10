@@ -24,33 +24,25 @@ const HeroSection = () => {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-10 overflow-hidden z-20">
-      {/* Particle system background - уменьшенный на мобильных */}
-      <div className="hidden md:block absolute inset-0 z-0">
-        <ParticleSystem
-          particleCount={60}
-          colors={['rgba(2, 191, 122, 0.3)', 'rgba(2, 191, 122, 0.2)', 'rgba(255, 255, 255, 0.1)']}
-          speed={0.5}
-          size={1.5}
-          className="opacity-70"
-        />
-      </div>
-
-      {/* Мобильная версия с меньшим количеством частиц */}
-      <div className="block md:hidden absolute inset-0 z-0">
-        <ParticleSystem
-          particleCount={20}
-          colors={['rgba(2, 191, 122, 0.2)', 'rgba(2, 191, 122, 0.1)', 'rgba(255, 255, 255, 0.05)']}
-          speed={0.3}
-          size={1}
-          className="opacity-50"
-        />
-      </div>
+      {/* Particle system background - отключен на мобильном */}
+      {!isMobile && (
+        <div className="absolute inset-0 z-0">
+          <ParticleSystem
+            particleCount={60}
+            colors={['rgba(2, 191, 122, 0.3)', 'rgba(2, 191, 122, 0.2)', 'rgba(255, 255, 255, 0.1)']}
+            speed={0.5}
+            size={1.5}
+            className="opacity-70"
+          />
+        </div>
+      )}
 
       {/* Floating elements with parallax - скрытые на мобильных */}
-      <motion.div
-        className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block z-5"
-        style={{ y: backgroundY }}
-      >
+      {!isMobile && (
+        <motion.div
+          className="absolute inset-0 overflow-hidden pointer-events-none z-5"
+          style={{ y: backgroundY }}
+        >
         <motion.div 
           className="absolute top-20 left-10 w-20 h-20 rounded-full bg-stellar-glow/20 blur-xl"
           animate={{
