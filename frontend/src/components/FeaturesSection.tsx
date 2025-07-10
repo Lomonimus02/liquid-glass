@@ -357,8 +357,8 @@ const FeaturesSection = () => {
             </motion.button>
           </div>
         ) : (
-          // Десктопная сетка
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          // Десктопная сетка с увеличенными отступами для теней
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 px-4"> {/* Увеличены gap и добавлены px отступы */}
             {features.map((feature, index) => (
               <SmoothReveal 
                 key={index}
