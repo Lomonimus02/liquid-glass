@@ -324,17 +324,121 @@ const StickyAIAnimation = () => {
   return (
     <div
       ref={containerRef}
-      className="relative h-[200vh] w-full"
+      className={isMobile ? "relative w-full py-16" : "relative h-[200vh] w-full"}
     >
-      <div
-        ref={stickyRef}
-        className="sticky left-0 w-full flex items-start justify-center bg-transparent z-20 overflow-visible"
-        style={{
-          top: '80px',
-          height: 'calc(100vh - 80px)',
-          paddingTop: '20px'
-        }}
-      >
+      {/* Мобильная версия - обычная секция */}
+      {isMobile ? (
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Заголовок секции */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="glass-card-enhanced p-6 relative overflow-hidden">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <motion.div
+                  className="w-12 h-12 bg-stellar-accent/20 rounded-full flex items-center justify-center"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 360]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Brain className="w-6 h-6 text-stellar-accent" />
+                </motion.div>
+
+                <h2 className="text-3xl md:text-4xl font-bold text-gradient">
+                  ИИ-помощник
+                </h2>
+              </div>
+
+              <p className="text-lg text-text-secondary max-w-3xl mx-auto">
+                Смотрите, как искусственный интеллект персонализирует обучение
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Мобильная демонстрация - одна карточка с этапами внутри */}
+          <motion.div
+            className="glass-card-enhanced p-6 relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            {/* Этапы в верхней части карточки */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-text-primary mb-4 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-stellar-accent" />
+                Этапы работы ИИ
+              </h3>
+              
+              <div className="grid grid-cols-2 gap-3">
+                {aiStages.map((stage, index) => (
+                  <motion.div
+                    key={stage.id}
+                    className={`p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
+                      activeStage === index
+                        ? 'border-stellar-accent bg-stellar-accent/10'
+                        : 'border-white/20 bg-white/5'
+                    }`}
+                    onClick={() => setActiveStage(index)}
+                    animate={{
+                      scale: activeStage === index ? 1.02 : 1,
+                      opacity: activeStage === index ? 1 : 0.7
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="text-center">
+                      <motion.div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-2 ${
+                          activeStage === index ? stage.bgColor : 'bg-white/10'
+                        }`}
+                        animate={{
+                          scale: activeStage === index ? 1.1 : 1
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <stage.icon className={`w-4 h-4 ${
+                          activeStage === index ? stage.color : 'text-white/60'
+                        }`} />
+                      </motion.div>
+                      <h4 className="text-sm font-semibold text-text-primary leading-tight">
+                        {stage.title}
+                      </h4>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Визуализация этапа */}
+            <div className="min-h-[300px] relative">
+              <AnimatePresence mode="wait">
+                <NeuralNetworkRenderer
+                  key={activeStage}
+                  stage={aiStages[activeStage]}
+                />
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
+      ) : (
+        // Десктопная версия - sticky контейнер
+        <div
+          ref={stickyRef}
+          className="sticky left-0 w-full flex items-start justify-center bg-transparent z-20 overflow-visible"
+          style={{
+            top: '80px',
+            height: 'calc(100vh - 80px)',
+            paddingTop: '20px'
+          }}
+        >
         <div className="relative w-full max-w-7xl mx-auto px-4">
           {/* Заголовок секции */}
           <motion.div
