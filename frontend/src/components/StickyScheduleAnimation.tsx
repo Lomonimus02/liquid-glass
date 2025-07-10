@@ -121,7 +121,7 @@ const StickyScheduleAnimation = () => {
   return (
     <div
       ref={containerRef}
-      className={isMobile ? "relative w-full py-20" : "relative h-[200vh] w-full"}
+      className={isMobile ? "relative w-full py-12" : "relative h-[200vh] w-full"}
     >
       {/* Мобильная версия - обычная секция */}
       {isMobile ? (
